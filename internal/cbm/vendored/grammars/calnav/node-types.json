@@ -1,0 +1,777 @@
+[
+  {
+    "type": "code_section",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "code_block",
+          "named": true
+        },
+        {
+          "type": "procedure_declaration",
+          "named": true
+        },
+        {
+          "type": "var_section",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "control",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "control_id",
+          "named": true
+        },
+        {
+          "type": "control_property",
+          "named": true
+        },
+        {
+          "type": "control_type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "control_id",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "control_property",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "control_property_value",
+          "named": true
+        },
+        {
+          "type": "control_trigger_value",
+          "named": true
+        },
+        {
+          "type": "property_key",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "control_property_value",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "control_trigger_value",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "control_type",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "controls_section",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "control",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "element",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "element_close_line",
+          "named": true
+        },
+        {
+          "type": "element_continuation_line",
+          "named": true
+        },
+        {
+          "type": "element_header_line",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "elements_section",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "element",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "fieldgroups_section",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "table_entry",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "fields_section",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "table_entry",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "keys_section",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "table_entry",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "local_var_section",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "var_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "object",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "object_body",
+          "named": true
+        },
+        {
+          "type": "object_id",
+          "named": true
+        },
+        {
+          "type": "object_name",
+          "named": true
+        },
+        {
+          "type": "object_type",
+          "named": true
+        },
+        {
+          "type": "report_object",
+          "named": true
+        },
+        {
+          "type": "xmlport_object",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "object_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "code_section",
+          "named": true
+        },
+        {
+          "type": "controls_section",
+          "named": true
+        },
+        {
+          "type": "elements_section",
+          "named": true
+        },
+        {
+          "type": "fieldgroups_section",
+          "named": true
+        },
+        {
+          "type": "fields_section",
+          "named": true
+        },
+        {
+          "type": "keys_section",
+          "named": true
+        },
+        {
+          "type": "object_properties_section",
+          "named": true
+        },
+        {
+          "type": "properties_section",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "object_id",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "object_properties_section",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "property",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "object_type",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "parameter",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "type_reference",
+          "named": true
+        },
+        {
+          "type": "var_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "parameter_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "parameter",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "proc_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "local_var_section",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "procedure_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "parameter_list",
+          "named": true
+        },
+        {
+          "type": "proc_body",
+          "named": true
+        },
+        {
+          "type": "procedure_name",
+          "named": true
+        },
+        {
+          "type": "type_reference",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "procedure_name",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "properties_section",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "property",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "property",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "property_key",
+          "named": true
+        },
+        {
+          "type": "property_value",
+          "named": true
+        },
+        {
+          "type": "trigger_value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "property_value",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "report_object",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "object_id",
+          "named": true
+        },
+        {
+          "type": "object_name",
+          "named": true
+        },
+        {
+          "type": "opaque_object_body",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "source_file",
+    "named": true,
+    "root": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "object",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "string_literal",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "table_entry",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "table_entry_line",
+          "named": true
+        },
+        {
+          "type": "table_entry_tail",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "text_const_var_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "var_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "trigger_value",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "type_reference",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "var_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "text_const_var_declaration",
+          "named": true
+        },
+        {
+          "type": "type_reference",
+          "named": true
+        },
+        {
+          "type": "var_initializer",
+          "named": true
+        },
+        {
+          "type": "var_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "var_initializer",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "var_name",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "var_section",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "var_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "xmlport_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "object_properties_section",
+          "named": true
+        },
+        {
+          "type": "properties_section",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "xmlport_object",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "object_id",
+          "named": true
+        },
+        {
+          "type": "object_name",
+          "named": true
+        },
+        {
+          "type": "xmlport_body",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
+    "type": ":",
+    "named": false
+  },
+  {
+    "type": ";",
+    "named": false
+  },
+  {
+    "type": "=",
+    "named": false
+  },
+  {
+    "type": "CODE",
+    "named": false
+  },
+  {
+    "type": "CONTROLS",
+    "named": false
+  },
+  {
+    "type": "ELEMENTS",
+    "named": false
+  },
+  {
+    "type": "FIELDGROUPS",
+    "named": false
+  },
+  {
+    "type": "FIELDS",
+    "named": false
+  },
+  {
+    "type": "KEYS",
+    "named": false
+  },
+  {
+    "type": "OBJECT",
+    "named": false
+  },
+  {
+    "type": "OBJECT-PROPERTIES",
+    "named": false
+  },
+  {
+    "type": "PROCEDURE",
+    "named": false
+  },
+  {
+    "type": "PROPERTIES",
+    "named": false
+  },
+  {
+    "type": "Record",
+    "named": false
+  },
+  {
+    "type": "Report",
+    "named": false
+  },
+  {
+    "type": "TEMPORARY",
+    "named": false
+  },
+  {
+    "type": "TextConst",
+    "named": false
+  },
+  {
+    "type": "VAR",
+    "named": false
+  },
+  {
+    "type": "WITHEVENTS",
+    "named": false
+  },
+  {
+    "type": "XMLport",
+    "named": false
+  },
+  {
+    "type": "code_block",
+    "named": true
+  },
+  {
+    "type": "element_close_line",
+    "named": true
+  },
+  {
+    "type": "element_continuation_line",
+    "named": true
+  },
+  {
+    "type": "element_header_line",
+    "named": true
+  },
+  {
+    "type": "identifier",
+    "named": true
+  },
+  {
+    "type": "object_name",
+    "named": true
+  },
+  {
+    "type": "opaque_object_body",
+    "named": true
+  },
+  {
+    "type": "property_key",
+    "named": true
+  },
+  {
+    "type": "table_entry_line",
+    "named": true
+  },
+  {
+    "type": "table_entry_tail",
+    "named": true
+  },
+  {
+    "type": "{",
+    "named": false
+  },
+  {
+    "type": "}",
+    "named": false
+  }
+]
