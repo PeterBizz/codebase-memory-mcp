@@ -588,6 +588,15 @@ test-foundation: $(BUILD_DIR)/test-foundation
 $(BUILD_DIR)/%.o: $(CBM_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(GRAMMAR_CFLAGS_TEST) -c -o $@ $<
 
+# Explicit dependency wiring for vendored CALNAV grammar sources.
+# grammar_calnav.c includes parser.c/scanner.c directly; without auto-generated
+# dep files (-MMD) Make cannot see those includes and would skip rebuilds when
+# parser/scanner change.
+$(BUILD_DIR)/grammar_calnav.o: \
+    $(CBM_DIR)/vendored/grammars/calnav/parser.c \
+    $(CBM_DIR)/vendored/grammars/calnav/scanner.c \
+    $(CBM_DIR)/vendored/grammars/calnav/tree_sitter/parser.h
+
 $(BUILD_DIR)/ts_runtime.o: $(TS_RUNTIME_DEPS) | $(BUILD_DIR)
 	$(CC) $(GRAMMAR_CFLAGS_TEST) -c -o $@ $<
 
@@ -599,6 +608,11 @@ $(BUILD_DIR)/preprocessor.o: $(CBM_DIR)/preprocessor.cpp | $(BUILD_DIR)
 
 $(BUILD_DIR)/tsan_%.o: $(CBM_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(GRAMMAR_CFLAGS_TSAN) -c -o $@ $<
+
+$(BUILD_DIR)/tsan_grammar_calnav.o: \
+    $(CBM_DIR)/vendored/grammars/calnav/parser.c \
+    $(CBM_DIR)/vendored/grammars/calnav/scanner.c \
+    $(CBM_DIR)/vendored/grammars/calnav/tree_sitter/parser.h
 
 $(BUILD_DIR)/tsan_ts_runtime.o: $(TS_RUNTIME_DEPS) | $(BUILD_DIR)
 	$(CC) $(GRAMMAR_CFLAGS_TSAN) -c -o $@ $<
@@ -777,6 +791,11 @@ PP_OBJ_PROD = $(BUILD_DIR)/prod_preprocessor.o
 
 $(BUILD_DIR)/prod_%.o: $(CBM_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(GRAMMAR_CFLAGS) -c -o $@ $<
+
+$(BUILD_DIR)/prod_grammar_calnav.o: \
+    $(CBM_DIR)/vendored/grammars/calnav/parser.c \
+    $(CBM_DIR)/vendored/grammars/calnav/scanner.c \
+    $(CBM_DIR)/vendored/grammars/calnav/tree_sitter/parser.h
 
 $(BUILD_DIR)/prod_ts_runtime.o: $(TS_RUNTIME_DEPS) | $(BUILD_DIR)
 	$(CC) $(GRAMMAR_CFLAGS) -c -o $@ $<
