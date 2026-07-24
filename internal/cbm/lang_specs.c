@@ -167,6 +167,7 @@ extern const TSLanguage *tree_sitter_pine(void);
 extern const TSLanguage *tree_sitter_mojo(void);
 extern const TSLanguage *tree_sitter_objectscript_udl(void);
 extern const TSLanguage *tree_sitter_objectscript_routine(void);
+extern const TSLanguage *tree_sitter_calnav(void);
 
 // -- Empty sentinel --
 static const char *empty_types[] = {NULL};
@@ -2630,6 +2631,12 @@ static const CBMLangSpec lang_specs[CBM_LANG_COUNT] = {
                                        empty_types, empty_types, empty_types, empty_types, NULL,
                                        empty_types, NULL, NULL, tree_sitter_objectscript_routine,
                                        NULL},
+
+    // CBM_LANG_CALNAV — CALNAV Business Central AL/N code
+    [CBM_LANG_CALNAV] = {CBM_LANG_CALNAV, empty_types, empty_types, empty_types,
+                         empty_types, empty_types, empty_types, empty_types, empty_types,
+                         empty_types, empty_types, empty_types, NULL, empty_types, NULL, NULL,
+                         tree_sitter_calnav, NULL},
 
     // CBM_LANG_OBJECTSCRIPT_EXPORT — Studio Export XML. No grammar row: the
     // pipeline transcodes Export XML to UDL (iris_export_xml.c) and re-extracts

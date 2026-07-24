@@ -74,6 +74,9 @@ static const ext_entry_t EXT_TABLE[] = {
     {".cu", CBM_LANG_CUDA},
     {".cuh", CBM_LANG_CUDA},
 
+    /* CALNAV -BIZZBRAIN*/
+    {".txt", CBM_LANG_CALNAV},
+
     /* Dart */
     {".dart", CBM_LANG_DART},
 
@@ -850,6 +853,7 @@ static const char *LANG_NAMES[CBM_LANG_COUNT] = {
     [CBM_LANG_OBJECTSCRIPT_UDL] = "ObjectScript UDL",
     [CBM_LANG_OBJECTSCRIPT_ROUTINE] = "ObjectScript Routine",
     [CBM_LANG_OBJECTSCRIPT_EXPORT] = "ObjectScript Export XML",
+    [CBM_LANG_CALNAV] = "CALNAV",
 
 };
 
