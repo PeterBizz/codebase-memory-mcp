@@ -2,8 +2,6 @@
 
 & ".\build\c\codebase-memory-mcp.exe" cli --json get_architecture
 
-& ".\build\c\codebase-memory-mcp.exe" cli --json list_projects
-
 $json = & ".\build\c\codebase-memory-mcp.exe" cli --json list_projects |
     Where-Object { $_ -match '^\{' }
 

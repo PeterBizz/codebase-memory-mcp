@@ -103,8 +103,8 @@ In de log zijn tijdens `scripts/build.sh` met GCC meerdere interne compilerfoute
 
 ### 3) Testprojectstructuur
 Voor snelle validatie is een lokale testcase-map gebruikt:
-- `private/test-calnav/codeunit/50000.txt`
-- extra testbestanden onder `private/test-calnav/...`
+- `calnav specifics/test-calnav/codeunit/50000.txt`
+- extra testbestanden onder `calnav specifics/test-calnav/...`
 
 Deze map kan in elk nieuw project 1-op-1 worden nagebouwd als rooktest.
 
@@ -214,7 +214,7 @@ Opmerking:
 ---
 
 ## Validatie-resultaat (samengevat)
-Op testproject `private/test-calnav`:
+Op testproject `calnav specifics/test-calnav`:
 - Project succesvol geïndexeerd.
 - `get_architecture` toont nodes/edges voor bestanden/modules.
 - CALNAV-keten functioneert end-to-end.

@@ -30,8 +30,7 @@ else {
     Write-Host "Kon taalgegevens niet valideren via get_architecture." -ForegroundColor Red
 }
 
-$JSON = & $codebaseMemoryexeFilename cli --json get_architecture '{"project":"test-calnav","aspects":["file_tree"]}' | Where-Object { $_ -match '^\{' }
+
 $JSON = & $codebaseMemoryexeFilename cli --json get_architecture '{"project":"test-calnav","aspects":["all"]}' | Where-Object { $_ -match '^\{' }
 $($Json | convertFrom-JSON).structuredContent.text 
-$JSON = & $codebaseMemoryexeFilename cli --json get_architecture '{"project":"test-calnav","aspects":["routes"]}' | Where-Object { $_ -match '^\{' }
-$($Json | convertFrom-JSON).structuredContent.text 
+

@@ -55,7 +55,7 @@ Leg kort uit dat incrementeel: gewijzigde objecten + relink doet.
 E. MCP/CLI validatie
 Voer uit:
 1) index_repository op:
-   C:\Users\<USER>\Source\Repos\Everest\codebase-memory-mcp\private\test-calnav
+   C:\Users\<USER>\Source\Repos\Everest\codebase-memory-mcp\calnav specifics\test-calnav
 2) list_projects
 3) get_architecture op het nieuwe project
 Rapporteer:
