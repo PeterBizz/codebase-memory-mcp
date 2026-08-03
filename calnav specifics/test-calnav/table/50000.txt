@@ -1,0 +1,41 @@
+OBJECT Table 15 G/L Account
+{
+  OBJECT-PROPERTIES
+  {
+    Date=28-03-08;
+    Time=12:00:00;
+    Version List=NAVW15.00,NAVNL5.00,SI1.18;
+  }
+  PROPERTIES
+  {
+    DataCaptionFields=No.,Name;    
+  }
+  FIELDS
+  {
+    { 1   ;   ;No.                 ;Code20        ;AltSearchField=Name;
+                                                   CaptionML=[ENU=No.;
+                                                              NLD=Nr.];
+                                                   NotBlank=Yes }
+    { 2   ;   ;Name                ;Text30        ;OnValidate=BEGIN
+                                                              END;
+
+                                                   CaptionML=[ENU=Name;
+                                                              NLD=Naam] }
+  }
+  KEYS
+  {
+    {    ;No.                                     ;Clustered=Yes }
+  }
+  CODE
+  {
+    BEGIN
+    {
+      Date/Version: 28-02-08 / NAVW15.00,SI1.17.1
+      by          : MvdH, Schouw Informatisering B.V.
+      ReferenceNo.: OP04074.238
+      modified    :
+      .field 11018200 added
+    }
+    END.
+  }
+}

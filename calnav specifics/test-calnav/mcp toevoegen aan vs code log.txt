@@ -1,0 +1,97 @@
+Mooi. ✅ Dit is precies de test die we wilden bereiken.
+
+De situatie is nu:
+
+✅ lokale build werkt
+✅ jouw fork wordt gebruikt
+✅ VS Code profiel-specifieke MCP-configuratie werkt
+✅ codebase-memory-mcp verschijnt als MCP server
+✅ geen afhankelijkheid van de officiële release/installatie
+
+Je hebt nu een goede ontwikkelbasis voor de C/AL toevoeging.
+
+Stap 18 – Eerste functionele test in VS Code
+
+Voordat we een nieuwe taal toevoegen, testen we of de MCP-server daadwerkelijk een repository kan indexeren.
+
+Gebruik in VS Code Copilot Chat (met MCP actief) een simpele opdracht zoals:
+
+Indexeer deze repository met codebase-memory-mcp
+
+Of als je direct de MCP-tools ziet, gebruik:
+
+index_repository
+
+met jouw repositorypad:
+
+C:\Users\peter\Source\Repos\Everest\codebase-memory-mcp
+
+Daarna testen we bijvoorbeeld:
+
+search_code
+
+met:
+
+codebase-memory-mcp
+
+of:
+
+build
+
+Als de index klaar is, controleer of je resultaten krijgt.
+
+Waarom eerst dit doen:
+
+Als we straks C/AL toevoegen willen we kunnen aantonen:
+
+Voor C/AL:
+
+file.als
+↓
+geen parser
+↓
+geen correcte symbolen
+
+Na C/AL:
+
+file.al
+↓
+Tree-sitter parser
+↓
+graph/index
+↓
+zoekresultaten
+
+Dan weten we dat onze wijziging echt effect heeft.
+
+Doe nu alleen deze test:
+
+Indexeer jouw repo via MCP.
+Voer daarna een eenvoudige zoekopdracht uit.
+
+Laat weten:
+
+of indexeren lukt;
+hoeveel bestanden/tijd ongeveer;
+of zoeken resultaten geeft.
+
+Daarna gaan we de architectuur voor een nieuwe taal bekijken.
+
+Repository indexed successfully.
+
+Project: C-Users-peter-Source-Repos-Everest-codebase-memory-mcp
+Nodes: 20,828 | Edges: 109,907
+Parse partial: 64 files with some ranges that may be partially missing (notably cli.c lines 1–13439 and parts of mcp.c)
+Excluded by design: 1 file (PNG image)
+
+Perfect. ✅ Dit is de nulmeting die we nodig hadden.
+
+Je lokale ontwikkelomgeving is nu volledig gevalideerd:
+
+Onderdeel	Status
+Fork/branch	✅
+Windows build	✅
+MSYS2 UCRT64 toolchain	✅
+Binary generatie	✅
+VS Code MCP koppeling	✅
+Repository indexing	✅

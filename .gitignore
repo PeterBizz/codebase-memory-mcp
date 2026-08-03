@@ -77,3 +77,4 @@ soak-results-query-leak/
 # scripts/soak-test.sh stay tracked.
 /soak*/
 /memlab-*
+calnav specifics/Omgeving opbouwen log.txt

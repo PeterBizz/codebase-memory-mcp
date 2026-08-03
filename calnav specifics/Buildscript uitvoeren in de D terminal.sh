@@ -1,0 +1,1 @@
+CC=clang CXX=clang++ scripts/build-incremental.sh

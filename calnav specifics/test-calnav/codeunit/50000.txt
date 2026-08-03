@@ -1,0 +1,28 @@
+OBJECT Codeunit 50000 TestCodeunit
+{
+  OBJECT-PROPERTIES
+  {
+    Date=08-07-26;
+    Time=12:21:01;
+    Modified=Yes;
+    Version List=TESTV1GRAMMAR, PETer Gram;
+  }
+  PROPERTIES
+  {
+    Permissions=TableData 50000=r,
+                TableData 50001=rimd;
+    OnRun=BEGIN
+          END;
+
+  }
+  CODE
+  {
+    VAR
+      TestData1@1000 : Record 50001;
+
+    PROCEDURE TestProcdure@30();
+    BEGIN
+      IF TestData1.FindFirst THEN 
+        MESSAGE('Record was found');
+    END;
+  }
