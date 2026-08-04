@@ -7,7 +7,12 @@ $script = 'source /etc/profile; '
 $script = $script + 'export PATH="/c/Program Files/nodejs:$PATH"; '
 $script = $script + 'cd /c/Users/peter/Source/Repos/Everest/codebase-memory-mcp; '
 $script = $script + 'CC=clang CXX=clang++ '
-$script = $script + 'scripts/build-incremental.sh'
+$Response = Read-Host "Do you want to build incrmentally? (y/n)"
+if ($Response -eq 'y') {
+    $script = $script + 'scripts/build-incremental.sh'
+} else {
+    $script = $script + 'scripts/build.sh'
+}
 $Response = Read-Host "Do you want to build with GUI? (y/n)"
 if ($Response -eq 'y') {
     $withui = ' --with-ui '
