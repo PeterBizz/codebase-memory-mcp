@@ -31,6 +31,16 @@ static _Atomic CBMLogFormat g_log_format = CBM_LOG_FORMAT_TEXT;
  * in a static initializer. The cast makes it an address constant. */
 static _Atomic cbm_log_sink_fn g_log_sink = (cbm_log_sink_fn)NULL;
 static _Atomic CBMLogSinkMode g_log_sink_mode = CBM_LOG_SINK_REPLACE;
+static FILE *g_log_file = NULL;
+
+static void cbm_log_file_sink(const char *line) {
+    if (!g_log_file || !line) {
+        return;
+    }
+    (void)fputs(line, g_log_file);
+    (void)fputc('\n', g_log_file);
+    (void)fflush(g_log_file);
+}
 
 /* CBM_LOG_LEVEL support — distilled from #414 (closes #413, thanks @santanusinha). */
 void cbm_log_init_from_env(void) {
@@ -79,12 +89,22 @@ parse_format:;
         } else if (fmt[i] == '\0' && strcmp(lower_fmt, "text") == 0) {
             cbm_log_set_format(CBM_LOG_FORMAT_TEXT);
         }
-        return;
     }
 
-    /* Format is intentionally explicit-only. Logs stay local to stderr and the
-     * optional in-process sink; deployment environment variables must not
-     * silently change the operator-selected output shape. */
+    const char *file_path = getenv("CBM_LOG_FILE");
+    if (file_path && file_path[0] != '\0') {
+        if (g_log_file) {
+            (void)fclose(g_log_file);
+            g_log_file = NULL;
+        }
+        g_log_file = fopen(file_path, "ab");
+        if (g_log_file) {
+            cbm_log_set_sink(cbm_log_file_sink);
+        }
+    }
+
+    /* Format is intentionally explicit-only. The optional file sink is only
+     * enabled when the operator asks for a path via CBM_LOG_FILE. */
 }
 
 void cbm_log_set_sink(cbm_log_sink_fn fn) {

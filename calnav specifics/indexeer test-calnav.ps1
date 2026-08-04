@@ -7,7 +7,7 @@ $DaemonStatus = & $codebaseMemoryexeFilename daemon status
 if ($DaemonStatus -match "daemon: not running") {
     Write-Host "Starting the MCP daemon..."
     & $codebaseMemoryexeFilename daemon start
-    & $codebaseMemoryexeFilename daemon stop
+    ##& $codebaseMemoryexeFilename daemon stop
 } else {
     Write-Host "MCP daemon is already running."
     $DaemonStatus

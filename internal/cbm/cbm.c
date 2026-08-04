@@ -17,6 +17,7 @@
 #include "foundation/compat.h"
 #include "foundation/compat_fs.h"  // cbm_fopen — crash-supervisor per-file marker write
 #include "foundation/hash_table.h" // CBMHashTable — crash-supervisor quarantine set
+#include "foundation/log.h"
 #include "tree_sitter/api.h" // TSParser, TSNode, TSTree, TSInput, TSLanguage, TSPoint, TSParseOptions, TSParseState
 #include "foundation/constants.h"
 #include "mimalloc.h" // mi_malloc/mi_calloc/mi_realloc/mi_free/mi_usable_size — bind 3rd-party allocators (#424)
@@ -222,6 +223,12 @@ static bool cbm_timeout_cb(TSParseState *state) {
 static CBM_TLS TSParser *tl_parser = NULL;
 static CBM_TLS CBMLanguage tl_parser_lang = CBM_LANG_COUNT; // invalid sentinel
 
+static void cbm_calnav_ts_logger(void *payload, TSLogType type, const char *message) {
+    (void)payload;
+    cbm_log_debug("calnav.tree_sitter", "type", type == TSLogTypeLex ? "lex" : "parse",
+                  "message", message ? message : "");
+}
+
 // Get or create a thread-local parser configured for the given language.
 static TSParser *get_thread_parser(const TSLanguage *ts_lang, CBMLanguage lang) {
     if (!tl_parser) {
@@ -233,6 +240,11 @@ static TSParser *get_thread_parser(const TSLanguage *ts_lang, CBMLanguage lang) 
     }
     if (tl_parser_lang != lang) {
         ts_parser_set_language(tl_parser, ts_lang);
+        TSLogger logger = {0};
+        if (lang == CBM_LANG_CALNAV) {
+            logger.log = cbm_calnav_ts_logger;
+        }
+        ts_parser_set_logger(tl_parser, logger);
         tl_parser_lang = lang;
     }
     return tl_parser;
@@ -1210,6 +1222,11 @@ CBMFileResult *cbm_extract_file_ex(const char *source, int source_len, CBMLangua
         opts.progress_callback = cbm_timeout_cb;
     }
 
+    if (language == CBM_LANG_CALNAV) {
+        cbm_log_debug("calnav.parse.start", "path", rel_path ? rel_path : "(memory)");
+        cbm_log_int(CBM_LOG_DEBUG, "calnav.parse.bytes", "bytes", (int64_t)source_len);
+    }
+
     TSTree *tree = ts_parser_parse_with_options(parser, NULL, ts_input, opts);
     uint64_t t1 = now_ns();
 
@@ -1217,8 +1234,15 @@ CBMFileResult *cbm_extract_file_ex(const char *source, int source_len, CBMLangua
         result->has_error = true;
         result->error_msg =
             cbm_arena_strdup(a, timeout_micros > 0 ? "parse timeout" : "parse failed");
+        if (language == CBM_LANG_CALNAV) {
+            cbm_log_debug("calnav.parse.failed", "path", rel_path ? rel_path : "(memory)");
+        }
         cbm_index_mark_done(rel_path);
         return result;
+    }
+
+    if (language == CBM_LANG_CALNAV) {
+        cbm_log_int(CBM_LOG_DEBUG, "calnav.parse.done", "elapsed_ns", (int64_t)(t1 - t0));
     }
 
     TSNode root = ts_tree_root_node(tree);
@@ -1251,6 +1275,11 @@ CBMFileResult *cbm_extract_file_ex(const char *source, int source_len, CBMLangua
     cbm_extract_definitions(&ctx);
     cbm_extract_imports(&ctx);
     cbm_extract_unified(&ctx);
+
+    if (language == CBM_LANG_CALNAV) {
+        cbm_log_int(CBM_LOG_DEBUG, "calnav.extract.defs", "count", result->defs.count);
+        cbm_log_int(CBM_LOG_DEBUG, "calnav.extract.calls", "count", result->calls.count);
+    }
 
     // Channel detection (Socket.IO / EventEmitter) — JS/TS only.
     cbm_extract_channels(&ctx);

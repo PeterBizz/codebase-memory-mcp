@@ -211,6 +211,29 @@ Opmerking:
 - `scripts/build-incremental.sh`
   - Productiebuild zonder clean.
 
+### 7) CALNAV parser logging
+De CALNAV tree-sitter parser logt nu extra detail op debug-niveau.
+
+Inschakelen:
+```powershell
+$env:CBM_LOG_LEVEL = 'debug'
+$env:CBM_LOG_FILE = 'C:\temp\calnav-parser.log'
+```
+
+Uitschakelen:
+```powershell
+$env:CBM_LOG_LEVEL = 'none'
+Remove-Item Env:CBM_LOG_FILE -ErrorAction SilentlyContinue
+```
+
+Waar komt het logfile terecht:
+- als `CBM_LOG_FILE` is gezet, wordt daar exact dat pad gebruikt;
+- als `CBM_LOG_FILE` niet is gezet, gaan de logs naar stderr en wordt er geen apart logfile gemaakt.
+
+Tip:
+- laat `CBM_LOG_LEVEL` op `debug` staan als je de volledige tree-sitter lex/parse trace wilt zien;
+- `info`, `warn` of `error` verminderen de hoeveelheid output zonder de codewijziging terug te draaien.
+
 ---
 
 ## Validatie-resultaat (samengevat)
