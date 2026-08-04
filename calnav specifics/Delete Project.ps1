@@ -1,6 +1,6 @@
 $codebaseMemoryexeFilename = ".\build\c\codebase-memory-mcp.exe"
 
-$codebaseMemoryexeFilename daemon start
+
 ##$projectName = "test-calnav"
 
 $json = & ".\build\c\codebase-memory-mcp.exe" cli --json list_projects |
@@ -13,7 +13,7 @@ foreach ($pproject in $projects) {
     # Dit werkt nu gegarandeerd en toont de pure namen
     $pproject.name
     $pproject.root_path
-    if ( read-host "Wil je dit project verwijderen? (j/n)" -eq 'j') {
+    if ( $(read-host "Wil je dit project verwijderen? (j/n)") -eq 'j') {
         $projectName = $pproject.name
         Write-Host "(Index voor Project $projectName aan het verwijderen" -ForegroundColor Red
         & $codebaseMemoryexeFilename cli delete_project --project "$projectName"

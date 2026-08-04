@@ -51,7 +51,11 @@ $JSON = .\build\c\codebase-memory-mcp.exe cli --json get_architecture '{"project
 $JSON = .\build\c\codebase-memory-mcp.exe cli --json query_graph '{"project":"test-calnav","query":"Section"}'
 
 ##Nu de exmples van de grammer maar eerst testen: 
-$Json = & ".\build\c\codebase-memory-mcp.exe" cli --json index_repository '{"repo_path":"C:\\Users\\peter\\Source\\Repos\\Everest\\tree-sitter-cal\\examples", "name":"Exmple-calnav"}'
+$Json = & ".\build\c\codebase-memory-mcp.exe" cli --json index_repository '{"repo_path":"C:\\Users\\peter\\Source\\Repos\\Everest\\tree-sitter-cal\\examples", "name":"Example-calnav"}'
+$Json = & ".\build\c\codebase-memory-mcp.exe" cli --json index_repository '{"repo_path":"c:\\users\\peter\\Source\\Repos\\Everest\\codebase-memory-mcp\\calnav specifics\\test-calnav", "name":"Mini-calnav","mode":"fast"}'
+
+
+
 $Json | set-clipboard
 
 

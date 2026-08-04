@@ -26,3 +26,4 @@ OBJECT Codeunit 50000 TestCodeunit
         MESSAGE('Record was found');
     END;
   }
+}
