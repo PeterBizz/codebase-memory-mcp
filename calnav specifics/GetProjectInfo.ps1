@@ -14,36 +14,6 @@ foreach ($pproject in $projects) {
         break
     }   
 } 
-
-## Step 1 : Fetch the project details > 
-
-Write-Host "`nOphalen van info  voor $projectName..." -ForegroundColor Cyan
-$archJson = & $codebaseMemoryexeFilename cli --json get_architecture --project "$projectName" | Where-Object { $_ -match '^\{' }
-if (-not [string]::IsNullOrEmpty($archJson)) {
-    try {
-        $archData = $(ConvertFrom-Json $archJson).structuredContent
-        $archData.text
-        Write-Host "=== Gebruikte talen in de index voor '$projectName' ===" -ForegroundColor Green
-            
-        $targetData = $archData.results ? $archData.results : $archData
-
-        if ($targetData.languages) {
-            # Toon de talenmatrix netjes onder elkaar
-            $targetData.languages | Format-List | Out-String | Write-Host -ForegroundColor White
-        }
-        else {
-            $targetData | Format-List | Out-String | Write-Host
-        }
-    }
-    catch {
-        Write-Host "Kon architectuur-JSON niet verwerken." -ForegroundColor Red
-    }
-}
-else {
-    Write-Host "Kon taalgegevens niet valideren via get_architecture." -ForegroundColor Red
-}
-$projectName 
-
 ## Create Hash tabel with results for each aspect:
 $aspectResults = @{}
 $aspects = @("overview", "structure", "dependencies","languages", "file_tree", "graph_schema", "call_graph", "data_flow",
@@ -54,7 +24,7 @@ foreach ($aspect in $aspects) {
     $Json = & $codebaseMemoryexeFilename cli --json get_architecture --project $projectName --aspects $aspect 2>$null | Where-Object { $_ -match '^\{' }
    
     $Jsonreceived = $($Json | convertFrom-JSON).structuredContent
-    if ($Jsonreceived -and $Jsonreceived.error) {
+    if ($Jsonreceived -and $Jsonreceived.PSObject.Properties.Match("error").Count -gt 0) {
         Write-Host "Aspect '$aspect' geeft fout: $($Jsonreceived.error)" -ForegroundColor Red
         $Jsonreceived = $Jsonreceived.error
     }
@@ -70,9 +40,7 @@ foreach ($aspect in $aspects) {
                 Write-Host "Aspect '$aspect' geeft zelfde resultaat als eerder ontvangen aspect '$receivedAspect'." -ForegroundColor Yellow
             }
         }
-    }
-    if ($aspectResults[$aspect] -eq $Jsonreceived) {
-        Write-Host "Aspect '$aspect' succesvol opgehaald en gevalideerd." -ForegroundColor Green
-    }    
+    }        
 }
 $aspectResults | Format-List | Out-String | Write-Host -ForegroundColor White
+

@@ -20,7 +20,7 @@ if ($Response -eq 'y') {
     $withui = ''
 }
 $currentVersion = '0.47.02'
-$response = Read-Host "Do you want to build with version $currentVersion? (y/n)"
+$response = Read-Host "Do you want to build with version $currentVersion ? (y/n)"
 if ($response -eq 'y') {
     $version = " --version dev.$currentVersion "
 } else {

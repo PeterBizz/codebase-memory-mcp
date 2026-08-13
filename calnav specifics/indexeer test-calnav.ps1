@@ -15,10 +15,8 @@ if ($DaemonStatus -match "daemon: not running") {
 $projectfolder = (Resolve-Path $projectfolder).Path
 $ProjectFolder = $projectfolder -replace "\\", "\\"  # Escape backslashes for JSON
 ##Get-ChildItem -Path $projectfolder -Recurse | Select-Object FullName, Length, LastWriteTime | Sort-Object LastWriteTime -Descending | Format-Table -AutoSize
-$JsonPayLoad = '{"repo_path":"' + $($ProjectFolder) + '", "name":"' + $($ProjectName) + '"}'
+$JsonPayload = '{"repo_path":"' + $($ProjectFolder) + '", "name":"' + $($ProjectName) + '"}'
 
-$JsonPayload = '{"repo_path":"C:\\Users\\peter\\Source\\Repos\\Everest\\tree-sitter-cal\\examples", "name":"Example-calnav"}'
-$Json = $JsonPayLoad | & $codebaseMemoryexeFilename $mcpCommand '{"repo_path":"C:\\Users\\peter\\Source\\Repos\\Everest\\tree-sitter-cal\\examples", "name":"Example-calnav"}'
-
-$Json = $JsonPayLoad | & $codebaseMemoryexeFilename $mcpCommand
+Write-Host "Reindexing '$ProjectName' from '$ProjectFolder'..." -ForegroundColor Cyan
+$Json = & $codebaseMemoryexeFilename $mcpCommand $JsonPayload
 $Json
