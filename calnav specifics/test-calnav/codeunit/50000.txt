@@ -25,5 +25,10 @@ OBJECT Codeunit 50000 TestCodeunit
       IF TestData1.FindFirst THEN 
         MESSAGE('Record was found');
     END;
+
+    PROCEDURE CallTestProcdure@31();
+    BEGIN
+      TestProcdure;
+    END;
   }
 }

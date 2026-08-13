@@ -1,64 +1,43 @@
-& ".\build\c\codebase-memory-mcp.exe" cli --json index_repository '{"repo_path":"C:\\Users\\peter\\Source\\Repos\\Everest\\codebase-memory-mcp\\private\\test-calnav"}'
+$ErrorActionPreference = 'Stop'
 
-& ".\build\c\codebase-memory-mcp.exe" cli --json get_architecture
+$Exe = ".\build\c\codebase-memory-mcp.exe"
+$LogFile = 'C:\Users\peter\Source\Repos\Everest\codebase-memory-mcp\private\calnav-parser-deamon.log'
+$Project = 'test-calnav'
+$ExampleRepo = 'C:\Users\peter\Source\Repos\Everest\tree-sitter-cal\examples'
 
-$json = & ".\build\c\codebase-memory-mcp.exe" cli --json list_projects |
-    Where-Object { $_ -match '^\{' }
+function Invoke-CbmJson {
+    param(
+        [Parameter(Mandatory)] [string] $Command,
+        [Parameter(Mandatory)] [string] $Payload
+    )
 
-$projects = $($json | ConvertFrom-Json ).structuredContent.projects
-    
-# 4. Voer de lus uit over de daadwerkelijke array
-foreach ($pproject in $projects) {
-    # Dit werkt nu gegarandeerd en toont de pure namen
-    $pproject.name
+    $ArgsFile = [System.IO.Path]::GetTempFileName()
+    try {
+        Set-Content -Path $ArgsFile -Value $Payload -Encoding utf8NoBOM -NoNewline
+        & $Exe cli --json $Command --args-file $ArgsFile
+    }
+    finally {
+        Remove-Item -Path $ArgsFile -ErrorAction SilentlyContinue
+    }
 }
 
-$json = & ".\build\c\codebase-memory-mcp.exe" cli --json get_architecture '{"project":"C-Users-peter-Source-Repos-Everest-codebase-memory-mcp-private-test-calnav"}'| Where-Object { $_ -match '^\{' }
-$json = & ".\build\c\codebase-memory-mcp.exe" cli --json get_architecture '{"project":"test-calnav"}'| Where-Object { $_ -match '^\{' }
-$($json | convertfrom-Json ).structuredContent | set-clipboard
+$ProjectsJson = & $Exe cli --json list_projects | Where-Object { $_ -match '^\{' }
+$Projects = ($ProjectsJson | ConvertFrom-Json).structuredContent.projects
+foreach ($ProjectItem in $Projects) {
+    $ProjectItem.name
+}
 
-$Json = & ".\build\c\codebase-memory-mcp.exe" cli --json index_repository '{"repo_path":"C:\\Users\\peter\\Source\\Repos\\Everest\\codebase-memory-mcp\\private\\test-calnav", "name":"test-calnav"}'
-$($json | convertfrom-Json ).structuredContent.text
+$env:CBM_LOG_LEVEL = 'debug'
+$env:CBM_LOG_FORMAT = 'text'
+$env:CBM_LOG_FILE = $LogFile
 
-### ==  start the daemon niet vergeten om weer te stoppen
-.\build\c\codebase-memory-mcp.exe daemon start
-.\build\c\codebase-memory-mcp.exe daemon stop
-.\build\c\codebase-memory-mcp.exe cli --help
-$Json = .\build\c\codebase-memory-mcp.exe cli query_graph --help
-$Json = .\build\c\codebase-memory-mcp.exe cli --json query_graph '{"project":"test-calnav"}'
+Invoke-CbmJson -Command 'get_graph_schema' -Payload ('{"project":"' + $Project + '"}')
+Invoke-CbmJson -Command 'get_architecture' -Payload ('{"project":"' + $Project + '","aspects":["file_tree"]}')
+Invoke-CbmJson -Command 'search_graph' -Payload ('{"project":"' + $Project + '","query":"Section"}')
+Invoke-CbmJson -Command 'query_graph' -Payload ('{"project":"' + $Project + '","query":"MATCH (f:Function) RETURN f.qualified_name AS qn LIMIT 5"}')
+Invoke-CbmJson -Command 'trace_call_path' -Payload ('{"project":"' + $Project + '","function_name":"TestProcdure"}')
 
-$JsonPayLoad = '{"project":"test-calnav","query":"*"}'
-$JsonPayLoad | & $codebaseMemoryexeFilename cli query_graph --json
-
-$JsonPayLoad =  '{"project":"test-calnav","aspects":["file_tree"]}'
-$JsonPayLoad | & $codebaseMemoryexeFilename cli get_architecture --json
-
-$JsonPayLoad = '{"project":"test-calnav"}'
-$Json = $JsonPayLoad | & $codebaseMemoryexeFilename cli get_graph_schema --json
-
-$nodeLabels = $($($Json | convertfrom-json ).structuredContent).node_labels
-$nodeLabels[1].properties 
-
-$nodeLabels = $($($Json | convertfrom-json ).structuredContent).edge    
-$nodeLabels[1].properties 
-
-## .\build\c\codebase-memory-mcp.exe daemon stop
-$JsonPayLoad = '{"project":"test-calnav","query":"50000"}'
-$JSON = $JsonPayLoad | & $codebaseMemoryexeFilename cli --json search_graph
-$JSON = .\build\c\codebase-memory-mcp.exe cli --json search_graph '{"project":"test-calnav","query":"Section"}'
-$JSON = .\build\c\codebase-memory-mcp.exe cli --json get_graph_schema '{"project":"test-calnav"}'
-$JSON = .\build\c\codebase-memory-mcp.exe cli --json get_architecture '{"project":"test-calnav","aspects":["file_tree"]}'
-$JSON = .\build\c\codebase-memory-mcp.exe cli --json query_graph '{"project":"test-calnav","query":"Section"}'
-
-##Nu de exmples van de grammer maar eerst testen: 
-$Json = & ".\build\c\codebase-memory-mcp.exe" cli --json index_repository '{"repo_path":"C:\\Users\\peter\\Source\\Repos\\Everest\\tree-sitter-cal\\examples", "name":"Example-calnav"}'
-$Json = & ".\build\c\codebase-memory-mcp.exe" cli --json index_repository '{"repo_path":"c:\\users\\peter\\Source\\Repos\\Everest\\codebase-memory-mcp\\calnav specifics\\test-calnav", "name":"Mini-calnav","mode":"fast"}'
-
-$Json | set-clipboard
-
-
-$JsonPayLoad = '{"project":"test-calnav","query":"Section"}'
-$JSON = $JsonPayLoad | & $codebaseMemoryexeFilename cli --json trace_call_path
-$JSON = $JsonPayLoad | & $codebaseMemoryexeFilename cli  --help
+Invoke-CbmJson -Command 'index_repository' -Payload ('{"repo_path":"' + ($ExampleRepo -replace '\\', '\\\\') + '","name":"Example-calnav"}')
+Invoke-CbmJson -Command 'index_repository' -Payload ('{"repo_path":"C:\\Users\\peter\\Source\\Repos\\Everest\\codebase-memory-mcp\\calnav specifics\\test-calnav","name":"Mini-calnav","mode":"fast"}')
 
 

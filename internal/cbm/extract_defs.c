@@ -690,6 +690,24 @@ TSNode cbm_resolve_func_name(TSNode node, CBMLanguage lang) {
             return null_node;
         }
 
+        /* CALNAV: a procedure declaration wraps its actual name in a
+         * `procedure_name` child, whose `name` field holds the identifier.
+         * Without this, `procedure_declaration` never resolves to a function
+         * name and CALNAV procedures are skipped entirely during def extraction.
+         */
+        if (lang == CBM_LANG_CALNAV && strcmp(kind, "procedure_declaration") == 0) {
+            TSNode proc_name = cbm_find_child_by_kind(node, "procedure_name");
+            if (!ts_node_is_null(proc_name)) {
+                TSNode nm = ts_node_child_by_field_name(proc_name, TS_FIELD("name"));
+                if (ts_node_is_null(nm) && ts_node_named_child_count(proc_name) > 0) {
+                    nm = ts_node_named_child(proc_name, 0);
+                }
+                if (!ts_node_is_null(nm)) {
+                    return nm;
+                }
+            }
+        }
+
         // A parameterized ObjectScript routine wraps its tag and body in a
         // procedure node. Use the direct tag as the callable name so the
         // definition spans the complete procedure instead of only its label.

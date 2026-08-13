@@ -404,6 +404,7 @@ typedef enum {
     CBM_OCCURRENCE_VHDL_INTERFACE,
     CBM_OCCURRENCE_PINE_FUNCTION,
     CBM_OCCURRENCE_LLVM_FUNCTION,
+    CBM_OCCURRENCE_CALNAV_DECLARATION,
 } CBMOccurrencePolicy;
 
 typedef struct {
@@ -529,6 +530,7 @@ static const CBMOccurrenceSpec occurrence_specs[CBM_LANG_COUNT] = {
                                    CBM_OCCURRENCE_STANDARD, true},
     [CBM_LANG_OBJECTSCRIPT_ROUTINE] = {objectscript_binding_nodes, objectscript_write_nodes,
                                        CBM_OCCURRENCE_STANDARD, true},
+    [CBM_LANG_CALNAV] = {NULL, NULL, CBM_OCCURRENCE_CALNAV_DECLARATION, false},
 };
 
 static bool text_equals(CBMExtractCtx *ctx, TSNode node, const char *expected) {
@@ -1079,6 +1081,9 @@ static bool is_policy_binding(CBMExtractCtx *ctx, TSNode node,
             }
         }
         return false;
+    case CBM_OCCURRENCE_CALNAV_DECLARATION:
+        return is_first_named_part_of(node, "procedure_declaration") ||
+               is_first_named_part_of(node, "var_declaration");
     case CBM_OCCURRENCE_STANDARD:
     default:
         return false;

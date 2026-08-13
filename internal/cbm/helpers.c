@@ -1029,6 +1029,19 @@ const char *cbm_nix_qn_name(CBMArena *a, TSNode func_node, const char *source, c
 
 static const char *func_node_name(CBMArena *a, TSNode func_node, const char *source,
                                   CBMLanguage lang) {
+    if (lang == CBM_LANG_CALNAV && strcmp(ts_node_type(func_node), "procedure_declaration") == 0) {
+        if (ts_node_named_child_count(func_node) > 0) {
+            TSNode proc_name = ts_node_named_child(func_node, 0);
+            if (!ts_node_is_null(proc_name) && strcmp(ts_node_type(proc_name), "procedure_name") == 0 &&
+                ts_node_named_child_count(proc_name) > 0) {
+                TSNode ident = ts_node_named_child(proc_name, 0);
+                if (!ts_node_is_null(ident)) {
+                    return cbm_node_text(a, ident, source);
+                }
+            }
+        }
+    }
+
     // Wolfram: set_delayed_top/set_top/set_delayed/set — LHS is apply(user_symbol("f"), ...)
     if (lang == CBM_LANG_WOLFRAM) {
         const char *nk = ts_node_type(func_node);

@@ -172,6 +172,10 @@ extern const TSLanguage *tree_sitter_calnav(void);
 // -- Empty sentinel --
 static const char *empty_types[] = {NULL};
 
+static const char *calnav_func_types[] = {"procedure_declaration", NULL};
+static const char *calnav_call_types[] = {"call_statement", NULL};
+static const char *calnav_assignment_types[] = {"assignment_statement", NULL};
+
 // ==================== GO ====================
 static const char *go_func_types[] = {"function_declaration", "method_declaration", "method_elem",
                                       "func_literal", NULL};
@@ -2624,10 +2628,10 @@ static const CBMLangSpec lang_specs[CBM_LANG_COUNT] = {
                                        NULL},
 
     // CBM_LANG_CALNAV — CALNAV Business Central AL/N code
-    [CBM_LANG_CALNAV] = {CBM_LANG_CALNAV, empty_types, empty_types, empty_types,
-                         empty_types, empty_types, empty_types, empty_types, empty_types,
-                         empty_types, empty_types, empty_types, NULL, empty_types, NULL, NULL,
-                         tree_sitter_calnav, NULL},
+    [CBM_LANG_CALNAV] = {CBM_LANG_CALNAV, calnav_func_types, empty_types, empty_types,
+                         empty_types, calnav_call_types, empty_types, empty_types, empty_types,
+                         empty_types, calnav_assignment_types, empty_types, NULL, empty_types,
+                         NULL, NULL, tree_sitter_calnav, NULL},
 
     // CBM_LANG_OBJECTSCRIPT_EXPORT — Studio Export XML. No grammar row: the
     // pipeline transcodes Export XML to UDL (iris_export_xml.c) and re-extracts
