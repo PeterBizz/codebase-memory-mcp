@@ -11,12 +11,45 @@
 #include "foundation/log.h"
 #include "foundation/mem.h"
 #include "foundation/platform.h"
+#include "foundation/win_utf8.h"
 
 #include <limits.h>
 #include <stdatomic.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef CBM_ENABLE_TEST_SEAMS
+/* #1383 test seam: force peer-image verification to fail so the rejection
+ * -response path is reachable from the in-process harness — the peer pid is
+ * OS-authenticated socket credentials, so a same-process peer always verifies
+ * against the service's own active image. */
+static atomic_bool runtime_force_peer_image_unverified_seam;
+void cbm_daemon_runtime_force_peer_image_unverified_for_testing(bool force) {
+    atomic_store(&runtime_force_peer_image_unverified_seam, force);
+}
+/* The two failure modes are NOT interchangeable and must be testable apart:
+ * an image that cannot be examined at all is admitted (the peer already proved
+ * build compatibility in the HELLO), while one that CAN be examined and differs
+ * is rejected. One seam per mode keeps each contract honest. */
+static atomic_bool runtime_force_peer_image_mismatch_seam;
+void cbm_daemon_runtime_force_peer_image_mismatch_for_testing(bool force) {
+    atomic_store(&runtime_force_peer_image_mismatch_seam, force);
+}
+/* The abandoned-request containment path ends in process termination, which an
+ * in-process harness cannot observe. The timeout override makes the ceiling
+ * reachable in test time; the hook replaces termination with a recordable
+ * callback. Both stay inert (zero/NULL) outside tests. */
+static _Atomic uint32_t runtime_abandoned_request_join_timeout_seam;
+void cbm_daemon_runtime_set_abandoned_request_join_timeout_for_testing(uint32_t timeout_ms) {
+    atomic_store(&runtime_abandoned_request_join_timeout_seam, timeout_ms);
+}
+static _Atomic(cbm_daemon_runtime_containment_hook_t) runtime_containment_hook_seam;
+void cbm_daemon_runtime_set_containment_hook_for_testing(
+    cbm_daemon_runtime_containment_hook_t hook) {
+    atomic_store(&runtime_containment_hook_seam, hook);
+}
+#endif
 
 #ifdef _WIN32
 #ifndef WIN32_LEAN_AND_MEAN
@@ -30,10 +63,14 @@
 #include <sys/proc_info.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#elif defined(__linux__)
+#elif defined(__linux__) || defined(__FreeBSD__) || defined(__NetBSD__)
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+#include <sys/types.h>
+#include <sys/sysctl.h>
+#endif
 #endif
 
 enum {
@@ -48,6 +85,16 @@ enum {
      * a local cooperative peer is already blocked in read and consumes the
      * rejection within milliseconds. */
     RUNTIME_REJECT_DRAIN_TIMEOUT_MS = 250,
+    /* Ceiling on how long a disconnecting worker waits for its in-flight
+     * application request to observe cancellation. session_cancel has already
+     * run by the time this wait starts, so a compliant handler returns within
+     * milliseconds; the wait is sized for a handler that only polls its cancel
+     * flag between long pipeline stages. A handler that ignores cancellation
+     * past this ceiling turned the daemon into a permanent zombie once
+     * (2026-08-29): the unbounded join blocked the disconnect path, admission
+     * wedged behind it, and the dead generation held the endpoint pipes and
+     * the UI port for nine hours with nothing logged. */
+    RUNTIME_ABANDONED_REQUEST_JOIN_TIMEOUT_MS = 30000,
     RUNTIME_PATH_CAP = 4096,
 
     RENDEZVOUS_REQUEST_ABI_OFFSET = 0,
@@ -135,7 +182,7 @@ typedef struct {
     HANDLE file;
     BY_HANDLE_FILE_INFORMATION information;
     LARGE_INTEGER size;
-#elif defined(__APPLE__) || defined(__linux__)
+#elif defined(__APPLE__) || defined(__linux__) || defined(__FreeBSD__) || defined(__NetBSD__)
     int fd;
     struct stat status;
 #endif
@@ -490,7 +537,7 @@ static bool runtime_activation_response_decode(
 static uint64_t runtime_current_process_id(void) {
 #ifdef _WIN32
     return (uint64_t)GetCurrentProcessId();
-#elif defined(__APPLE__) || defined(__linux__)
+#elif defined(__APPLE__) || defined(__linux__) || defined(__FreeBSD__) || defined(__NetBSD__)
     return (uint64_t)getpid();
 #else
     return 0;
@@ -504,7 +551,7 @@ static void runtime_process_image_reference_init(runtime_process_image_reference
     memset(reference, 0, sizeof(*reference));
 #ifdef _WIN32
     reference->file = INVALID_HANDLE_VALUE;
-#elif defined(__APPLE__) || defined(__linux__)
+#elif defined(__APPLE__) || defined(__linux__) || defined(__FreeBSD__) || defined(__NetBSD__)
     reference->fd = -1;
 #endif
 }
@@ -518,7 +565,7 @@ static bool runtime_process_image_reference_release(runtime_process_image_refere
     if (reference->file != INVALID_HANDLE_VALUE && !CloseHandle(reference->file)) {
         ok = false;
     }
-#elif defined(__APPLE__) || defined(__linux__)
+#elif defined(__APPLE__) || defined(__linux__) || defined(__FreeBSD__) || defined(__NetBSD__)
     if (reference->fd >= 0 && close(reference->fd) != 0) {
         ok = false;
     }
@@ -658,9 +705,9 @@ static bool runtime_mac_process_maps_file_executable(int process_id, const struc
     return false;
 }
 
-#elif defined(__linux__)
+#elif defined(__linux__) || defined(__FreeBSD__) || defined(__NetBSD__)
 
-static bool runtime_linux_stat_same_image(const struct stat *first, const struct stat *second) {
+static bool runtime_posix_stat_same_image(const struct stat *first, const struct stat *second) {
     return first && second && S_ISREG(first->st_mode) && S_ISREG(second->st_mode) &&
            first->st_dev == second->st_dev && first->st_ino == second->st_ino &&
            first->st_size == second->st_size && first->st_mtim.tv_sec == second->st_mtim.tv_sec &&
@@ -700,10 +747,17 @@ static bool runtime_process_image_reference_acquire(
     LARGE_INTEGER size_before;
     LARGE_INTEGER size_after;
     bool ok = runtime_windows_process_image_snapshot(process, &process_before);
-    HANDLE file = ok ? CreateFileW(process_before.path, GENERIC_READ,
-                                   FILE_SHARE_READ | FILE_SHARE_DELETE, NULL, OPEN_EXISTING,
-                                   FILE_FLAG_OPEN_REPARSE_POINT | FILE_FLAG_SEQUENTIAL_SCAN, NULL)
-                     : INVALID_HANDLE_VALUE;
+    /* QueryFullProcessImageNameW returns a stable identity spelling for the
+     * before/after comparison, but its Win32/DOS form may exceed MAX_PATH.
+     * Keep that snapshot byte-for-byte and use an owned extended spelling only
+     * at the file-API boundary. */
+    wchar_t *open_path = ok ? cbm_wide_path_to_extended(process_before.path) : NULL;
+    HANDLE file = open_path
+                      ? CreateFileW(open_path, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_DELETE,
+                                    NULL, OPEN_EXISTING,
+                                    FILE_FLAG_OPEN_REPARSE_POINT | FILE_FLAG_SEQUENTIAL_SCAN, NULL)
+                      : INVALID_HANDLE_VALUE;
+    free(open_path);
     ok = ok && runtime_windows_file_snapshot(file, &file_before, &size_before) &&
          (!fingerprint || cbm_daemon_build_fingerprint_native_file((uintptr_t)file, fingerprint)) &&
          runtime_windows_file_snapshot(file, &file_after, &size_after) &&
@@ -769,17 +823,48 @@ static bool runtime_process_image_reference_acquire(
               (!fingerprint ||
                cbm_daemon_build_fingerprint_native_file((uintptr_t)image_fd, fingerprint)) &&
               fstat(image_fd, &image_after) == 0 &&
-              runtime_linux_stat_same_image(&image_before, &image_after);
+              runtime_posix_stat_same_image(&image_before, &image_after);
     int verify_fd = ok ? openat(process_fd, "exe", O_RDONLY | O_CLOEXEC) : -1;
     struct stat verify_status;
     ok = ok && verify_fd >= 0 && fstat(verify_fd, &verify_status) == 0 &&
-         runtime_linux_stat_same_image(&image_after, &verify_status);
+         runtime_posix_stat_same_image(&image_after, &verify_status);
     if (verify_fd >= 0 && close(verify_fd) != 0) {
         ok = false;
     }
     if (process_fd >= 0 && close(process_fd) != 0) {
         ok = false;
     }
+    if (ok) {
+        reference->held = true;
+        reference->fd = image_fd;
+        reference->status = image_after;
+    } else if (image_fd >= 0) {
+        (void)close(image_fd);
+    }
+#elif defined(__FreeBSD__) || defined(__NetBSD__)
+    if (process_id > INT_MAX) {
+        return false;
+    }
+    int pid = (int)process_id;
+#if defined(__NetBSD__)
+    int mib[4] = {CTL_KERN, KERN_PROC_ARGS, pid, KERN_PROC_PATHNAME};
+#else
+    int mib[4] = {CTL_KERN, KERN_PROC, KERN_PROC_PATHNAME, pid};
+#endif
+    char path[PATH_MAX];
+    size_t path_length = sizeof(path);
+    bool ok = sysctl(mib, 4, path, &path_length, NULL, 0) == 0 && path_length > 0;
+    if (ok) {
+        path[path_length < sizeof(path) ? path_length : sizeof(path) - 1] = '\0';
+    }
+    int image_fd = ok ? open(path, O_RDONLY | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK) : -1;
+    struct stat image_before;
+    struct stat image_after;
+    ok = image_fd >= 0 && fstat(image_fd, &image_before) == 0 && S_ISREG(image_before.st_mode) &&
+         (!fingerprint ||
+          cbm_daemon_build_fingerprint_native_file((uintptr_t)image_fd, fingerprint)) &&
+         fstat(image_fd, &image_after) == 0 &&
+         runtime_posix_stat_same_image(&image_before, &image_after);
     if (ok) {
         reference->held = true;
         reference->fd = image_fd;
@@ -827,14 +912,14 @@ static bool runtime_process_image_reference_matches_process(
            runtime_mac_stat_same(&active->status, &peer.status);
     bool released = runtime_process_image_reference_release(&peer);
     return same && released;
-#elif defined(__linux__)
+#elif defined(__linux__) || defined(__FreeBSD__) || defined(__NetBSD__)
     runtime_process_image_reference_t peer;
     runtime_process_image_reference_init(&peer);
     bool same = runtime_process_image_reference_acquire(process_id, &peer, NULL);
     struct stat active_now;
     same = same && fstat(active->fd, &active_now) == 0 &&
-           runtime_linux_stat_same_image(&active->status, &active_now) &&
-           runtime_linux_stat_same_image(&active->status, &peer.status);
+           runtime_posix_stat_same_image(&active->status, &active_now) &&
+           runtime_posix_stat_same_image(&active->status, &peer.status);
     bool released = runtime_process_image_reference_release(&peer);
     return same && released;
 #else
@@ -1251,12 +1336,61 @@ static void *runtime_application_worker(void *opaque) {
     return NULL;
 }
 
+static _Noreturn void runtime_cleanup_fail_stop(const char *component);
+
+static void runtime_contain_unresponsive_application(cbm_daemon_runtime_worker_t *worker) {
+    char peer_pid[32];
+    char token[32];
+    (void)snprintf(peer_pid, sizeof(peer_pid), "%llu", (unsigned long long)worker->peer_process_id);
+    (void)snprintf(token, sizeof(token), "%llu",
+                   (unsigned long long)worker->application_request_token);
+    cbm_log_error("daemon.application_request_unresponsive", "peer_pid", peer_pid, "request_token",
+                  token);
+#ifdef CBM_ENABLE_TEST_SEAMS
+    cbm_daemon_runtime_containment_hook_t hook = atomic_load(&runtime_containment_hook_seam);
+    if (hook) {
+        hook("application_request_join");
+        return;
+    }
+#endif
+    runtime_cleanup_fail_stop("application_request_join");
+}
+
 static bool runtime_worker_reap_application(cbm_daemon_runtime_worker_t *worker, bool wait) {
     if (!worker->application_thread_started) {
         return true;
     }
     if (!wait && !atomic_load_explicit(&worker->application_thread_done, memory_order_acquire)) {
         return false;
+    }
+    if (!atomic_load_explicit(&worker->application_thread_done, memory_order_acquire)) {
+        /* The peer is gone and session_cancel already ran, so the handler owes
+         * a prompt return; only a handler that ignores cancellation reaches
+         * the ceiling. An unbounded join here once turned one wedged request
+         * into a whole-daemon zombie (2026-08-29): the disconnect path
+         * blocked, the worker slot never released, and the dead generation
+         * held the endpoint pipes and UI port for nine hours with nothing
+         * logged while every new client timed out bare. Containment
+         * terminates the process instead — the kernel releases every native
+         * claim and the next client starts a fresh generation. */
+        uint32_t timeout_ms = RUNTIME_ABANDONED_REQUEST_JOIN_TIMEOUT_MS;
+#ifdef CBM_ENABLE_TEST_SEAMS
+        uint32_t seam_timeout = atomic_load(&runtime_abandoned_request_join_timeout_seam);
+        if (seam_timeout != 0) {
+            timeout_ms = seam_timeout;
+        }
+#endif
+        uint64_t deadline = runtime_deadline_after(timeout_ms);
+        while (!atomic_load_explicit(&worker->application_thread_done, memory_order_acquire)) {
+            if (cbm_now_ms() >= deadline) {
+                /* Terminal in production. A test containment hook returns, and
+                 * the join then waits for the harness to release the handler
+                 * so teardown stays leak-free under the sanitizers. */
+                runtime_contain_unresponsive_application(worker);
+                deadline = UINT64_MAX;
+            }
+            runtime_wait_tick(deadline);
+        }
     }
     if (cbm_thread_join(&worker->application_thread) != 0) {
         return false;
@@ -1728,9 +1862,49 @@ static void *runtime_connection_worker(void *opaque) {
                               strcmp(peer_fingerprint, requested_build) == 0 &&
                               strcmp(peer_fingerprint, service->identity.build_fingerprint) == 0;
     }
+#ifdef CBM_ENABLE_TEST_SEAMS
+    if (atomic_load(&runtime_force_peer_image_unverified_seam)) {
+        peer_image_verified = false;
+        peer_image_fingerprinted = false;
+    }
+    if (atomic_load(&runtime_force_peer_image_mismatch_seam)) {
+        peer_image_verified = false;
+        peer_image_fingerprinted = true;
+    }
+#endif
+    /* Two different failures wear the same "unverified" flag, and treating them
+     * alike broke every ephemeral-path client (#1539/#1383):
+     *
+     *   fingerprint_mismatch — the peer's image WAS read and hashes differently
+     *     than the running daemon. That is the tamper/skew case the gate exists
+     *     for. Still rejected, hard.
+     *   image_unverifiable — the peer's image could not be examined at all
+     *     (ephemeral npx cache paths, ptrace_scope restrictions, sandboxed
+     *     hosts). Nothing was contradicted; we simply could not look. The peer
+     *     ALREADY proved semantic version, build fingerprint, protocol/store/
+     *     feature ABI and cache root in the HELLO exchange above — rejecting on
+     *     top of that traded a real compatibility proof for an unavailable one,
+     *     and made `npx codebase-memory-mcp` unusable with the daemon. Admit,
+     *     and say so out loud so the weaker check is never invisible. */
+    if (!peer_image_verified && !peer_image_fingerprinted) {
+        cbm_log_warn("daemon.client_image_unverifiable_admitted", "reason", "image_unverifiable",
+                     "basis", "rendezvous_hello_verified");
+        peer_image_verified = true;
+    }
     if (!peer_image_verified) {
-        cbm_log_error("daemon.client_image_rejected", "reason",
-                      peer_image_fingerprinted ? "fingerprint_mismatch" : "image_unverifiable");
+        cbm_log_error("daemon.client_image_rejected", "reason", "fingerprint_mismatch");
+        /* #1383: answer the peer before closing. An unanswered rejection is
+         * indistinguishable from a slow cold start on the client side — the
+         * caller sat on "pending" indefinitely with the reason visible only in
+         * the daemon log. The version-conflict path above already responds to
+         * unverified peers, so this discloses nothing new to a same-uid local
+         * peer; admission stays rejected either way. */
+        runtime_result_rejected(&hello_result, "CBM daemon rejected this client's binary image");
+        (void)snprintf(hello_result.message, sizeof(hello_result.message),
+                       "CBM daemon rejected this client: fingerprint_mismatch. The client binary "
+                       "must match the running daemon's build; close CBM sessions (or run "
+                       "'daemon stop') and retry with one consistent install.");
+        (void)runtime_send_hello_response(worker->connection, &hello_result);
         runtime_worker_finish(worker);
         return NULL;
     }
@@ -2467,8 +2641,11 @@ static bool runtime_control_request_send(const cbm_daemon_ipc_endpoint_t *endpoi
                                          const cbm_daemon_build_identity_t *identity,
                                          cbm_daemon_runtime_operation_t operation,
                                          uint32_t timeout_ms, uint32_t response_size,
-                                         uint8_t **payload_out) {
+                                         uint8_t **payload_out, uint64_t *muted_holder_pid_out) {
     *payload_out = NULL;
+    if (muted_holder_pid_out) {
+        *muted_holder_pid_out = 0;
+    }
     if (!endpoint || !identity || !identity->build_fingerprint ||
         timeout_ms == CBM_DAEMON_IPC_WAIT_FOREVER) {
         return false;
@@ -2488,6 +2665,15 @@ static bool runtime_control_request_send(const cbm_daemon_ipc_endpoint_t *endpoi
     int received = sent ? cbm_daemon_ipc_receive_frame_bounded(connection, timeout_ms,
                                                                response_size, &frame, &payload)
                         : 0;
+    if (muted_holder_pid_out && sent &&
+        (received != 1 || (frame.type == CBM_DAEMON_FRAME_RESPONSE && frame.flags != operation))) {
+        /* Connected but not served: either total silence (dead runtime), or a
+         * wrong-operation reject frame (a wedged generation whose accept path
+         * still answers inline while every worker slot is stuck). Both are
+         * the zombie class — surface the holder's kernel-reported pid so
+         * `daemon status` can name it instead of reporting "not running". */
+        *muted_holder_pid_out = cbm_daemon_ipc_connection_peer_pid(connection);
+    }
     bool valid = received == 1 && frame.type == CBM_DAEMON_FRAME_RESPONSE &&
                  frame.flags == operation && frame.length == response_size && payload &&
                  payload[0] == 1U;
@@ -2515,7 +2701,8 @@ bool cbm_daemon_runtime_request_status(const cbm_daemon_ipc_endpoint_t *endpoint
     memset(status_out, 0, sizeof(*status_out));
     uint8_t *payload = NULL;
     if (!runtime_control_request_send(endpoint, identity, CBM_DAEMON_RUNTIME_OP_STATUS, timeout_ms,
-                                      CBM_DAEMON_STATUS_RESPONSE_SIZE, &payload)) {
+                                      CBM_DAEMON_STATUS_RESPONSE_SIZE, &payload,
+                                      &status_out->muted_endpoint_holder_pid)) {
         return false;
     }
     status_out->permanent = (payload[1] & 0x01U) != 0U;
@@ -2546,7 +2733,7 @@ bool cbm_daemon_runtime_request_stop(const cbm_daemon_ipc_endpoint_t *endpoint,
     memset(result_out, 0, sizeof(*result_out));
     uint8_t *payload = NULL;
     if (!runtime_control_request_send(endpoint, identity, CBM_DAEMON_RUNTIME_OP_STOP, timeout_ms,
-                                      CBM_DAEMON_STOP_RESPONSE_SIZE, &payload)) {
+                                      CBM_DAEMON_STOP_RESPONSE_SIZE, &payload, NULL)) {
         return false;
     }
     result_out->accepted = (payload[1] & 0x01U) != 0U;
@@ -2589,6 +2776,13 @@ cbm_daemon_runtime_client_t *cbm_daemon_runtime_client_connect(
                  frame.length == CBM_DAEMON_RENDEZVOUS_RESPONSE_SIZE &&
                  runtime_hello_response_decode(payload, result_out);
     free(payload);
+    if (received != 1) {
+        /* The kernel completed the pipe/socket connect, so a server process
+         * exists, yet the HELLO went unanswered. Name that holder: a dead
+         * runtime behind a live endpoint is otherwise indistinguishable from
+         * absence, and the 2026-08-29 zombie hid behind exactly that gap. */
+        result_out->muted_endpoint_holder_pid = cbm_daemon_ipc_connection_peer_pid(connection);
+    }
     if (!valid || result_out->status != CBM_DAEMON_RUNTIME_CONNECT_ACCEPTED) {
         cbm_daemon_ipc_connection_close(connection);
         return NULL;

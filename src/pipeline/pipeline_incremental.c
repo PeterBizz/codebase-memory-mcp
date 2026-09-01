@@ -15,7 +15,6 @@ enum { INCR_RING_BUF = 4, INCR_RING_MASK = 3, INCR_TS_BUF = 24 };
 #include "pipeline/pipeline.h"
 #include <stdio.h>
 #include <time.h>
-#include "pipeline/artifact.h"
 #include "pipeline/lsp_surface.h"
 #include "pipeline/pass_lsp_cross.h"
 #include "sqlite3.h"
@@ -1021,20 +1020,15 @@ static void incr_free_edge_capture(cbm_edge_capture_t *cap) {
 
 /* ── Registry seed visitor ────────────────────────────────────────── */
 
-/* Labels the full-index definition pass seeds into the registry
- * (pass_definitions.c — KEEP IN SYNC). Incremental re-resolution must see the
- * SAME symbol set, or it diverges from a clean full reindex: seeding extra
- * container nodes (File / Module / Folder / ...) lets a type usage like `Word`
- * resolve to the same-named Module node instead of the Class node. Only
- * callable / declared symbols belong in the registry. */
+/* Labels the full-index definition pass seeds into the registry. Incremental
+ * re-resolution must see the SAME symbol set, or it diverges from a clean full
+ * reindex: seeding extra container nodes (File / Module / Folder / ...) lets a
+ * type usage like `Word` resolve to the same-named Module node instead of the
+ * Class node. Membership is defined once by cbm_label_is_registry_symbol
+ * (helpers.c) — the same predicate pass_definitions.c / pass_parallel.c seed
+ * through, so divergence is impossible by construction. */
 static bool incr_label_is_registry_symbol(const char *label) {
-    /* Mirror pass_definitions.c / pass_parallel.c registry seeding EXACTLY:
-     * callables + every type-like container (Class/Struct/Interface/Enum/Type/
-     * Trait) + Variable/Field. Struct included so an incremental re-resolve seeds
-     * the same struct type nodes a full reindex would. */
-    return label && (strcmp(label, "Function") == 0 || strcmp(label, "Method") == 0 ||
-                     cbm_label_is_type_like(label) || strcmp(label, "Variable") == 0 ||
-                     strcmp(label, "Field") == 0);
+    return cbm_label_is_registry_symbol(label);
 }
 
 /* Callback for cbm_gbuf_foreach_node: seed the registry with the existing
@@ -1291,7 +1285,7 @@ static int run_extract_resolve(cbm_pipeline_ctx_t *ctx, cbm_file_info_t *changed
             int fresh_count = 0;
             CBMLSPDef *fresh_defs =
                 def_modules && def_starts
-                    ? cbm_pxc_collect_all_defs(cache, changed_files, ci, ctx->project_name,
+                    ? cbm_pxc_collect_all_defs(ctx, cache, changed_files, ci, ctx->project_name,
                                                def_modules, &fresh_count, def_starts)
                     : NULL;
             if ((fresh_defs || fresh_count == 0) && def_starts &&
@@ -1334,6 +1328,8 @@ static int run_extract_resolve(cbm_pipeline_ctx_t *ctx, cbm_file_info_t *changed
                     cross_registries.c = cbm_c_build_cross_registry(xa, all_defs, all_def_count);
                     cross_registries.cs = cbm_cs_build_cross_registry(xa, all_defs, all_def_count);
                     cross_registries.ts = cbm_ts_build_cross_registry(xa, all_defs, all_def_count);
+                    cross_registries.java =
+                        cbm_java_build_cross_registry(xa, all_defs, all_def_count);
                     registries_arg = &cross_registries;
                 }
             } else {
@@ -1414,9 +1410,15 @@ static int run_extract_resolve(cbm_pipeline_ctx_t *ctx, cbm_file_info_t *changed
     }
 }
 
-/* Run post-extraction passes (tests, decorator tags, configlink). */
+/* Run post-extraction passes (tests, decorator tags, configlink).
+ *
+ * score_importance: false on the closure-delta route, whose ctx->gbuf is a
+ * PROXY buffer — cbm_delta_preseed fills it with id/label/name/qn/file_path
+ * and no project-wide edges, so an in-memory score there would read a
+ * near-zero in-degree and cbm_delta_patch would persist it. That route scores
+ * in SQL instead, after the patch; see cbm_pipeline_importance_recompute_store. */
 static int run_postpasses(cbm_pipeline_ctx_t *ctx, cbm_file_info_t *changed_files, int ci,
-                          const char *project) {
+                          const char *project, bool score_importance) {
     struct timespec t;
 
     cbm_clock_gettime(CLOCK_MONOTONIC, &t);
@@ -1460,13 +1462,33 @@ static int run_postpasses(cbm_pipeline_ctx_t *ctx, cbm_file_info_t *changed_file
             return rc < 0 ? rc : CBM_NOT_FOUND;
         }
     }
+
+    /* Importance last, in EVERY mode — same ordering rule as the full path: it
+     * reads CALLS/USAGE (re-extraction, above) and TESTS (pass_tests, first in
+     * this function).
+     *
+     * ONLY on the legacy-partial route, where ctx->gbuf really is the whole
+     * project rehydrated by cbm_gbuf_load_from_db — those nodes already carry
+     * an "importance" key from the previous run, and the write-back overwrites
+     * it in place rather than appending a duplicate. The closure-delta route
+     * passes score_importance = false and rescores in SQL after its patch,
+     * because its buffer holds proxies without project-wide edges. */
+    if (score_importance) {
+        cbm_clock_gettime(CLOCK_MONOTONIC, &t);
+        cbm_pipeline_pass_importance(ctx);
+        cbm_log_info("pass.timing", "pass", "incr_importance", "elapsed_ms",
+                     itoa_buf((int)elapsed_ms(t)));
+    }
+    if (cbm_pipeline_check_cancel(ctx)) {
+        return CBM_NOT_FOUND;
+    }
     return 0;
 }
 /* Publish the test-only legacy partial result through the same atomic
  * generation boundary as full indexing. */
 static int dump_and_persist(cbm_gbuf_t *gbuf, const char *db_path, const char *project,
                             atomic_int *cancelled, const cbm_file_hash_t *manifest,
-                            int manifest_count, const char *adr_content, const char *repo_path,
+                            int manifest_count, const char *adr_content,
                             const cbm_coverage_row_t *cov, int cov_count,
                             const cbm_coverage_meta_t *meta_template,
                             const cbm_lsp_surface_row_t *surface_rows, int surface_row_count) {
@@ -1491,11 +1513,6 @@ static int dump_and_persist(cbm_gbuf_t *gbuf, const char *db_path, const char *p
                  itoa_buf((int)elapsed_ms(t)));
     if (rc != 0) {
         return rc;
-    }
-
-    /* Auto-update artifact if one already exists (persistence was enabled previously) */
-    if (repo_path && cbm_artifact_exists(repo_path)) {
-        cbm_artifact_export(db_path, repo_path, project, CBM_ARTIFACT_FAST);
     }
     return 0;
 }
@@ -1571,8 +1588,8 @@ static int closure_probe_surfaces(cbm_pipeline_t *p, const char *project,
         int def_count = 0;
         CBMLSPDef *defs = NULL;
         if (def_modules && def_starts) {
-            defs = cbm_pxc_collect_all_defs(cache, probe_files, probe_count, project, def_modules,
-                                            &def_count, def_starts);
+            defs = cbm_pxc_collect_all_defs(NULL, cache, probe_files, probe_count, project,
+                                            def_modules, &def_count, def_starts);
             rc = cbm_lsp_surface_build_rows(project, cache, probe_files, probe_count, defs,
                                             def_starts, out_rows, out_count);
         } else {
@@ -2153,7 +2170,7 @@ static int run_closure_delta(cbm_pipeline_t *p, const char *db_path, const char 
         phase_rc = cbm_pipeline_check_cancel(&ctx);
     }
     if (phase_rc == 0) {
-        phase_rc = run_postpasses(&ctx, changed_files, ci, project);
+        phase_rc = run_postpasses(&ctx, changed_files, ci, project, false);
     }
     if (ctx.return_type_table) {
         for (int i = 0; i < ctx.return_type_table->count; i++) {
@@ -2177,6 +2194,23 @@ static int run_closure_delta(cbm_pipeline_t *p, const char *db_path, const char 
         goto out;
     }
     cbm_log_info("delta.patch_done", "elapsed_ms", itoa_buf((int)elapsed_ms(t)));
+
+    /* Importance, in SQL, over the now-complete staging graph. This is the
+     * FIRST point on this route where the whole project is queryable: the
+     * patch has just inserted the repaired files' nodes AND re-linked the
+     * snapshotted inbound edges, so in-degree is finally correct. Scoring
+     * earlier — in run_postpasses, off the proxy buffer — would persist a
+     * near-zero score for any heavily-referenced symbol in a changed file.
+     * A failure here is a delta-route failure: `result` still holds
+     * FORCE_FULL_REINDEX, so the run degrades to a correct full rebuild
+     * rather than publishing wrong scores. */
+    cbm_clock_gettime(CLOCK_MONOTONIC, &t);
+    if (cbm_pipeline_importance_recompute_store(staging, project) != 0) {
+        cbm_log_error("delta.err", "phase", "importance_recompute");
+        goto out;
+    }
+    cbm_log_info("pass.timing", "pass", "delta_importance_store", "elapsed_ms",
+                 itoa_buf((int)elapsed_ms(t)));
 
     /* Coverage: previous failure rows for files not re-extracted + this
      * run's fresh entries — same merge the legacy tail performs. */
@@ -2362,7 +2396,7 @@ out:
 
 int cbm_pipeline_run_incremental(cbm_pipeline_t *p, const char *db_path, cbm_file_info_t *files,
                                  int file_count, const cbm_file_hash_t *baseline_manifest,
-                                 int baseline_count) {
+                                 int baseline_count, bool force_full_on_mismatch) {
     struct timespec t0;
     cbm_clock_gettime(CLOCK_MONOTONIC, &t0);
     closure_plan_t closure_plan = {0};
@@ -2423,7 +2457,16 @@ int cbm_pipeline_run_incremental(cbm_pipeline_t *p, const char *db_path, cbm_fil
             incr_test_set_last_route(CBM_INCREMENTAL_ROUTE_NOOP);
 #endif
             cbm_log_info("incremental.noop", "reason", "semantic_manifest_equal");
-            return cbm_pipeline_refresh_artifact(p, db_path);
+            return 0;
+        }
+        if (force_full_on_mismatch) {
+            cbm_store_free_file_hashes(stored, stored_count);
+            cbm_store_close(store);
+#if defined(CBM_INCREMENTAL_TEST_API) && CBM_INCREMENTAL_TEST_API
+            incr_test_set_last_route(CBM_INCREMENTAL_ROUTE_FORCED_FULL);
+#endif
+            cbm_log_info("incremental.force_full", "reason", "mode_downgrade_changed");
+            return CBM_PIPELINE_FORCE_FULL_REINDEX;
         }
         /* Manifest delta. Closure repair recomputes exactly the changed
          * files plus the recorded consumers of any changed SURFACE; every
@@ -2699,7 +2742,7 @@ int cbm_pipeline_run_incremental(cbm_pipeline_t *p, const char *db_path, cbm_fil
         phase_rc = cbm_pipeline_check_cancel(&ctx);
     }
     if (phase_rc == 0) {
-        phase_rc = run_postpasses(&ctx, changed_files, ci, project);
+        phase_rc = run_postpasses(&ctx, changed_files, ci, project, true);
     }
 
     /* Free ObjectScript tables built by pass_calls during run_extract_resolve. */
@@ -2848,9 +2891,9 @@ int cbm_pipeline_run_incremental(cbm_pipeline_t *p, const char *db_path, cbm_fil
      * re-parsed files have no codec output, and publishing a stale row
      * would satisfy a future closure plan with yesterday's surface; an
      * empty table just routes the next incremental to a full rebuild. */
-    int persist_rc = dump_and_persist(
-        existing, db_path, project, cbm_pipeline_cancelled_ptr(p), manifest, manifest_count,
-        saved_adr, cbm_pipeline_repo_path(p), cov, cov_n, &coverage_meta, NULL, 0);
+    int persist_rc =
+        dump_and_persist(existing, db_path, project, cbm_pipeline_cancelled_ptr(p), manifest,
+                         manifest_count, saved_adr, cov, cov_n, &coverage_meta, NULL, 0);
     cbm_pipeline_free_semantic_manifest(manifest, manifest_count);
     free(saved_adr);
     free(cov);

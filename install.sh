@@ -5,7 +5,6 @@ set -euo pipefail
 #
 # Usage:
 #   curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh | bash
-#   curl -fsSL ... | bash -s -- --ui          # Install the UI variant
 #   curl -fsSL ... | bash -s -- --dir /path   # Custom install directory
 #
 # Environment:
@@ -19,8 +18,9 @@ main() {
 
 REPO="DeusData/codebase-memory-mcp"
 INSTALL_DIR="$HOME/.local/bin"
-VARIANT="standard"
 SKIP_CONFIG=false
+CLIENTS_SET=false
+CLIENTS=""
 CBM_DOWNLOAD_URL="${CBM_DOWNLOAD_URL:-https://github.com/${REPO}/releases/latest/download}"
 
 # Security: every remote hop must remain HTTPS. Plain HTTP is accepted only
@@ -81,29 +81,45 @@ download_file() {
     fi
 }
 
-for arg in "$@"; do
-    case "$arg" in
-        --ui)           VARIANT="ui" ;;
-        --standard)     VARIANT="standard" ;;
-        --dir=*)        INSTALL_DIR="${arg#--dir=}" ;;
-        --skip-config)  SKIP_CONFIG=true ;;
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        --dir=*)
+            INSTALL_DIR="${1#--dir=}"
+            shift
+            ;;
+        --dir)
+            if [ "$#" -lt 2 ] || [[ "$2" == -* ]]; then
+                echo "install.sh: '--dir' needs a value. Please consult --help." >&2
+                exit 2
+            fi
+            INSTALL_DIR="$2"
+            shift 2
+            ;;
+        --clients=*)
+            CLIENTS_SET=true
+            CLIENTS="${1#--clients=}"
+            shift
+            ;;
+        --skip-config)
+            SKIP_CONFIG=true
+            shift
+            ;;
         --help|-h)
-            echo "Usage: install.sh [--ui] [--dir=<path>] [--skip-config]"
-            echo "  --ui           Install the UI variant (with graph visualization)"
-            echo "  --standard     Install the standard variant (default)"
-            echo "  --dir PATH     Install directory (default: ~/.local/bin)"
-            echo "  --skip-config  Skip automatic agent configuration"
+            echo "Usage: install.sh [--dir=<path>] [--clients=<list>] [--skip-config]"
+            echo "  --dir PATH       Install directory (default: ~/.local/bin)"
+            echo "  --clients LIST   Configure only comma-separated clients"
+            echo "  --skip-config    Skip automatic agent configuration"
             exit 0
             ;;
+        -*)
+            echo "install.sh: unknown option '$1'. Please consult --help." >&2
+            exit 2
+            ;;
+        *)
+            echo "install.sh: unexpected argument '$1'. Please consult --help." >&2
+            exit 2
+            ;;
     esac
-done
-# Handle --dir <path> (space-separated)
-prev=""
-for arg in "$@"; do
-    if [ "$prev" = "--dir" ]; then
-        INSTALL_DIR="$arg"
-    fi
-    prev="$arg"
 done
 
 detect_os() {
@@ -138,7 +154,6 @@ ARCH=$(detect_arch)
 echo "codebase-memory-mcp installer"
 echo "  os:      $OS"
 echo "  arch:    $ARCH"
-echo "  variant: $VARIANT"
 echo "  target:  $INSTALL_DIR/codebase-memory-mcp"
 echo ""
 
@@ -155,11 +170,7 @@ fi
 PORTABLE=""
 [ "$OS" = "linux" ] && PORTABLE="-portable"
 
-if [ "$VARIANT" = "ui" ]; then
-    ARCHIVE="codebase-memory-mcp-ui-${OS}-${ARCH}${PORTABLE}.${EXT}"
-else
-    ARCHIVE="codebase-memory-mcp-${OS}-${ARCH}${PORTABLE}.${EXT}"
-fi
+ARCHIVE="codebase-memory-mcp-${OS}-${ARCH}${PORTABLE}.${EXT}"
 
 URL="${CBM_DOWNLOAD_URL}/${ARCHIVE}"
 
@@ -231,16 +242,73 @@ if [ "$EXPECTED" != "$ACTUAL" ]; then
 fi
 echo "Checksum verified."
 
+# Validate the complete archive namespace before extraction. Current and legacy
+# release assets use the same four-member root layout; anything outside that
+# closed set is a release-integrity failure, not a sidecar to ignore.
+if [ "$OS" = "windows" ]; then
+    ARCHIVE_BINARY="codebase-memory-mcp.exe"
+    ARCHIVE_INSTALLER="install.ps1"
+else
+    ARCHIVE_BINARY="codebase-memory-mcp"
+    ARCHIVE_INSTALLER="install.sh"
+fi
+ARCHIVE_MEMBERS_FILE="$DLDIR/archive-members.txt"
+if [ "$EXT" = "zip" ]; then
+    if ! unzip -Z1 "$DLDIR/$ARCHIVE" > "$ARCHIVE_MEMBERS_FILE"; then
+        echo "error: could not enumerate release archive" >&2
+        exit 1
+    fi
+else
+    if ! tar -tzf "$DLDIR/$ARCHIVE" > "$ARCHIVE_MEMBERS_FILE"; then
+        echo "error: could not enumerate release archive" >&2
+        exit 1
+    fi
+fi
+
+BINARY_MEMBERS=0
+LICENSE_MEMBERS=0
+INSTALLER_MEMBERS=0
+NOTICE_MEMBERS=0
+ARCHIVE_MEMBER_COUNT=0
+while IFS= read -r member || [ -n "$member" ]; do
+    ARCHIVE_MEMBER_COUNT=$((ARCHIVE_MEMBER_COUNT + 1))
+    case "$member" in
+        "$ARCHIVE_BINARY") BINARY_MEMBERS=$((BINARY_MEMBERS + 1)) ;;
+        LICENSE) LICENSE_MEMBERS=$((LICENSE_MEMBERS + 1)) ;;
+        "$ARCHIVE_INSTALLER") INSTALLER_MEMBERS=$((INSTALLER_MEMBERS + 1)) ;;
+        THIRD_PARTY_NOTICES.md) NOTICE_MEMBERS=$((NOTICE_MEMBERS + 1)) ;;
+        *)
+            echo "error: release archive contains unexpected member: $member" >&2
+            exit 1
+            ;;
+    esac
+done < "$ARCHIVE_MEMBERS_FILE"
+
+if [ "$BINARY_MEMBERS" -ne 1 ] || [ "$LICENSE_MEMBERS" -ne 1 ] ||
+    [ "$INSTALLER_MEMBERS" -ne 1 ] || [ "$NOTICE_MEMBERS" -ne 1 ] ||
+    [ "$ARCHIVE_MEMBER_COUNT" -ne 4 ]; then
+    echo "error: release archive does not match the exact member set" >&2
+    exit 1
+fi
+
 # Extract
 echo "Extracting..."
 if [ "$EXT" = "zip" ]; then
     unzip -q "$DLDIR/$ARCHIVE" -d "$DLDIR"
 else
-    tar -xzf "$DLDIR/$ARCHIVE" -C "$DLDIR"
+    tar --no-same-owner -xzf "$DLDIR/$ARCHIVE" -C "$DLDIR"
 fi
 
-DLBIN="$DLDIR/codebase-memory-mcp"
-if [ ! -f "$DLBIN" ]; then
+for extracted_member in "$ARCHIVE_BINARY" LICENSE "$ARCHIVE_INSTALLER" \
+    THIRD_PARTY_NOTICES.md; do
+    if [ ! -f "$DLDIR/$extracted_member" ] || [ -L "$DLDIR/$extracted_member" ]; then
+        echo "error: release member is not a regular file: $extracted_member" >&2
+        exit 1
+    fi
+done
+
+DLBIN="$DLDIR/$ARCHIVE_BINARY"
+if [ ! -f "$DLBIN" ] || [ -L "$DLBIN" ]; then
     echo "error: binary not found after extraction" >&2
     exit 1
 fi
@@ -248,8 +316,13 @@ fi
 # macOS: fix signing
 if [ "$OS" = "darwin" ]; then
     echo "Fixing macOS code signing..."
-    xattr -d com.apple.quarantine "$DLBIN" 2>/dev/null || true
-    codesign --sign - --force "$DLBIN" 2>/dev/null || true
+    # A curl-downloaded archive usually carries no quarantine attribute at all,
+    # and xattr then prints "No such xattr: com.apple.quarantine" on stderr.
+    # That harmless line was read as the cause of an unrelated install failure
+    # and became a bug report's title (#1537) — silence it; nothing here is an
+    # error worth showing.
+    xattr -d com.apple.quarantine "$DLBIN" >/dev/null 2>&1 || true
+    codesign --sign - --force "$DLBIN" >/dev/null 2>&1 || true
 fi
 
 # Verify the candidate before it requests account-wide maintenance. The
@@ -263,6 +336,9 @@ echo "Verified candidate: $CANDIDATE_VERSION"
 
 DEST="$INSTALL_DIR/codebase-memory-mcp"
 INSTALL_ARGS=(-y --force "--dir=$INSTALL_DIR")
+if [ "$CLIENTS_SET" = true ]; then
+    INSTALL_ARGS+=("--clients=$CLIENTS")
+fi
 if [ "$SKIP_CONFIG" = true ]; then
     INSTALL_ARGS+=(--skip-config)
 fi

@@ -40,6 +40,19 @@ enum {
      * cancelled and the frontend exits cleanly. */
     FRONTEND_EOF_DRAIN_MS = 15000,
     FRONTEND_MAINTENANCE_POLL_MS = 10,
+    /* Cadence for the quiet no-maintenance steady state. Every presence probe
+     * try-acquires the maintenance marker lock, and on Windows that
+     * revalidates the whole ancestor directory chain (a CreateFileW +
+     * identity check per path component). At the old 10 ms cadence this
+     * burned ~20% of a core for the life of every MCP session — 7762
+     * CPU-seconds on one 9.5 h session in the 2026-08-29 incident. The
+     * budget: an activation drains participants within
+     * CLI_ACTIVATION_DRAIN_TIMEOUT_MS (15 s) and the monitor's own exit grace
+     * is FRONTEND_MAINTENANCE_GRACE_MS (3 s), so a 250 ms detection latency
+     * spends under 2% of that window while cutting the probe cost 25-fold.
+     * The 10 ms cadence still paces the monitor's post-detection grace loop,
+     * which does no lock probing. */
+    FRONTEND_MAINTENANCE_IDLE_POLL_MS = 250,
     /* The owner thread may be draining a supervised process tree. Preserve the
      * supervisor's complete graceful + forced-settle window before the monitor
      * fail-stops the process, plus scheduling/teardown margin. */
@@ -93,23 +106,83 @@ struct cbm_daemon_maintenance_monitor {
     cbm_daemon_maintenance_cancel_fn cancel;
     void *cancel_context;
     atomic_bool stopping;
+    bool exit_when_cancel_not_needed;
     int exit_code;
     char participant[FRONTEND_PARTICIPANT_NAME_CAP];
 };
+
+#if defined(CBM_ENABLE_TEST_SEAMS) && CBM_ENABLE_TEST_SEAMS
+static atomic_bool frontend_test_hold_monitor = ATOMIC_VAR_INIT(false);
+static atomic_bool frontend_test_monitor_is_waiting = ATOMIC_VAR_INIT(false);
+static atomic_uint_fast64_t frontend_test_monitor_observation_count = ATOMIC_VAR_INIT(0);
+static atomic_uint_fast64_t frontend_test_worker_observation_count = ATOMIC_VAR_INIT(0);
+static atomic_uint_fast64_t frontend_test_worker_idle_count = ATOMIC_VAR_INIT(0);
+
+void cbm_daemon_frontend_test_observer_reset(bool hold_monitor) {
+    atomic_store_explicit(&frontend_test_monitor_observation_count, 0, memory_order_release);
+    atomic_store_explicit(&frontend_test_worker_observation_count, 0, memory_order_release);
+    atomic_store_explicit(&frontend_test_worker_idle_count, 0, memory_order_release);
+    atomic_store_explicit(&frontend_test_monitor_is_waiting, false, memory_order_release);
+    atomic_store_explicit(&frontend_test_hold_monitor, hold_monitor, memory_order_release);
+}
+
+void cbm_daemon_frontend_test_observer_release(void) {
+    atomic_store_explicit(&frontend_test_hold_monitor, false, memory_order_release);
+}
+
+bool cbm_daemon_frontend_test_monitor_waiting(void) {
+    return atomic_load_explicit(&frontend_test_monitor_is_waiting, memory_order_acquire);
+}
+
+uint64_t cbm_daemon_frontend_test_monitor_observations(void) {
+    return atomic_load_explicit(&frontend_test_monitor_observation_count, memory_order_acquire);
+}
+
+uint64_t cbm_daemon_frontend_test_worker_observations(void) {
+    return atomic_load_explicit(&frontend_test_worker_observation_count, memory_order_acquire);
+}
+
+uint64_t cbm_daemon_frontend_test_worker_idle_cycles(void) {
+    return atomic_load_explicit(&frontend_test_worker_idle_count, memory_order_acquire);
+}
+#endif
+
+static cbm_version_cohort_maintenance_presence_t frontend_observe_maintenance(
+    cbm_version_cohort_manager_t *manager, bool independent_monitor) {
+#if defined(CBM_ENABLE_TEST_SEAMS) && CBM_ENABLE_TEST_SEAMS
+    if (independent_monitor) {
+        atomic_fetch_add_explicit(&frontend_test_monitor_observation_count, 1,
+                                  memory_order_release);
+        if (atomic_load_explicit(&frontend_test_hold_monitor, memory_order_acquire)) {
+            atomic_store_explicit(&frontend_test_monitor_is_waiting, true, memory_order_release);
+            while (atomic_load_explicit(&frontend_test_hold_monitor, memory_order_acquire)) {
+                cbm_usleep(FRONTEND_WAIT_US);
+            }
+            atomic_store_explicit(&frontend_test_monitor_is_waiting, false, memory_order_release);
+        }
+    } else {
+        atomic_fetch_add_explicit(&frontend_test_worker_observation_count, 1, memory_order_release);
+    }
+#else
+    (void)independent_monitor;
+#endif
+    return cbm_version_cohort_maintenance_presence_terminal(manager);
+}
 
 static void *frontend_maintenance_monitor_worker(void *opaque) {
     cbm_daemon_maintenance_monitor_t *monitor = opaque;
     while (!atomic_load_explicit(&monitor->stopping, memory_order_acquire)) {
         cbm_version_cohort_maintenance_presence_t presence =
-            cbm_version_cohort_maintenance_presence_terminal(monitor->manager);
+            frontend_observe_maintenance(monitor->manager, true);
         if (presence == CBM_VERSION_COHORT_MAINTENANCE_ABSENT) {
-            cbm_usleep(FRONTEND_MAINTENANCE_POLL_MS * 1000U);
+            cbm_usleep(FRONTEND_MAINTENANCE_IDLE_POLL_MS * 1000U);
             continue;
         }
 
         if (presence == CBM_VERSION_COHORT_MAINTENANCE_REQUESTED) {
+            bool cancel_requested = false;
             if (monitor->cancel) {
-                (void)monitor->cancel(monitor->cancel_context);
+                cancel_requested = monitor->cancel(monitor->cancel_context);
             }
             /* Never log, write to, or flush agent stdio from this monitor.
              * Structured logging itself writes to stderr, and this thread's
@@ -117,6 +190,9 @@ static void *frontend_maintenance_monitor_worker(void *opaque) {
              * thread is blocked on a full stdout/stderr pipe. The activation
              * owner records the maintenance event durably. */
 
+            if (monitor->exit_when_cancel_not_needed && !cancel_requested) {
+                _Exit(monitor->exit_code);
+            }
             uint64_t now = cbm_now_ms();
             uint64_t deadline = now > UINT64_MAX - FRONTEND_MAINTENANCE_GRACE_MS
                                     ? UINT64_MAX
@@ -139,9 +215,10 @@ static void *frontend_maintenance_monitor_worker(void *opaque) {
     return NULL;
 }
 
-cbm_daemon_maintenance_monitor_t *cbm_daemon_maintenance_monitor_start(
+static cbm_daemon_maintenance_monitor_t *frontend_maintenance_monitor_start(
     cbm_version_cohort_manager_t *manager, cbm_daemon_maintenance_cancel_fn cancel,
-    void *cancel_context, int exit_code, const char *participant) {
+    void *cancel_context, int exit_code, const char *participant,
+    bool exit_when_cancel_not_needed) {
     if (!manager || exit_code < 0 || !participant || !participant[0]) {
         return NULL;
     }
@@ -152,6 +229,7 @@ cbm_daemon_maintenance_monitor_t *cbm_daemon_maintenance_monitor_start(
     monitor->manager = manager;
     monitor->cancel = cancel;
     monitor->cancel_context = cancel_context;
+    monitor->exit_when_cancel_not_needed = exit_when_cancel_not_needed;
     monitor->exit_code = exit_code;
     atomic_init(&monitor->stopping, false);
     int written = snprintf(monitor->participant, sizeof(monitor->participant), "%s", participant);
@@ -161,6 +239,13 @@ cbm_daemon_maintenance_monitor_t *cbm_daemon_maintenance_monitor_start(
         return NULL;
     }
     return monitor;
+}
+
+cbm_daemon_maintenance_monitor_t *cbm_daemon_maintenance_monitor_start(
+    cbm_version_cohort_manager_t *manager, cbm_daemon_maintenance_cancel_fn cancel,
+    void *cancel_context, int exit_code, const char *participant) {
+    return frontend_maintenance_monitor_start(manager, cancel, cancel_context, exit_code,
+                                              participant, false);
 }
 
 bool cbm_daemon_maintenance_monitor_stop(cbm_daemon_maintenance_monitor_t **monitor_io) {
@@ -175,19 +260,6 @@ bool cbm_daemon_maintenance_monitor_stop(cbm_daemon_maintenance_monitor_t **moni
     free(monitor);
     *monitor_io = NULL;
     return true;
-}
-
-static void frontend_exit_for_maintenance(frontend_state_t *state) {
-    cbm_version_cohort_maintenance_presence_t presence =
-        cbm_version_cohort_maintenance_presence_terminal(state->cohort_manager);
-    if (presence == CBM_VERSION_COHORT_MAINTENANCE_ABSENT) {
-        return;
-    }
-    /* Do not fclose stdin across threads. Process exit closes the authenticated
-     * kernel IPC handle, and daemon ownership then cancels only this session.
-     * Agent stdout/stderr may both be backpressured, so terminal paths must not
-     * log, write, or flush before fail-stop. */
-    _Exit(presence == CBM_VERSION_COHORT_MAINTENANCE_REQUESTED ? EXIT_SUCCESS : EXIT_FAILURE);
 }
 
 static void frontend_item_free(frontend_item_t *item) {
@@ -414,20 +486,15 @@ static frontend_cancellation_route_t frontend_route_cancellation(
 
 static void *frontend_worker(void *opaque) {
     frontend_state_t *state = opaque;
-    uint64_t next_maintenance_check_ms = 0;
     for (;;) {
-        uint64_t now_ms = cbm_now_ms();
-        if (now_ms >= next_maintenance_check_ms) {
-            frontend_exit_for_maintenance(state);
-            next_maintenance_check_ms = now_ms > UINT64_MAX - FRONTEND_MAINTENANCE_POLL_MS
-                                            ? UINT64_MAX
-                                            : now_ms + FRONTEND_MAINTENANCE_POLL_MS;
-        }
         frontend_item_t item = {0};
         if (!frontend_pop_begin(state, &item)) {
             if (frontend_should_stop(state)) {
                 break;
             }
+#if defined(CBM_ENABLE_TEST_SEAMS) && CBM_ENABLE_TEST_SEAMS
+            atomic_fetch_add_explicit(&frontend_test_worker_idle_count, 1, memory_order_release);
+#endif
             cbm_usleep(FRONTEND_IDLE_WAIT_US);
             continue;
         }
@@ -492,33 +559,56 @@ static bool frontend_enqueue(frontend_state_t *state, char *message, bool conten
             return false;
         }
     }
-    cbm_mutex_lock(&state->mutex);
-    bool stopped = state->stopping || state->failed;
-    bool capacity = state->count < FRONTEND_QUEUE_CAPACITY &&
-                    state->queued_bytes <= FRONTEND_QUEUE_BYTES_MAX &&
-                    length <= FRONTEND_QUEUE_BYTES_MAX - state->queued_bytes;
-    if (!stopped && capacity) {
-        size_t tail = (state->head + state->count) % FRONTEND_QUEUE_CAPACITY;
-        state->queue[tail] = (frontend_item_t){
-            .message = message,
-            .length = length,
-            .content_length_framed = content_length_framed,
-            .has_id = has_id,
-            .id = id,
-            .id_str = id_str,
-        };
-        state->count++;
-        state->queued_bytes += length;
+    /* A frame that exceeds the whole byte budget can never be admitted no
+     * matter how long we wait; only that case is a hard failure. */
+    if (length > FRONTEND_QUEUE_BYTES_MAX) {
+        cbm_mutex_lock(&state->mutex);
+        if (!state->stopping && !state->failed) {
+            state->failed = true;
+            state->stopping = true;
+        }
         cbm_mutex_unlock(&state->mutex);
-        return true;
+        free(id_str);
+        return false;
     }
-    if (!stopped) {
-        state->failed = true;
-        state->stopping = true;
+    /* A full queue is BACKPRESSURE, not failure. This runs on the stdin reader
+     * thread, so blocking here stops further reads and lets the kernel pipe
+     * absorb the client's burst — a pipelining client is a client going fast,
+     * not a client going wrong. The old code failed the whole session at frame
+     * capacity+1, killing it with every buffered response unwritten: any 7+
+     * pipelined requests (e.g. an agent issuing parallel tool calls) died with
+     * rc=1 and zero output (#1522 follow-up). Waits are bounded only by the
+     * stop/fail flags, which every teardown path already sets — the same
+     * condition the polling worker and watchdogs key on. */
+    for (;;) {
+        cbm_mutex_lock(&state->mutex);
+        bool stopped = state->stopping || state->failed;
+        if (stopped) {
+            cbm_mutex_unlock(&state->mutex);
+            free(id_str);
+            return false;
+        }
+        bool capacity = state->count < FRONTEND_QUEUE_CAPACITY &&
+                        state->queued_bytes <= FRONTEND_QUEUE_BYTES_MAX &&
+                        length <= FRONTEND_QUEUE_BYTES_MAX - state->queued_bytes;
+        if (capacity) {
+            size_t tail = (state->head + state->count) % FRONTEND_QUEUE_CAPACITY;
+            state->queue[tail] = (frontend_item_t){
+                .message = message,
+                .length = length,
+                .content_length_framed = content_length_framed,
+                .has_id = has_id,
+                .id = id,
+                .id_str = id_str,
+            };
+            state->count++;
+            state->queued_bytes += length;
+            cbm_mutex_unlock(&state->mutex);
+            return true;
+        }
+        cbm_mutex_unlock(&state->mutex);
+        cbm_usleep(FRONTEND_WAIT_US);
     }
-    cbm_mutex_unlock(&state->mutex);
-    free(id_str);
-    return false;
 }
 
 static bool frontend_stop_begin(frontend_state_t *state) {
@@ -560,8 +650,9 @@ int cbm_daemon_frontend_mcp_run(cbm_daemon_runtime_client_t *client,
     };
     cbm_mutex_init(&state.mutex);
     atomic_init(&state.completed_items, 0);
-    cbm_daemon_maintenance_monitor_t *maintenance_monitor = cbm_daemon_maintenance_monitor_start(
-        cohort_manager, frontend_cancel_for_maintenance, &state, EXIT_SUCCESS, "MCP frontend");
+    cbm_daemon_maintenance_monitor_t *maintenance_monitor =
+        frontend_maintenance_monitor_start(cohort_manager, frontend_cancel_for_maintenance, &state,
+                                           EXIT_SUCCESS, "MCP frontend", true);
     if (!maintenance_monitor) {
         cbm_mutex_destroy(&state.mutex);
         (void)cbm_daemon_runtime_client_close(client, FRONTEND_CLOSE_TIMEOUT_MS);

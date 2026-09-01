@@ -11,6 +11,7 @@
 #include "foundation/compat.h"
 #include "foundation/compat_thread.h"
 #include "foundation/platform.h"
+#include "foundation/sanitized.h"
 
 #include <stdint.h>
 #include <stdatomic.h>
@@ -32,6 +33,23 @@ typedef struct {
     cbm_daemon_ipc_endpoint_t *endpoint;
     cbm_version_cohort_manager_t *manager;
 } frontend_maintenance_fixture_t;
+
+#if defined(CBM_ENABLE_TEST_SEAMS) && CBM_ENABLE_TEST_SEAMS
+typedef struct {
+    frontend_maintenance_fixture_t maintenance;
+    char conflict_log[FRONTEND_TEST_PATH_CAP];
+    cbm_daemon_runtime_service_t *service;
+    cbm_daemon_runtime_client_t *client;
+} frontend_idle_fixture_t;
+
+typedef struct {
+    cbm_daemon_runtime_client_t *client;
+    cbm_version_cohort_manager_t *manager;
+    FILE *input;
+    FILE *output;
+    int result;
+} frontend_idle_run_t;
+#endif
 
 static bool frontend_maintenance_fixture_start(frontend_maintenance_fixture_t *fixture,
                                                const char *tag) {
@@ -57,6 +75,148 @@ static void frontend_maintenance_fixture_finish(frontend_maintenance_fixture_t *
     }
     memset(fixture, 0, sizeof(*fixture));
 }
+
+#if defined(CBM_ENABLE_TEST_SEAMS) && CBM_ENABLE_TEST_SEAMS
+static cbm_daemon_runtime_application_session_t *frontend_idle_session_open(
+    void *context, cbm_daemon_client_id_t client_id, uint64_t authenticated_process_id) {
+    return context && client_id != CBM_DAEMON_CLIENT_ID_INVALID && authenticated_process_id != 0
+               ? (cbm_daemon_runtime_application_session_t *)context
+               : NULL;
+}
+
+static cbm_daemon_runtime_application_status_t frontend_idle_request(
+    void *context, cbm_daemon_runtime_application_session_t *session,
+    cbm_daemon_runtime_application_token_t request_token, const uint8_t *request,
+    uint32_t request_length, uint8_t **response_out, uint32_t *response_length_out) {
+    (void)request_token;
+    if (!context || session != (cbm_daemon_runtime_application_session_t *)context ||
+        !response_out || !response_length_out || (request_length > 0 && !request)) {
+        return CBM_DAEMON_RUNTIME_APPLICATION_HANDLER_ERROR;
+    }
+    *response_out = NULL;
+    *response_length_out = 0;
+    return CBM_DAEMON_RUNTIME_APPLICATION_OK;
+}
+
+static void frontend_idle_request_cancel(
+    void *context, cbm_daemon_runtime_application_session_t *session,
+    cbm_daemon_runtime_application_token_t request_token) {
+    (void)context;
+    (void)session;
+    (void)request_token;
+}
+
+static void frontend_idle_session_cancel(
+    void *context, cbm_daemon_runtime_application_session_t *session) {
+    (void)context;
+    (void)session;
+}
+
+static void frontend_idle_session_close(
+    void *context, cbm_daemon_runtime_application_session_t *session) {
+    (void)context;
+    (void)session;
+}
+
+static uint64_t frontend_test_process_id(void) {
+#ifdef _WIN32
+    return (uint64_t)GetCurrentProcessId();
+#else
+    return (uint64_t)getpid();
+#endif
+}
+
+static bool frontend_idle_fixture_start(frontend_idle_fixture_t *fixture) {
+    static const char cache[] =
+        "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
+    memset(fixture, 0, sizeof(*fixture));
+    if (!frontend_maintenance_fixture_start(&fixture->maintenance, "idle-observer")) {
+        return false;
+    }
+    char build[CBM_DAEMON_BUILD_FINGERPRINT_SIZE];
+    int log_written = snprintf(fixture->conflict_log, sizeof(fixture->conflict_log),
+                               "%s/conflicts.ndjson", fixture->maintenance.parent);
+    if (log_written <= 0 || log_written >= (int)sizeof(fixture->conflict_log) ||
+        !cbm_daemon_runtime_process_build_fingerprint(frontend_test_process_id(), build)) {
+        return false;
+    }
+    cbm_daemon_build_identity_t identity = {
+        .semantic_version = "2.4.0",
+        .build_fingerprint = build,
+        .cache_fingerprint = cache,
+        .protocol_abi = 3,
+        .store_abi = 11,
+        .feature_abi = 7,
+    };
+    cbm_daemon_runtime_application_callbacks_t callbacks = {
+        .context = fixture,
+        .session_open = frontend_idle_session_open,
+        .request = frontend_idle_request,
+        .request_cancel = frontend_idle_request_cancel,
+        .session_cancel = frontend_idle_session_cancel,
+        .session_close = frontend_idle_session_close,
+    };
+    cbm_daemon_runtime_service_config_t config = {
+        .endpoint = fixture->maintenance.endpoint,
+        .identity = identity,
+        .conflict_log_path = fixture->conflict_log,
+        .conflict_log_cap_bytes = 64U * 1024U,
+        .max_clients = 2,
+        .lease_timeout_ms = 5000,
+        .request_timeout_ms = 30000,
+        .shutdown_timeout_ms = 30000,
+        .application = callbacks,
+    };
+    fixture->service = cbm_daemon_runtime_service_start(&config);
+    cbm_daemon_runtime_connect_result_t connect_result = {0};
+    fixture->client = fixture->service
+                          ? cbm_daemon_runtime_client_connect(fixture->maintenance.endpoint, &identity,
+                                                              30000, &connect_result)
+                          : NULL;
+    return fixture->client && connect_result.status == CBM_DAEMON_RUNTIME_CONNECT_ACCEPTED;
+}
+
+static bool frontend_idle_fixture_finish(frontend_idle_fixture_t *fixture) {
+    bool ok = true;
+    if (fixture->client) {
+        ok = cbm_daemon_runtime_client_close(fixture->client, 30000) && ok;
+        fixture->client = NULL;
+    }
+    if (fixture->service) {
+        if (cbm_daemon_runtime_service_state(fixture->service) !=
+            CBM_DAEMON_RUNTIME_SERVICE_EXITED) {
+            ok = cbm_daemon_runtime_service_stop(fixture->service, 30000) && ok;
+        }
+        ok = cbm_daemon_runtime_service_free(fixture->service) && ok;
+        fixture->service = NULL;
+    }
+    frontend_maintenance_fixture_finish(&fixture->maintenance);
+    return ok;
+}
+
+static FILE *frontend_test_fdopen_read(int fd) {
+#ifdef _WIN32
+    return _fdopen(fd, "rb");
+#else
+    return fdopen(fd, "rb");
+#endif
+}
+
+static int frontend_test_close_fd(int fd) {
+#ifdef _WIN32
+    return _close(fd);
+#else
+    return close(fd);
+#endif
+}
+
+static void *frontend_idle_run(void *opaque) {
+    frontend_idle_run_t *run = opaque;
+    run->result =
+        cbm_daemon_frontend_mcp_run(run->client, run->manager, run->input, run->output);
+    return NULL;
+}
+#endif
 
 #ifndef _WIN32
 static const char FRONTEND_TEST_BUILD[] =
@@ -89,6 +249,12 @@ typedef struct {
     atomic_int second_session_cancels;
     atomic_bool block_first_request;
     atomic_bool first_request_started;
+    /* Overflow mode: set by the writer AFTER stdin is fully pumped and closed,
+     * releasing the deliberately-held first request. The hold is what forces
+     * the input queue to actually fill (proving enqueue backpressures instead
+     * of failing the session); the release is a state transition, not a
+     * timeout, so the drain that follows is deterministic. */
+    atomic_bool release_first_request;
     int request_observed_fd;
     int session_cancel_fd;
 } frontend_eof_application_context_t;
@@ -162,10 +328,14 @@ static cbm_daemon_runtime_application_status_t frontend_eof_application_request(
     if (request_index == 0 &&
         atomic_load_explicit(&context->block_first_request, memory_order_acquire)) {
         atomic_store_explicit(&context->first_request_started, true, memory_order_release);
-        while (!atomic_load_explicit(&session->cancelled, memory_order_acquire)) {
+        while (!atomic_load_explicit(&session->cancelled, memory_order_acquire) &&
+               !atomic_load_explicit(&context->release_first_request, memory_order_acquire)) {
             cbm_usleep(1000);
         }
-        return CBM_DAEMON_RUNTIME_APPLICATION_CANCELLED;
+        if (atomic_load_explicit(&session->cancelled, memory_order_acquire)) {
+            return CBM_DAEMON_RUNTIME_APPLICATION_CANCELLED;
+        }
+        /* Released: fall through and answer normally like every later item. */
     }
     if (request_length == 0) {
         return CBM_DAEMON_RUNTIME_APPLICATION_OK;
@@ -271,6 +441,14 @@ static void *frontend_eof_writer(void *opaque) {
     }
     ok = close(writer->fd) == 0 && ok;
     writer->fd = -1;
+    if (writer->overflow) {
+        /* Everything — 32 over-capacity frames AND the EOF behind them — is now
+         * committed to the pipe. Only now release the held first request: the
+         * queue was provably full while it blocked, so the drain that follows
+         * exercises enqueue-wait, not a conveniently fast worker. */
+        atomic_store_explicit(&writer->application->release_first_request, true,
+                              memory_order_release);
+    }
     atomic_store_explicit(&writer->succeeded, ok, memory_order_release);
     atomic_store_explicit(&writer->finished, true, memory_order_release);
     return NULL;
@@ -285,6 +463,7 @@ static bool frontend_eof_fixture_start(frontend_eof_fixture_t *fixture, const ch
     atomic_init(&fixture->application.second_session_cancels, 0);
     atomic_init(&fixture->application.block_first_request, true);
     atomic_init(&fixture->application.first_request_started, false);
+    atomic_init(&fixture->application.release_first_request, false);
     fixture->application.request_observed_fd = -1;
     fixture->application.session_cancel_fd = -1;
     char key[CBM_DAEMON_KEY_SIZE];
@@ -408,13 +587,31 @@ static int frontend_eof_child_run(const char *parent, bool overflow) {
         atomic_load_explicit(&fixture.application.first_request_started, memory_order_acquire);
     bool session_cancelled =
         atomic_load_explicit(&fixture.application.session_cancels, memory_order_acquire) > 0;
+    int requests_observed =
+        atomic_load_explicit(&fixture.application.requests, memory_order_acquire);
     bool input_closed = fclose(input) == 0;
     bool output_closed = fclose(output) == 0;
     bool streams_closed = input_closed && output_closed;
     bool fixture_closed = frontend_eof_fixture_finish(&fixture);
-    bool result_matches_contract = overflow ? result < 0 : result == 0;
-    return result_matches_contract && joined && writer_ok && request_started && session_cancelled &&
-                   streams_closed && fixture_closed
+    bool result_matches_contract;
+    if (overflow) {
+        /* Over-capacity pipelined input is a client going FAST, not a client
+         * going WRONG (#1522 follow-up): enqueue must backpressure the stdin
+         * reader until the worker drains, then every queued frame — the held
+         * first request plus all 32 over-capacity frames — is answered and the
+         * session closes cleanly. The old contract pinned the defect: enqueue
+         * overflow failed the whole session (result < 0, session cancelled,
+         * every buffered response lost). */
+        /* session_cancel also fires on the ordinary client disconnect at EOF
+         * teardown, so it cannot discriminate this contract; the loss-free
+         * property is the request count plus the clean run result. */
+        result_matches_contract =
+            result == 0 && requests_observed == 1 + FRONTEND_EOF_TEST_OVERFLOW_MESSAGES;
+    } else {
+        result_matches_contract = result == 0 && session_cancelled;
+    }
+    return result_matches_contract && joined && writer_ok && request_started && streams_closed &&
+                   fixture_closed
                ? 0
                : 73;
 }
@@ -583,6 +780,7 @@ static int frontend_backpressure_daemon_run(const char *parent, int ready_fd, in
     atomic_init(&application.second_session_cancels, 0);
     atomic_init(&application.block_first_request, false);
     atomic_init(&application.first_request_started, false);
+    atomic_init(&application.release_first_request, false);
     application.request_observed_fd = ready_fd;
     application.session_cancel_fd = cancel_fd;
     cbm_daemon_runtime_application_callbacks_t callbacks = {
@@ -792,9 +990,26 @@ static bool frontend_backpressure_run_isolated(bool maintenance) {
      * below that budget SIGKILLs a slow-but-legitimate startup — on
      * oversubscribed CI runners this fired every round (announced=0,
      * daemon_signal=9) while fast local machines never saw it. Keep the
-     * deadline comfortably above the daemon's own worst-case budget. */
-    bool announced_read = daemon > 0 && frontend_test_read_byte(ready_pipe[0], &announced_marker,
-                                                                cbm_now_ms() + 30000U);
+     * deadline comfortably above the daemon's own worst-case budget.
+     *
+     * This wait is a LIVENESS BACKSTOP, not a race budget: the daemon either
+     * announces or it does not, and the test asserts the announcement, never a
+     * timing window. A backstop is only doing its job if it never fires on a
+     * legitimately slow start — so it has to scale with the build. Under
+     * MemorySanitizer (instrumented libc++ and origin tracking) startup runs
+     * several times slower than the 12s budget it must clear, which is what
+     * reddened test-msan while every other lane and the same suite under local
+     * MSan stayed green. Widening the backstop for sanitized builds costs
+     * nothing when the daemon is healthy: a passing run returns as soon as the
+     * byte arrives, whatever the ceiling is. */
+#if CBM_SANITIZED
+    const uint64_t announce_backstop_ms = 180000U;
+#else
+    const uint64_t announce_backstop_ms = 30000U;
+#endif
+    bool announced_read =
+        daemon > 0 && frontend_test_read_byte(ready_pipe[0], &announced_marker,
+                                              cbm_now_ms() + announce_backstop_ms);
     bool announced = announced_read && announced_marker == 'R';
 
     /* This raw runtime client intentionally owns no cohort lease. It is a
@@ -1086,6 +1301,66 @@ TEST(daemon_frontend_rejects_non_notification_cancellation_shapes) {
     PASS();
 }
 
+#if defined(CBM_ENABLE_TEST_SEAMS) && CBM_ENABLE_TEST_SEAMS
+/* An idle frontend has one independent maintenance observer. Hold that
+ * observer before its first secure presence read, then require the real worker
+ * to complete an idle cycle. Any worker-side presence read is therefore an
+ * exact duplicate, independent of elapsed time or scheduler cadence. */
+TEST(daemon_frontend_idle_uses_one_maintenance_observer) {
+    frontend_idle_fixture_t fixture;
+    bool fixture_ready = frontend_idle_fixture_start(&fixture);
+    int input_pipe[2] = {-1, -1};
+    bool pipe_ready = fixture_ready && cbm_pipe(input_pipe) == 0;
+    FILE *input = pipe_ready ? frontend_test_fdopen_read(input_pipe[0]) : NULL;
+    FILE *output = input ? tmpfile() : NULL;
+    frontend_idle_run_t run = {
+        .client = fixture.client,
+        .manager = fixture.maintenance.manager,
+        .input = input,
+        .output = output,
+        .result = -1,
+    };
+    if (output) {
+        fixture.client = NULL; /* cbm_daemon_frontend_mcp_run consumes it. */
+    }
+    cbm_daemon_frontend_test_observer_reset(true);
+    cbm_thread_t frontend_thread;
+    bool thread_started =
+        output && cbm_thread_create(&frontend_thread, 0, frontend_idle_run, &run) == 0;
+    uint64_t deadline = cbm_now_ms() + 10000U;
+    while (thread_started && cbm_now_ms() < deadline &&
+           (!cbm_daemon_frontend_test_monitor_waiting() ||
+            cbm_daemon_frontend_test_worker_idle_cycles() == 0)) {
+        cbm_usleep(1000);
+    }
+    bool monitor_waiting = cbm_daemon_frontend_test_monitor_waiting();
+    uint64_t monitor_observations = cbm_daemon_frontend_test_monitor_observations();
+    uint64_t worker_observations = cbm_daemon_frontend_test_worker_observations();
+    uint64_t idle_cycles = cbm_daemon_frontend_test_worker_idle_cycles();
+    cbm_daemon_frontend_test_observer_release();
+    bool input_closed = !pipe_ready || frontend_test_close_fd(input_pipe[1]) == 0;
+    bool joined = thread_started && cbm_thread_join(&frontend_thread) == 0;
+    bool input_stream_closed = !input || fclose(input) == 0;
+    bool output_closed = !output || fclose(output) == 0;
+    bool fixture_closed = frontend_idle_fixture_finish(&fixture);
+
+    ASSERT_TRUE(fixture_ready);
+    ASSERT_TRUE(pipe_ready);
+    ASSERT_TRUE(thread_started);
+    ASSERT_TRUE(monitor_waiting);
+    ASSERT_EQ(monitor_observations, 1);
+    ASSERT_TRUE(idle_cycles > 0);
+    ASSERT_EQ(worker_observations, 0);
+    ASSERT_TRUE(input_closed);
+    ASSERT_TRUE(joined);
+    ASSERT_EQ(run.result, 0);
+    ASSERT_TRUE(input_stream_closed);
+    ASSERT_TRUE(output_closed);
+    ASSERT_TRUE(fixture_closed);
+    PASS();
+}
+#endif
+
 #ifndef _WIN32
 /* RED: an MCP frontend's main thread can remain blocked forever in stdio while
  * install/update/uninstall owns maintenance intent. The already-present
@@ -1332,7 +1607,7 @@ TEST(daemon_local_participant_monitor_allows_supervisor_containment_window) {
  * prevents the sole reader from observing that already-pending EOF, so neither
  * the request nor its daemon session is cancelled. Overload must instead fail
  * the frontend promptly and close/cancel the authenticated session. */
-TEST(daemon_frontend_over_capacity_input_cannot_hide_eof_behind_active_request) {
+TEST(daemon_frontend_over_capacity_input_backpressures_without_loss) {
     ASSERT_TRUE(frontend_eof_run_isolated("overflow", true));
     PASS();
 }
@@ -1386,11 +1661,14 @@ SUITE(daemon_frontend) {
     RUN_TEST(daemon_frontend_correlates_cancellation_to_exact_request);
     RUN_TEST(daemon_frontend_ignores_cancellation_text_in_string_content);
     RUN_TEST(daemon_frontend_rejects_non_notification_cancellation_shapes);
+#if defined(CBM_ENABLE_TEST_SEAMS) && CBM_ENABLE_TEST_SEAMS
+    RUN_TEST(daemon_frontend_idle_uses_one_maintenance_observer);
+#endif
 #ifndef _WIN32
     RUN_TEST(daemon_frontend_maintenance_exits_while_stdio_reader_is_blocked);
     RUN_TEST(daemon_local_participant_monitor_cancels_then_bounds_active_operation);
     RUN_TEST(daemon_local_participant_monitor_allows_supervisor_containment_window);
-    RUN_TEST(daemon_frontend_over_capacity_input_cannot_hide_eof_behind_active_request);
+    RUN_TEST(daemon_frontend_over_capacity_input_backpressures_without_loss);
     RUN_TEST(daemon_frontend_eof_drain_timeout_cancels_and_returns_success);
     RUN_TEST(daemon_frontend_stdout_backpressure_eof_fail_stops_and_cancels_session);
     RUN_TEST(daemon_frontend_stdout_backpressure_maintenance_stops_and_cancels_session);
