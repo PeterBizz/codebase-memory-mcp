@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 
 $Exe = ".\build\c\codebase-memory-mcp.exe"
 $LogFile = 'C:\Users\peter\Source\Repos\Everest\codebase-memory-mcp\private\calnav-parser-deamon.log'
-$Project = 'test-calnav'
+$Project = 'navdev-full'
 
 $ExampleRepo = 'C:\Users\peter\Source\Repos\Everest\tree-sitter-cal\examples'
 
@@ -23,7 +23,7 @@ function Invoke-CbmJson {
 }
 
 $ProjectsJson = & $Exe cli --json list_projects | Where-Object { $_ -match '^\{' }
-$Projects = ($ProjectsJson | ConvertFrom-Json).structuredContent.projects
+$Projects = ($ProjectsJson | ConvertFrom-Json).structuredContent.projects | where-object { $_.name -eq $Project }
 foreach ($ProjectItem in $Projects) {
     $ProjectItem.name
 }
@@ -38,7 +38,6 @@ Invoke-CbmJson -Command 'search_graph' -Payload ('{"project":"' + $Project + '",
 Invoke-CbmJson -Command 'query_graph' -Payload ('{"project":"' + $Project + '","query":"MATCH (f:Function) RETURN f.qualified_name AS qn LIMIT 5"}')
 Invoke-CbmJson -Command 'trace_call_path' -Payload ('{"project":"' + $Project + '","function_name":"TestProcdure"}')
 
-Invoke-CbmJson -Command 'index_repository' -Payload ('{"repo_path":"' + ($ExampleRepo -replace '\\', '\\\\') + '","name":"Example-calnav"}')
-Invoke-CbmJson -Command 'index_repository' -Payload ('{"repo_path":"C:\\Users\\peter\\Source\\Repos\\Everest\\codebase-memory-mcp\\calnav specifics\\test-calnav","name":"Mini-calnav","mode":"fast"}')
-
-
+$PayLoad = '{"project":"' + $Project + '","query":"name_pattern=*CompanyOpen*"}'
+Invoke-CbmJson -Command 'search_graph' -Payload ($PayLoad)
+Invoke-CbmJson -Command 'trace_call_path' -Payload ('{"project":"' + $Project + '","function_name":"navdev-full.Codeunit.1.CompanyOpen"}')

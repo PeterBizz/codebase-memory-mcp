@@ -640,6 +640,10 @@
           "named": true
         },
         {
+          "type": "menuitems_block",
+          "named": true
+        },
+        {
           "type": "property_key",
           "named": true
         },
@@ -684,6 +688,10 @@
       "required": false,
       "types": [
         {
+          "type": "dataport_fields_section",
+          "named": true
+        },
+        {
           "type": "properties_section",
           "named": true
         },
@@ -704,6 +712,67 @@
       "types": [
         {
           "type": "dataitem",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "dataport_field",
+    "named": true,
+    "fields": {
+      "id": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "field_id",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "field_name",
+            "named": true
+          }
+        ]
+      },
+      "start": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "dataport_field_start",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "field_property",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "dataport_fields_section",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "dataport_field",
           "named": true
         }
       ]
@@ -854,9 +923,24 @@
     }
   },
   {
-    "type": "events_section",
+    "type": "event_entry",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "events_section",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "event_entry",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "exit_statement",
@@ -1329,11 +1413,6 @@
     }
   },
   {
-    "type": "internal_id",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "keys_section",
     "named": true,
     "fields": {},
@@ -1406,6 +1485,87 @@
     }
   },
   {
+    "type": "menu_item",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "control_property",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "menuitems_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "menu_item",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "menunode",
+    "named": true,
+    "fields": {
+      "guid": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "element_guid",
+            "named": true
+          }
+        ]
+      },
+      "node_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "menunode_type",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "control_property",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "menunodes_section",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "menunode",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "object",
     "named": true,
     "fields": {},
@@ -1470,6 +1630,10 @@
         },
         {
           "type": "keys_section",
+          "named": true
+        },
+        {
+          "type": "menunodes_section",
           "named": true
         },
         {
@@ -1758,7 +1922,7 @@
       },
       "name": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "identifier",
@@ -2446,7 +2610,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "text_const_var_declaration",
@@ -2796,6 +2960,14 @@
     "named": false
   },
   {
+    "type": "MENUITEMS",
+    "named": false
+  },
+  {
+    "type": "MENUNODES",
+    "named": false
+  },
+  {
     "type": "MOD",
     "named": false
   },
@@ -2896,6 +3068,10 @@
     "named": false
   },
   {
+    "type": "dataport_field_start",
+    "named": true
+  },
+  {
     "type": "element_guid",
     "named": true
   },
@@ -2929,6 +3105,18 @@
   },
   {
     "type": "identifier",
+    "named": true
+  },
+  {
+    "type": "infinite",
+    "named": false
+  },
+  {
+    "type": "internal_id",
+    "named": true
+  },
+  {
+    "type": "menunode_type",
     "named": true
   },
   {
