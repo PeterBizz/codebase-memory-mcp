@@ -4,8 +4,6 @@ $Exe = ".\build\c\codebase-memory-mcp.exe"
 $LogFile = 'C:\Users\peter\Source\Repos\Everest\codebase-memory-mcp\private\calnav-parser-deamon.log'
 $Project = 'navdev-full'
 
-$ExampleRepo = 'C:\Users\peter\Source\Repos\Everest\tree-sitter-cal\examples'
-
 function Invoke-CbmJson {
     param(
         [Parameter(Mandatory)] [string] $Command,
@@ -21,11 +19,12 @@ function Invoke-CbmJson {
         Remove-Item -Path $ArgsFile -ErrorAction SilentlyContinue
     }
 }
-
-$ProjectsJson = & $Exe cli --json list_projects | Where-Object { $_ -match '^\{' }
-$Projects = ($ProjectsJson | ConvertFrom-Json).structuredContent.projects | where-object { $_.name -eq $Project }
-foreach ($ProjectItem in $Projects) {
-    $ProjectItem.name
+if (!$CurrentProject ) {
+   $ProjectsJson = & $Exe cli --json list_projects | Where-Object { $_ -match '^\{' }
+   $Projects = ($ProjectsJson | ConvertFrom-Json).structuredContent.projects | where-object { $_.name -eq $Project }
+   foreach ($ProjectItem in $Projects) {
+      $ProjectItem.name
+}
 }
 
 $env:CBM_LOG_LEVEL = 'debug'

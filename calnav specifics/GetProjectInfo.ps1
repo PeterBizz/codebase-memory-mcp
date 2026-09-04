@@ -1,7 +1,7 @@
 $codebaseMemoryexeFilename = ".\build\c\codebase-memory-mcp.exe"
 $projectName = "test-calnav"
 
-$json = & ".\build\c\codebase-memory-mcp.exe" cli --json list_projects |
+$json = & $codebaseMemoryexeFilename cli --json list_projects |
     Where-Object { $_ -match '^\{' }
 
 $projects = $($json | ConvertFrom-Json ).structuredContent.projects
@@ -43,4 +43,3 @@ foreach ($aspect in $aspects) {
     }        
 }
 $aspectResults | Format-List | Out-String | Write-Host -ForegroundColor White
-
