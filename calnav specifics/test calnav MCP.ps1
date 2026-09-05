@@ -1,9 +1,10 @@
 $ErrorActionPreference = 'Stop'
+Set-ScriptLocation
+$Location =Get-Location
 
-$Exe = ".\build\c\codebase-memory-mcp.exe"
-$LogFile = 'C:\Users\peter\Source\Repos\Everest\codebase-memory-mcp\private\calnav-parser-deamon.log'
+$LogFile = Join-Path $Location '..\private\calnav-parser-deamon.log'
+$exe = Join-Path $Location "..\build\c\codebase-memory-mcp.exe"
 $Project = 'test-calnav'
-
 $ExampleRepo = 'C:\Users\peter\Source\Repos\Everest\tree-sitter-cal\examples'
 
 function Invoke-CbmJson {
@@ -32,13 +33,9 @@ $env:CBM_LOG_LEVEL = 'debug'
 $env:CBM_LOG_FORMAT = 'text'
 $env:CBM_LOG_FILE = $LogFile
 
+Invoke-CbmJson -Command 'index_repository' -Payload ('{"repo_path":"' + ($ExampleRepo -replace '\\', '\\\\') + '","name":"' + $Project + '","mode":"fast"}')
 Invoke-CbmJson -Command 'get_graph_schema' -Payload ('{"project":"' + $Project + '"}')
 Invoke-CbmJson -Command 'get_architecture' -Payload ('{"project":"' + $Project + '","aspects":["file_tree"]}')
 Invoke-CbmJson -Command 'search_graph' -Payload ('{"project":"' + $Project + '","query":"Section"}')
 Invoke-CbmJson -Command 'query_graph' -Payload ('{"project":"' + $Project + '","query":"MATCH (f:Function) RETURN f.qualified_name AS qn LIMIT 5"}')
 Invoke-CbmJson -Command 'trace_call_path' -Payload ('{"project":"' + $Project + '","function_name":"TestProcdure"}')
-
-Invoke-CbmJson -Command 'index_repository' -Payload ('{"repo_path":"' + ($ExampleRepo -replace '\\', '\\\\') + '","name":"Example-calnav"}')
-Invoke-CbmJson -Command 'index_repository' -Payload ('{"repo_path":"C:\\Users\\peter\\Source\\Repos\\Everest\\codebase-memory-mcp\\calnav specifics\\test-calnav","name":"Mini-calnav","mode":"fast"}')
-
-

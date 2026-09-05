@@ -1530,7 +1530,7 @@
       },
       "node_type": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "menunode_type",
@@ -2239,7 +2239,7 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "object",
@@ -2662,7 +2662,7 @@
       },
       "name": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "identifier",

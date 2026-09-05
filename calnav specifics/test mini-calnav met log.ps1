@@ -1,12 +1,15 @@
+Set-ScriptLocation
+$Location =Get-Location
 Set-StrictMode -Version Latest
 
 $env:CBM_LOG_LEVEL = 'debug'
 $env:CBM_LOG_FORMAT = 'text'
 $env:CBM_DIAGNOSTICS = '0'
-$env:CBM_LOG_FILE = 'C:\Users\peter\Source\Repos\Everest\codebase-memory-mcp\private\calnav-parser.log'
 
-$exe = ".\build\c\codebase-memory-mcp.exe"
-$repo = 'C:\Users\peter\Source\Repos\Everest\codebase-memory-mcp\calnav specifics\test-calnav'
+$env:CBM_LOG_FILE = Join-Path $Location '..\private\calnav-parser.log'
+
+$exe = Join-Path $Location "..\build\c\codebase-memory-mcp.exe"
+$repo = Join-Path $Location ".\test-calnav"
 $projectName = 'Mini-calnav'
 
 function Write-Section {

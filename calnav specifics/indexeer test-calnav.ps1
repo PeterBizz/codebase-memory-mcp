@@ -1,17 +1,26 @@
 $ErrorActionPreference = 'Stop'
+Set-ScriptLocation
+$Location = Get-Location
+$exe = Join-Path $Location "..\build\c\codebase-memory-mcp.exe"
 
-$Exe = ".\build\c\codebase-memory-mcp.exe"
 $ProjectName = "test-calnav"
-$ProjectFolder = (Resolve-Path '.\calnav specifics\test-calnav').Path
-
+$ProjectFolder = (Resolve-Path (Join-Path $Location '.\test-calnav')).Path
 function Invoke-CbmJson {
     param(
         [Parameter(Mandatory)] [string] $Command,
         [Parameter(Mandatory)] [string] $Payload
     )
 
-    & $Exe cli --json $Command $Payload
+    $ArgsFile = [System.IO.Path]::GetTempFileName()
+    try {
+        Set-Content -Path $ArgsFile -Value $Payload -Encoding utf8NoBOM -NoNewline
+        & $Exe cli --json $Command --args-file $ArgsFile
+    }
+    finally {
+        Remove-Item -Path $ArgsFile -ErrorAction SilentlyContinue
+    }
 }
+
 
 Write-Host "Reindexing '$ProjectName' from '$ProjectFolder'..." -ForegroundColor Cyan
 

@@ -1,7 +1,9 @@
 $ErrorActionPreference = 'Stop'
+Set-ScriptLocation
+$Location =Get-Location
 
-$Exe = ".\build\c\codebase-memory-mcp.exe"
-$LogFile = 'C:\Users\peter\Source\Repos\Everest\codebase-memory-mcp\private\calnav-parser-deamon.log'
+$LogFile = Join-Path $Location '..\private\calnav-parser-deamon_navdev.log'
+$exe = Join-Path $Location "..\build\c\codebase-memory-mcp.exe"
 $Project = 'navdev-full'
 
 function Invoke-CbmJson {
@@ -28,8 +30,9 @@ $GraphSchema = Invoke-CbmJson -Command 'get_graph_schema' -Payload ('{"project":
 $ArchFileTree = Invoke-CbmJson -Command 'get_architecture' -Payload ('{"project":"' + $Project + '","aspects":["file_tree"]}')
 Invoke-CbmJson -Command 'search_graph' -Payload ('{"project":"' + $Project + '","query":"Section"}')
 Invoke-CbmJson -Command 'query_graph' -Payload ('{"project":"' + $Project + '","query":"MATCH (f:Function) RETURN f.qualified_name AS qn LIMIT 5"}')
-Invoke-CbmJson -Command 'trace_call_path' -Payload ('{"project":"' + $Project + '","function_name":"TestProcdure"}')
+Invoke-CbmJson -Command 'trace_call_path' -Payload ('{"project":"' + $Project + '","function_name":"Init"}')
 
 $PayLoad = '{"project":"' + $Project + '","query":"name_pattern=*CompanyOpen*"}'
 Invoke-CbmJson -Command 'search_graph' -Payload ($PayLoad)
+Invoke-CbmJson -Command 'trace_call_path' -Payload ('{"project":"' + $Project + '","function_name":"navdev-full.Codeunit.1.CompanyOpen"}')
 Invoke-CbmJson -Command 'trace_call_path' -Payload ('{"project":"' + $Project + '","function_name":"navdev-full.Codeunit.1.CompanyOpen"}')
