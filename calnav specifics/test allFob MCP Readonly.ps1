@@ -19,20 +19,13 @@ function Invoke-CbmJson {
         Remove-Item -Path $ArgsFile -ErrorAction SilentlyContinue
     }
 }
-if (!$CurrentProject ) {
-   $ProjectsJson = & $Exe cli --json list_projects | Where-Object { $_ -match '^\{' }
-   $Projects = ($ProjectsJson | ConvertFrom-Json).structuredContent.projects | where-object { $_.name -eq $Project }
-   foreach ($ProjectItem in $Projects) {
-      $ProjectItem.name
-}
-}
 
 $env:CBM_LOG_LEVEL = 'debug'
 $env:CBM_LOG_FORMAT = 'text'
 $env:CBM_LOG_FILE = $LogFile
 
-Invoke-CbmJson -Command 'get_graph_schema' -Payload ('{"project":"' + $Project + '"}')
-Invoke-CbmJson -Command 'get_architecture' -Payload ('{"project":"' + $Project + '","aspects":["file_tree"]}')
+$GraphSchema = Invoke-CbmJson -Command 'get_graph_schema' -Payload ('{"project":"' + $Project + '"}')
+$ArchFileTree = Invoke-CbmJson -Command 'get_architecture' -Payload ('{"project":"' + $Project + '","aspects":["file_tree"]}')
 Invoke-CbmJson -Command 'search_graph' -Payload ('{"project":"' + $Project + '","query":"Section"}')
 Invoke-CbmJson -Command 'query_graph' -Payload ('{"project":"' + $Project + '","query":"MATCH (f:Function) RETURN f.qualified_name AS qn LIMIT 5"}')
 Invoke-CbmJson -Command 'trace_call_path' -Payload ('{"project":"' + $Project + '","function_name":"TestProcdure"}')
