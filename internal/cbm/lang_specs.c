@@ -176,7 +176,7 @@ extern const TSLanguage *tree_sitter_plsql(void);
 static const char *empty_types[] = {NULL};
 
 static const char *calnav_func_types[] = {"procedure_declaration", NULL};
-static const char *calnav_call_types[] = {"call_statement", NULL};
+static const char *calnav_call_types[] = {"call_statement", "call_expression", NULL};
 static const char *calnav_assignment_types[] = {"assignment_statement", NULL};
 
 // ==================== GO ====================

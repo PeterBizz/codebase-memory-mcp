@@ -1,6 +1,9 @@
 # --- CONFIGURATIE ---
 # Pas dit aan naar het juiste pad van jouw binary
-$codebaseMemoryexeFilename = ".\build\c\codebase-memory-mcp.exe" 
+
+Set-ScriptLocation 
+$Location = Get-Location
+$codebaseMemoryexeFilename = Join-Path $Location "..\build\c\codebase-memory-mcp.exe"
 
 Write-Host "=== Ophalen van bekende projecten uit codebase-memory-mcp ===" -ForegroundColor Cyan
 
@@ -43,14 +46,14 @@ foreach ($pproject in $projects) {
     $projectName = $pproject.name
     if ([string]::IsNullOrEmpty($projectName)) { continue } 
     
-    # Gekoppeld aan jouw exacte JSON-output velden:
-    $nodes = $pproject.nodes ? $pproject.nodes : 0
-    $edges = $pproject.edges ? $pproject.edges : 0
+       
+    ##--$nodes = $pproject.nodes ? $pproject.nodes : 0
+    ##--$edges = $pproject.edges ? $pproject.edges : 0
     $repoPath = $pproject.root_path
 
     Write-Host "`n--------------------------------------------------" -ForegroundColor Gray
     Write-Host "Project gevonden: $projectName" -ForegroundColor Magenta
-    Write-Host "Nodes: $nodes | Edges: $edges | Branch: $($pproject.branch)" -ForegroundColor Gray
+    ## Write-Host "Nodes: $nodes | Edges: $edges | Branch: $($pproject.branch)" -ForegroundColor Gray
     Write-Host "--------------------------------------------------" -ForegroundColor Gray
     Write-Host "Wat wil je met dit project doen?"
     Write-Host " 1] Full Index (Bestaande index behouden, wijzigingen scannen)"

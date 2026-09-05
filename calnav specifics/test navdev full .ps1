@@ -35,4 +35,4 @@ Invoke-CbmJson -Command 'trace_call_path' -Payload ('{"project":"' + $Project + 
 $PayLoad = '{"project":"' + $Project + '","query":"name_pattern=*CompanyOpen*"}'
 Invoke-CbmJson -Command 'search_graph' -Payload ($PayLoad)
 Invoke-CbmJson -Command 'trace_call_path' -Payload ('{"project":"' + $Project + '","function_name":"navdev-full.Codeunit.1.CompanyOpen"}')
-Invoke-CbmJson -Command 'trace_call_path' -Payload ('{"project":"' + $Project + '","function_name":"navdev-full.Codeunit.1.CompanyOpen"}')
+Invoke-CbmJson -Command 'trace_call_path' -Payload ('{"project":"' + $Project + '","function_name":"navdev-full.Table.11067889.IsFeatureEnabled"}')

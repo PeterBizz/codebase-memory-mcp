@@ -245,6 +245,23 @@ Op testproject `calnav specifics/test-calnav`:
 
 ---
 
+## 2026-09-05 — Calls extraction patch and reindex (validation)
+
+Actie: twee kleine wijzigingen in de extractor om expression-position en CAL `member_access` callees te vangen, vervolgens incremental build + re-index van `navdev-full`.
+
+Resultaat (post-reindex):
+- Nodes (sum node labels): **37,706** (was ~37,660) — delta **+46**.
+- Edges (sum edge types): **115,604** (was 107,267) — delta **+8,337**.
+- `CALLS` edges: **48,431** (was ~14,939) — delta **+33,492**.
+
+Spot-check: `trace_call_path` against `navdev-full.Table.11067889.IsFeatureEnabled` returns **121** callers (examples: `Table.7311.CheckName`, `Form.5703.UpdateEnabled`, `Table.5766.OpenActivityHeader`).
+
+Opmerking: dit matcht de verwachte effecten uit de handoff — veel expression-position member calls zijn nu CALLS edges in plaats van USAGE, en de overall CALLS growth is aanzienlijk.
+
+Aanbeveling: monitor voor false positives op veelvoorkomende procedure-namen en overweeg (optioneel) `call.is_method` suppression for `member_access` if noise appears.
+
+---
+
 ## Aanbevolen volgende stap
 De omgeving staat nu goed. Voor functionele CALNAV-extractie is de volgende stap:
 - de dummy grammar vervangen/uitbreiden met een echte CALNAV/AL-N grammar,

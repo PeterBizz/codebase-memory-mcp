@@ -7,14 +7,14 @@
 
 extern const unsigned char _binary_assets_index_BbAddRU3_css_data[];
 extern const unsigned int _binary_assets_index_BbAddRU3_css_size;
-extern const unsigned char _binary_assets_index_DK5W7ax6_js_data[];
-extern const unsigned int _binary_assets_index_DK5W7ax6_js_size;
+extern const unsigned char _binary_assets_index_DQDvNqdk_js_data[];
+extern const unsigned int _binary_assets_index_DQDvNqdk_js_size;
 extern const unsigned char _binary_index_html_data[];
 extern const unsigned int _binary_index_html_size;
 
 cbm_embedded_file_t CBM_EMBEDDED_FILES[] = {
     {"/assets/index-BbAddRU3.css", _binary_assets_index_BbAddRU3_css_data, 0, "text/css"},
-    {"/assets/index-DK5W7ax6.js", _binary_assets_index_DK5W7ax6_js_data, 0, "application/javascript"},
+    {"/assets/index-DQDvNqdk.js", _binary_assets_index_DQDvNqdk_js_data, 0, "application/javascript"},
     {"/index.html", _binary_index_html_data, 0, "text/html"},
 };
 const int CBM_EMBEDDED_FILE_COUNT = 3;
@@ -22,7 +22,7 @@ const int CBM_EMBEDDED_FILE_COUNT = 3;
 static void __attribute__((constructor)) init_embedded_sizes(void) {
     cbm_embedded_file_t *files = CBM_EMBEDDED_FILES;
     files[0].size = _binary_assets_index_BbAddRU3_css_size;
-    files[1].size = _binary_assets_index_DK5W7ax6_js_size;
+    files[1].size = _binary_assets_index_DQDvNqdk_js_size;
     files[2].size = _binary_index_html_size;
 }
 

@@ -269,6 +269,7 @@ static char *extract_callee_from_fields(CBMArena *a, TSNode node, const char *so
         }
         if (strcmp(fk, "identifier") == 0 || strcmp(fk, "simple_identifier") == 0 ||
             strcmp(fk, "attribute") == 0 || strcmp(fk, "member_expression") == 0 ||
+            strcmp(fk, "member_access") == 0 ||
             strcmp(fk, "field_expression") == 0 || strcmp(fk, "dot") == 0 ||
             strcmp(fk, "function") == 0 || strcmp(fk, "dotted_identifier") == 0 ||
             strcmp(fk, "member_access_expression") == 0 || strcmp(fk, "scoped_identifier") == 0 ||

@@ -4,7 +4,10 @@
 # ==================================================================================
 
 # 1. Definieer het pad naar de MCP Server Executable
-$ServerExecutable = ".\build\c\codebase-memory-mcp.exe"
+Set-ScriptLocation 
+$Location = Get-Location
+$ServerExecutable = Join-Path $Location "..\build\c\codebase-memory-mcp.exe"
+
 $ServerArguments  = @() # Leeg indien de server geen extra argumenten vereist bij opstarten
 
 # Los het relatieve pad op naar een absoluut pad om opstartfouten te voorkomen
