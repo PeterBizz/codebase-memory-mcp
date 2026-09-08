@@ -15,6 +15,8 @@ enum { PC_RING = 4, PC_RING_MASK = 3, PC_SIG_SCAN = 15, PC_REGEX_GRP = 2 };
 /* Confidence for a service-pattern HTTP/ASYNC edge emitted when registry
  * resolution is empty (external, unindexed client library) — see #523. */
 #define PC_SVC_PATTERN_CONF 0.5
+#define PC_CALNAV_METHOD_HINT_CONF 0.97
+#define PC_CALNAV_MODULE_HINT_CONF 0.88
 #include "pipeline/pipeline.h"
 #include <stdint.h>
 #include "pipeline/pipeline_internal.h"
@@ -474,11 +476,100 @@ static const cbm_gbuf_node_t *calls_find_source(cbm_pipeline_ctx_t *ctx, const c
     return src;
 }
 
+static bool pc_ascii_ieq(const char *left, const char *right) {
+    if (!left || !right) {
+        return false;
+    }
+    while (*left && *right) {
+        char l = *left;
+        char r = *right;
+        if (l >= 'A' && l <= 'Z') {
+            l = (char)(l + ('a' - 'A'));
+        }
+        if (r >= 'A' && r <= 'Z') {
+            r = (char)(r + ('a' - 'A'));
+        }
+        if (l != r) {
+            return false;
+        }
+        left++;
+        right++;
+    }
+    return *left == '\0' && *right == '\0';
+}
+
+static void try_calnav_type_assign_hint(cbm_pipeline_ctx_t *ctx, cbm_resolution_t *res,
+                                        const CBMFileResult *result, const CBMCall *call,
+                                        int64_t source_id) {
+    if (!ctx || !res || !result || !call || !call->callee_name || !call->callee_name[0]) {
+        return;
+    }
+    const char *dot = strchr(call->callee_name, '.');
+    if (!dot || dot == call->callee_name || !dot[1]) {
+        return;
+    }
+
+    size_t recv_len = (size_t)(dot - call->callee_name);
+    if (recv_len == 0 || recv_len >= CBM_SZ_256) {
+        return;
+    }
+    char receiver[CBM_SZ_256];
+    memcpy(receiver, call->callee_name, recv_len);
+    receiver[recv_len] = '\0';
+
+    const char *method_name = dot + SKIP_ONE;
+    const CBMTypeAssign *best = NULL;
+    for (int i = 0; i < result->type_assigns.count; i++) {
+        const CBMTypeAssign *ta = &result->type_assigns.items[i];
+        if (!ta->var_name || !ta->type_name || strncmp(ta->type_name, "Table.", 6) != 0) {
+            continue;
+        }
+        if (!pc_ascii_ieq(ta->var_name, receiver)) {
+            continue;
+        }
+        if (ta->enclosing_func_qn && call->enclosing_func_qn &&
+            strcmp(ta->enclosing_func_qn, call->enclosing_func_qn) != 0) {
+            continue;
+        }
+        best = ta;
+        if (ta->enclosing_func_qn && call->enclosing_func_qn &&
+            strcmp(ta->enclosing_func_qn, call->enclosing_func_qn) == 0) {
+            break;
+        }
+    }
+    if (!best) {
+        return;
+    }
+
+    char table_module_qn[CBM_SZ_512];
+    snprintf(table_module_qn, sizeof(table_module_qn), "%s.%s", ctx->project_name,
+             best->type_name);
+
+    char method_qn[CBM_SZ_1K];
+    snprintf(method_qn, sizeof(method_qn), "%s.%s", table_module_qn, method_name);
+    const cbm_gbuf_node_t *method_node = cbm_gbuf_find_by_qn(ctx->gbuf, method_qn);
+    if (method_node && method_node->id != source_id) {
+        res->qualified_name = method_node->qualified_name;
+        res->strategy = "calnav_record_method";
+        res->confidence = PC_CALNAV_METHOD_HINT_CONF;
+        res->candidate_count = 1;
+        return;
+    }
+
+    const cbm_gbuf_node_t *table_module_node = cbm_gbuf_find_by_qn(ctx->gbuf, table_module_qn);
+    if (table_module_node && table_module_node->id != source_id) {
+        res->qualified_name = table_module_node->qualified_name;
+        res->strategy = "calnav_record_module";
+        res->confidence = PC_CALNAV_MODULE_HINT_CONF;
+        res->candidate_count = 1;
+    }
+}
+
 /* Resolve one call and emit the appropriate edge. Returns 1 if resolved, 0 if not. */
 static int resolve_single_call(cbm_pipeline_ctx_t *ctx, CBMCall *call,
-                               const CBMResolvedCallArray *lsp_calls, const char *rel,
-                               const char *module_qn, const char **imp_keys, const char **imp_vals,
-                               int imp_count, CBMLanguage lang) {
+                               const CBMResolvedCallArray *lsp_calls, const CBMFileResult *result,
+                               const char *rel, const char *module_qn, const char **imp_keys,
+                               const char **imp_vals, int imp_count, CBMLanguage lang) {
     const cbm_gbuf_node_t *source_node = calls_find_source(ctx, rel, call->enclosing_func_qn);
     if (!source_node) {
         return 0;
@@ -546,6 +637,9 @@ static int resolve_single_call(cbm_pipeline_ctx_t *ctx, CBMCall *call,
 
     cbm_resolution_t res = cbm_registry_resolve(ctx->registry, call->callee_name, module_qn,
                                                 imp_keys, imp_vals, imp_count);
+    if (lang == CBM_LANG_CALNAV) {
+        try_calnav_type_assign_hint(ctx, &res, result, call, source_node->id);
+    }
     if (!res.qualified_name || res.qualified_name[0] == '\0') {
         /* Resolution is empty when the callee belongs to an EXTERNAL client
          * library whose source is not in the indexed tree (e.g. `requests.get`,
@@ -819,8 +913,8 @@ int cbm_pipeline_pass_calls(cbm_pipeline_ctx_t *ctx, const cbm_file_info_t *file
                 continue;
             }
             total_calls++;
-            if (resolve_single_call(ctx, call, &result->resolved_calls, rel, module_qn, imp_keys,
-                                    imp_vals, imp_count, files[i].language)) {
+            if (resolve_single_call(ctx, call, &result->resolved_calls, result, rel, module_qn,
+                                    imp_keys, imp_vals, imp_count, files[i].language)) {
                 resolved++;
             } else {
                 unresolved++;

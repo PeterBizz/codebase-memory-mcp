@@ -30,8 +30,30 @@ Receiver typing applies to:
 - Confidence tiering for ambiguous receiver scopes
 - Corpus extensions for Rec/WITH/shadow/temp regressions
 
-## Current status
-- ✅ Baseline unresolved GET metrics
-- ✅ Method matrix acceptance drafted
-- 🚧 Design table-method target resolution (in progress)
-- ⏭️ Next: map typed `Record` declarations in resolver pipeline and define target selection contract.
+## Implementation completed (2026-09-08)
+- ✅ Rolled back prior 3-file experimental resolver patch first
+- ✅ Added AST-based CALNAV `Record` typing in `extract_type_assigns` (`var_declaration` -> `type_reference` -> `object_ref_type`)
+- ✅ Added resolver hinting in both sequential and parallel call passes using `result->type_assigns`
+- ✅ Hint behavior:
+	- prefer `Table.<id>.<Method>` (`strategy=calnav_record_method`) when table function exists
+	- fallback to `Table.<id>` Module (`strategy=calnav_record_module`) for standard record methods like `GET`
+
+## Validation results (clean reindex)
+- Build: `scripts/build-incremental.sh` via MSYS2 UCRT64 + `CC=clang CXX=clang++` — **success**
+- Reindex: `navdev-full` (NAVDev/AllFobDev) — **success**
+	- `parse_partial_count`: **0**
+	- `nodes`: **37,713**
+	- `edges`: **133,519**
+
+## Post-change metrics
+- Total `.GET` `CALLS` edges: **10,067**
+- `.GET` with `strategy=callee_suffix AND candidates=0`: **2,545**
+- `.GET` strategy distribution:
+	- `calnav_record_module`: **7,522**
+	- `callee_suffix`: **2,545**
+- Confirmed sample fix:
+	- `Codeunit/11000004.txt` + `AccountingSetup.GET`
+	- now resolves to `navdev-full.Table.98` with `strategy=calnav_record_module`, `confidence=0.88`, `candidates=1`
+
+## Remaining follow-up
+- Phase 2 still pending: implicit `Rec`, `WITH` scope stack, shadowing precedence, and temporary-record semantics.

@@ -9,6 +9,7 @@
 #include <stdint.h> // uint32_t
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 // Extract type from new_expression / object_creation_expression.
 static const char *extract_new_expr_type(CBMArena *a, TSNode rhs, const char *source) {
@@ -163,11 +164,101 @@ static void process_rust_let_type_assign(CBMExtractCtx *ctx, TSNode node, const 
     }
 }
 
+static bool ascii_ieq(const char *left, const char *right) {
+    if (!left || !right) {
+        return false;
+    }
+    while (*left && *right) {
+        unsigned char l = (unsigned char)*left;
+        unsigned char r = (unsigned char)*right;
+        if (tolower(l) != tolower(r)) {
+            return false;
+        }
+        left++;
+        right++;
+    }
+    return *left == '\0' && *right == '\0';
+}
+
+static bool parse_object_id_numeric(const char *object_id_text, int *table_id_out) {
+    if (!object_id_text || !table_id_out) {
+        return false;
+    }
+    while (*object_id_text && isspace((unsigned char)*object_id_text)) {
+        object_id_text++;
+    }
+    if (!*object_id_text) {
+        return false;
+    }
+    char *end = NULL;
+    long value = strtol(object_id_text, &end, 10);
+    if (end == object_id_text || value <= 0 || value > 2000000000L) {
+        return false;
+    }
+    *table_id_out = (int)value;
+    return true;
+}
+
+static void process_calnav_var_type_assign(CBMExtractCtx *ctx, TSNode node, const char *func_qn) {
+    if (ctx->language != CBM_LANG_CALNAV || strcmp(ts_node_type(node), "var_declaration") != 0) {
+        return;
+    }
+
+    TSNode var_name_node = cbm_find_child_by_kind(node, "var_name");
+    TSNode type_ref = cbm_find_child_by_kind(node, "type_reference");
+    if (ts_node_is_null(var_name_node) || ts_node_is_null(type_ref)) {
+        return;
+    }
+
+    TSNode name = ts_node_child_by_field_name(var_name_node, TS_FIELD("name"));
+    if (ts_node_is_null(name)) {
+        name = cbm_find_child_by_kind(var_name_node, "identifier");
+    }
+    if (ts_node_is_null(name)) {
+        return;
+    }
+    char *var_name = cbm_node_text(ctx->arena, name, ctx->source);
+    if (!var_name || !var_name[0]) {
+        return;
+    }
+
+    TSNode obj_ref = cbm_find_child_by_kind(type_ref, "object_ref_type");
+    if (ts_node_is_null(obj_ref)) {
+        return;
+    }
+
+    TSNode kind_node = ts_node_child_by_field_name(obj_ref, TS_FIELD("kind"));
+    TSNode id_node = ts_node_child_by_field_name(obj_ref, TS_FIELD("id"));
+    if (ts_node_is_null(kind_node) || ts_node_is_null(id_node)) {
+        return;
+    }
+
+    char *kind_text = cbm_node_text(ctx->arena, kind_node, ctx->source);
+    if (!kind_text || !ascii_ieq(kind_text, "Record")) {
+        return;
+    }
+    char *id_text = cbm_node_text(ctx->arena, id_node, ctx->source);
+    int table_id = 0;
+    if (!parse_object_id_numeric(id_text, &table_id)) {
+        return;
+    }
+
+    CBMTypeAssign ta;
+    ta.var_name = var_name;
+    ta.type_name = cbm_arena_sprintf(ctx->arena, "Table.%d", table_id);
+    ta.enclosing_func_qn = func_qn;
+    cbm_typeassign_push(&ctx->result->type_assigns, ctx->arena, ta);
+}
+
 // Process assignment nodes (assignment, short_var_declaration, variable_declarator,
 // let_declaration).
 static void process_type_assign_node(CBMExtractCtx *ctx, TSNode node, const CBMLangSpec *spec,
                                      const char *func_qn) {
     const char *kind = ts_node_type(node);
+
+    if (ctx->language == CBM_LANG_CALNAV) {
+        process_calnav_var_type_assign(ctx, node, func_qn);
+    }
 
     if (cbm_kind_in_set(node, spec->assignment_node_types)) {
         process_assignment_type_assign(ctx, node, func_qn);

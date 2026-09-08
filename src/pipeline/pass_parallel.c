@@ -38,6 +38,8 @@ enum {
 #define PP_USEC_PER_MS 1000000ULL
 #define PP_HALF_CONF 0.5
 #define PP_FIELD_HINT_CONF 0.85
+#define PP_CALNAV_METHOD_HINT_CONF 0.97
+#define PP_CALNAV_MODULE_HINT_CONF 0.88
 enum { PP_CSHARP_M_PREFIX_LEN = 2 };
 
 /* Absolute source-retention ceilings for the parallel extract pipeline.
@@ -2133,6 +2135,95 @@ static void try_field_type_hint(resolve_ctx_t *rc, cbm_resolution_t *res, const 
     }
 }
 
+static bool pp_ascii_ieq(const char *left, const char *right) {
+    if (!left || !right) {
+        return false;
+    }
+    while (*left && *right) {
+        char l = *left;
+        char r = *right;
+        if (l >= 'A' && l <= 'Z') {
+            l = (char)(l + ('a' - 'A'));
+        }
+        if (r >= 'A' && r <= 'Z') {
+            r = (char)(r + ('a' - 'A'));
+        }
+        if (l != r) {
+            return false;
+        }
+        left++;
+        right++;
+    }
+    return *left == '\0' && *right == '\0';
+}
+
+static void try_calnav_type_assign_hint(resolve_ctx_t *rc, cbm_resolution_t *res,
+                                        const CBMFileResult *result, const CBMCall *call,
+                                        int64_t source_id) {
+    if (!rc || !res || !result || !call || !call->callee_name || !call->callee_name[0]) {
+        return;
+    }
+    const char *dot = strchr(call->callee_name, '.');
+    if (!dot || dot == call->callee_name || !dot[1]) {
+        return;
+    }
+
+    size_t recv_len = (size_t)(dot - call->callee_name);
+    if (recv_len == 0 || recv_len >= CBM_SZ_256) {
+        return;
+    }
+    char receiver[CBM_SZ_256];
+    memcpy(receiver, call->callee_name, recv_len);
+    receiver[recv_len] = '\0';
+
+    const char *method_name = dot + SKIP_ONE;
+    const CBMTypeAssign *best = NULL;
+    for (int i = 0; i < result->type_assigns.count; i++) {
+        const CBMTypeAssign *ta = &result->type_assigns.items[i];
+        if (!ta->var_name || !ta->type_name || strncmp(ta->type_name, "Table.", 6) != 0) {
+            continue;
+        }
+        if (!pp_ascii_ieq(ta->var_name, receiver)) {
+            continue;
+        }
+        if (ta->enclosing_func_qn && call->enclosing_func_qn &&
+            strcmp(ta->enclosing_func_qn, call->enclosing_func_qn) != 0) {
+            continue;
+        }
+        best = ta;
+        if (ta->enclosing_func_qn && call->enclosing_func_qn &&
+            strcmp(ta->enclosing_func_qn, call->enclosing_func_qn) == 0) {
+            break;
+        }
+    }
+    if (!best) {
+        return;
+    }
+
+    char table_module_qn[CBM_SZ_512];
+    snprintf(table_module_qn, sizeof(table_module_qn), "%s.%s", rc->project_name,
+             best->type_name);
+
+    char method_qn[CBM_SZ_1K];
+    snprintf(method_qn, sizeof(method_qn), "%s.%s", table_module_qn, method_name);
+    const cbm_gbuf_node_t *method_node = cbm_gbuf_find_by_qn(rc->main_gbuf, method_qn);
+    if (method_node && method_node->id != source_id) {
+        res->qualified_name = method_node->qualified_name;
+        res->strategy = "calnav_record_method";
+        res->confidence = PP_CALNAV_METHOD_HINT_CONF;
+        res->candidate_count = 1;
+        return;
+    }
+
+    const cbm_gbuf_node_t *table_module_node = cbm_gbuf_find_by_qn(rc->main_gbuf, table_module_qn);
+    if (table_module_node && table_module_node->id != source_id) {
+        res->qualified_name = table_module_node->qualified_name;
+        res->strategy = "calnav_record_module";
+        res->confidence = PP_CALNAV_MODULE_HINT_CONF;
+        res->candidate_count = 1;
+    }
+}
+
 /* Free a strdup'd key stored in the per-file lsp_idx hash table. */
 static void lsp_idx_free_key(const char *key, void *value, void *ud) {
     (void)value;
@@ -2449,6 +2540,9 @@ static void resolve_file_calls(resolve_ctx_t *rc, resolve_worker_state_t *ws, CB
 
         _rc_t0 = extract_now_ns();
         try_field_type_hint(rc, &res, call->callee_name, source_node->id);
+        if (lang == CBM_LANG_CALNAV) {
+            try_calnav_type_assign_hint(rc, &res, result, call, source_node->id);
+        }
         atomic_fetch_add_explicit(&rc->time_ns_rc_hint, extract_now_ns() - _rc_t0,
                                   memory_order_relaxed);
 
