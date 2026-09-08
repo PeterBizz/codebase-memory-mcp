@@ -16,21 +16,34 @@ if (-not $Project) {
     Write-Host "Querying first project: $($projects[0].name), $($projects[0].root_path)`n" -ForegroundColor Yellow
 }
 
+$Project = '.\test-calnav'
+
 # Request the 'languages' aspect explicitly, however it will only show nodes and edges count. 
-$org =$true
+#$org =$true
+$org = $false
 if ($org ) {
-    $arch = & $Binary cli get_architecture --project $($projects[0].name) --aspects languages 2>$null
+    $arch = & $Binary cli get_architecture --json --project $($Project) --aspects languages 
+    $arch = & $Binary cli get_architecture --json --payload $Payload
+    & $Binary cli get_architecture --help
+    & $Binary cli get_architecture --json --args-file $ArgsFile
     $repoSummary = [pscustomobject](($arch -replace ':\s*', '=') | ConvertFrom-StringData)
     $repoSummary
 }
 else {   
     Set-ScriptLocation
-     $Payload = '{"project":"' + $ProjectName + '","aspect":"' + $Aspects + '"}'
-    $Json = Invoke-MCPCbmJson -Command 'get_architecture' -Payload $Payload
-    $($Json | ConvertFrom-Json).StructuredContent    
+    . .\SetupMCPEnvironment.ps1
+    $aspects = 'languages'
+    $aspects = 'structure'
+    $PayloadObject = [pscustomobject]@{
+        project = $Project
+        aspects = @($Aspects)
+    }
+    $Payload = $PayloadObject | ConvertTo-Json -Depth 5 -Compress
+    $Json = Invoke-MCPCbmJson -Command 'get_architecture' -Payload $Payload -outfile .\testoutfile.txt
+    $Envelope = $Json | ConvertFrom-Json
+    $Envelope.content[0].text
 }
-$repoSummary = [pscustomobject](($arch -replace ':\s*', '=') | ConvertFrom-StringData)
-$repoSummary
+
 
 
 
