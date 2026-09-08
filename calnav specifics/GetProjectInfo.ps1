@@ -1,16 +1,7 @@
-Set-ScriptLocation 
-$Location = Get-Location
-$ServerExecutable = Join-Path $Location "..\build\c\codebase-memory-mcp.exe"
-$projectName = "navdev-full"  
-
-$json = & $ServerExecutable cli --json list_projects |
-Where-Object { $_ -match '^\{' }
-
-$projects = $($json | ConvertFrom-Json ).structuredContent.projects
-    
-# 4. Voer de lus uit over de daadwerkelijke array
+Set-ScriptLocation
+& .\SetupMCPEnvironment.ps1
+$projects = Get-Projects
 foreach ($pproject in $projects) {
-    ## VRaag of geberuiker dit project wil bekijken, indien ja dan $ProjectName zetten en verder gaan
     if ( $(read-host "Wil je project '$($pproject.name)' bekijken? (j/n)") -eq 'j') {
         $projectName = $pproject.name
         break
@@ -22,10 +13,8 @@ $aspects = @("overview", "structure", "dependencies", "languages", "file_tree", 
     "control_flow", "dependencies", "metrics", "routes", "packages", "entry_points", "hotspots", "boundaries", "layers", "clusters", "cycles")
 foreach ($aspect in $aspects) {
     Write-Host "`nOphalen van aspect '$aspect' voor $projectName..." -ForegroundColor Cyan
+    $JsonReceived = Get-MCPProjectInfo -ProjectName $projectName -Aspects $aspect 
    
-    $Json = & $ServerExecutable cli --json get_architecture --project $projectName --aspects $aspect 2>$null | Where-Object { $_ -match '^\{' }
-   
-    $Jsonreceived = $($Json | convertFrom-JSON).Content
     if ($Jsonreceived -and $Jsonreceived.PSObject.Properties.Match("error").Count -gt 0) {
         Write-Host "Aspect '$aspect' geeft fout: $($Jsonreceived.error)" -ForegroundColor Red
         $Jsonreceived = $Jsonreceived.error
@@ -52,7 +41,7 @@ foreach ($aspect in $aspects) {
         }     
     } 
     if ($store) {
-       $aspectResults[$aspect] = $Jsonreceived
+        $aspectResults[$aspect] = $Jsonreceived
     }
 }
 

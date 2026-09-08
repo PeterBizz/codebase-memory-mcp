@@ -1,12 +1,12 @@
-python --version ##---> 3.12.2
+## voer deze comments uit in de MSYS2 shell, 
 
+python --version ##---> 3.12.2
 git --version
 python --version
 pip --version
 g++ --version
 pkg-config --version
 bash --version
-
 gcc --version
 clang --version
 cmake --version

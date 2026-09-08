@@ -6,21 +6,6 @@ $LogFile = Join-Path $Location '..\private\calnav-parser-deamon_navdev.log'
 $exe = Join-Path $Location "..\build\c\codebase-memory-mcp.exe"
 $Project = 'navdev-full'
 
-function Invoke-CbmJson {
-    param(
-        [Parameter(Mandatory)] [string] $Command,
-        [Parameter(Mandatory)] [string] $Payload
-    )
-
-    $ArgsFile = [System.IO.Path]::GetTempFileName()
-    try {
-        Set-Content -Path $ArgsFile -Value $Payload -Encoding utf8NoBOM -NoNewline
-        & $Exe cli --json $Command --args-file $ArgsFile
-    }
-    finally {
-        Remove-Item -Path $ArgsFile -ErrorAction SilentlyContinue
-    }
-}
 
 $env:CBM_LOG_LEVEL = 'debug'
 $env:CBM_LOG_FORMAT = 'text'

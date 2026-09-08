@@ -1,14 +1,11 @@
 Set-ScriptLocation
-$Location =Get-Location
-Set-StrictMode -Version Latest
+. .\SetupMCPEnvironment.ps1
 
 $env:CBM_LOG_LEVEL = 'debug'
 $env:CBM_LOG_FORMAT = 'text'
 $env:CBM_DIAGNOSTICS = '0'
-
 $env:CBM_LOG_FILE = Join-Path $Location '..\private\calnav-parser.log'
 
-$exe = Join-Path $Location "..\build\c\codebase-memory-mcp.exe"
 $repo = Join-Path $Location ".\test-calnav"
 $projectName = 'Mini-calnav'
 
@@ -49,35 +46,20 @@ if ($clearLog -eq 'y' -and (Test-Path $env:CBM_LOG_FILE)) {
 
 # A full index already replaces the project data, so no delete step is needed.
 
-$indexArgs = [pscustomobject]@{
-	repo_path = $repo
-	name      = $projectName
-	mode      = 'full'
-} | ConvertTo-Json -Compress
-
-$Json = $indexArgs | & $exe cli --json index_repository
-
+$Json = Index-Project -ProjectName $projectName -ProjectFolder $repo 
 $IndexResult = Get-JsonResult $Json
-$statusArgs = [pscustomobject]@{
-	project = $projectName
-	verbose = $true
-} | ConvertTo-Json -Compress
-
-$StatusJson = $statusArgs | & $exe cli --json index_status
-$StatusResult = Get-JsonResult $StatusJson
-
-Write-Section 'Index response'
 if ($IndexResult) {
 	$IndexResult | ConvertTo-Json -Depth 20
 } else {
 	$Json
 }
+Write-Section 'Index response'
 
 if ($IndexResult) {
 	Write-Section 'Index summary'
 	$IndexResult | Format-List | Out-String | Write-Host
 }
-
+$IndexStatus = Get-IndexStatus -ProjectName $projectName
 if ($StatusResult) {
 	Write-Section 'Project summary'
 	[pscustomobject]@{

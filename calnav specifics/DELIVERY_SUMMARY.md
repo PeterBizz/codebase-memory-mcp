@@ -20,4 +20,3 @@ Notes & next steps
 
 - This is the minimal patch to restore call edges for expression-position member calls.
 - Recommended: observe for false positives on common names; if needed, add refined suppression (`call.is_method`) later.
-- If you want, I can open a PR branch with these changes and include this delivery note as the PR description.

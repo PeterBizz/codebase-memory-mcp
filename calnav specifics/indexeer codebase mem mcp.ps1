@@ -22,8 +22,4 @@ function Invoke-CbmJson {
 }
 
 
-Write-Host "Reindexing '$ProjectName' from '$ProjectFolder'..." -ForegroundColor Cyan
 
-$Payload = '{"repo_path":"' + ($ProjectFolder -replace '\\', '\\\\') + '","name":"' + $ProjectName + '"}'
-$Json = Invoke-CbmJson -Command 'index_repository' -Payload $Payload
-$Json

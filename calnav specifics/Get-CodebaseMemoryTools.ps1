@@ -4,16 +4,15 @@
 # ==================================================================================
 
 # 1. Definieer het pad naar de MCP Server Executable
-Set-ScriptLocation 
-$Location = Get-Location
-$ServerExecutable = Join-Path $Location "..\build\c\codebase-memory-mcp.exe"
+Set-ScriptLocation; 
+& .\SetupMCPEnvironment.ps1
 
 $ServerArguments  = @() # Leeg indien de server geen extra argumenten vereist bij opstarten
 
 # Los het relatieve pad op naar een absoluut pad om opstartfouten te voorkomen
-$AbsoluteProcessPath = Resolve-Path $ServerExecutable -ErrorAction SilentlyContinue
+$AbsoluteProcessPath = Resolve-Path $CodebaseMemoryexeFilename  -ErrorAction SilentlyContinue
 if (-not $AbsoluteProcessPath) {
-    Write-Error "Fout: Kan het bestand niet vinden op locatie: $ServerExecutable"
+    Write-Error "Fout: Kan het bestand niet vinden op locatie: $CodebaseMemoryexeFilename "
     Write-Host "Controleer of je in de juiste map staat (huidige map is: $(Get-Location))" -ForegroundColor Yellow
     exit
 }

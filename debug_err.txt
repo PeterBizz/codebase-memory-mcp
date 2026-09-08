@@ -1,0 +1,3 @@
+level=warn msg=mem.allocator.preloading_completed still_preloading=false detail=allocator_was_still_preloading,_so_arena_creation_and_purging_were_disabled;_process_init_completed_explicitly
+level=info msg=mem.allocator.owned classes=all
+level=info msg=mem.init budget_mb=3343 total_ram_mb=13374 source=ram_fraction

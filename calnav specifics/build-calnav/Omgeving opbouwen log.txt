@@ -1,0 +1,1153 @@
+
+Peter@LEAD-V-W22-PETER UCRT64 ~
+$ gcc --version
+-bash: gcc: command not found
+
+Peter@LEAD-V-W22-PETER UCRT64 ~
+$ make --version
+-bash: make: command not found
+
+Peter@LEAD-V-W22-PETER UCRT64 ~
+$ pacman -Syu
+:: Synchronizing package databases...
+ clangarm64 is up to date
+ mingw32 is up to date
+ mingw64 is up to date
+ ucrt64 is up to date
+ clang64 is up to date
+ msys is up to date
+:: Starting core system upgrade...
+ there is nothing to do
+:: Starting full system upgrade...
+resolving dependencies...
+looking for conflicting packages...
+
+Packages (22) bash-completion-2.18.0-1  bsdtar-3.8.8-1  curl-8.21.0-1  findutils-4.10.0-3
+              gawk-5.4.1-1  gcc-libs-15.3.0-1  libcurl-8.21.0-1  libexpat-2.8.2-1  libffi-3.7.1-1
+              libgnutls-3.8.13-2  libhogweed-4.0-1  libnettle-4.0-1  libnghttp3-1.17.0-1
+              libngtcp2-1.24.0-1  libp11-kit-0.26.4-1  libsqlite-3.53.3-1  nano-9.1-1  nettle-4.0-1
+              p11-kit-0.26.4-1  pinentry-1.3.3-1  tzcode-2026c-1  wget-1.25.0-2
+
+Total Download Size:   10.17 MiB
+Total Installed Size:  34.53 MiB
+Net Upgrade Size:       0.34 MiB
+
+:: Proceed with installation? [Y/n]
+Interrupt signal received
+
+
+Peter@LEAD-V-W22-PETER UCRT64 ~
+$ pacman -Syu
+:: Synchronizing package databases...
+ clangarm64 is up to date
+ mingw32 is up to date
+ mingw64 is up to date
+ ucrt64 is up to date
+ clang64 is up to date
+ msys is up to date
+:: Starting core system upgrade...
+ there is nothing to do
+:: Starting full system upgrade...
+resolving dependencies...
+looking for conflicting packages...
+
+Packages (22) bash-completion-2.18.0-1  bsdtar-3.8.8-1  curl-8.21.0-1  findutils-4.10.0-3
+              gawk-5.4.1-1  gcc-libs-15.3.0-1  libcurl-8.21.0-1  libexpat-2.8.2-1  libffi-3.7.1-1
+              libgnutls-3.8.13-2  libhogweed-4.0-1  libnettle-4.0-1  libnghttp3-1.17.0-1
+              libngtcp2-1.24.0-1  libp11-kit-0.26.4-1  libsqlite-3.53.3-1  nano-9.1-1  nettle-4.0-1
+              p11-kit-0.26.4-1  pinentry-1.3.3-1  tzcode-2026c-1  wget-1.25.0-2
+
+Total Download Size:   10.17 MiB
+Total Installed Size:  34.53 MiB
+Net Upgrade Size:       0.34 MiB
+
+:: Proceed with installation? [Y/n]
+:: Retrieving packages...
+ gawk-5.4.1-1-x86_64            1483.6 KiB  1887 KiB/s 00:01 [###############################] 100%
+ libgnutls-3.8.13-2-x86_64      1464.7 KiB  1307 KiB/s 00:01 [###############################] 100%
+ curl-8.21.0-1-x86_64            905.8 KiB   696 KiB/s 00:01 [###############################] 100%
+ libsqlite-3.53.3-1-x86_64       741.2 KiB  1708 KiB/s 00:00 [###############################] 100%
+ gcc-libs-15.3.0-1-x86_64       1056.8 KiB   729 KiB/s 00:01 [###############################] 100%
+ wget-1.25.0-2-x86_64            759.9 KiB   372 KiB/s 00:02 [###############################] 100%
+ nano-9.1-1-x86_64               669.2 KiB  1507 KiB/s 00:00 [###############################] 100%
+ findutils-4.10.0-3-x86_64       550.3 KiB   498 KiB/s 00:01 [###############################] 100%
+ p11-kit-0.26.4-1-x86_64         502.7 KiB   375 KiB/s 00:01 [###############################] 100%
+ libcurl-8.21.0-1-x86_64         372.4 KiB   215 KiB/s 00:02 [###############################] 100%
+ bsdtar-3.8.8-1-x86_64           366.9 KiB   217 KiB/s 00:02 [###############################] 100%
+ libhogweed-4.0-1-x86_64         179.4 KiB   382 KiB/s 00:00 [###############################] 100%
+ tzcode-2026c-1-x86_64           262.5 KiB   297 KiB/s 00:01 [###############################] 100%
+ libp11-kit-0.26.4-1-x86_64      255.5 KiB   247 KiB/s 00:01 [###############################] 100%
+ bash-completion-2.18.0-1-any    228.7 KiB   196 KiB/s 00:01 [###############################] 100%
+ libngtcp2-1.24.0-1-x86_64       159.0 KiB   116 KiB/s 00:01 [###############################] 100%
+ libnettle-4.0-1-x86_64          143.9 KiB   155 KiB/s 00:01 [###############################] 100%
+ nettle-4.0-1-x86_64              96.5 KiB   255 KiB/s 00:00 [###############################] 100%
+ libnghttp3-1.17.0-1-x86_64       67.9 KiB   162 KiB/s 00:00 [###############################] 100%
+ libexpat-2.8.2-1-x86_64          61.7 KiB   171 KiB/s 00:00 [###############################] 100%
+ pinentry-1.3.3-1-x86_64          49.1 KiB   122 KiB/s 00:00 [###############################] 100%
+ libffi-3.7.1-1-x86_64            35.3 KiB  80.0 KiB/s 00:00 [###############################] 100%
+ Total (22/22)                    10.2 MiB  1536 KiB/s 00:07 [###############################] 100%
+(22/22) checking keys in keyring                             [###############################] 100%
+(22/22) checking package integrity                           [###############################] 100%
+(22/22) loading package files                                [###############################] 100%
+(22/22) checking for file conflicts                          [###############################] 100%
+(22/22) checking available disk space                        [###############################] 100%
+:: Running pre-transaction hooks...
+(1/1) Removing old entries from the info directory file...
+:: Processing package changes...
+( 1/22) upgrading bash-completion                            [###############################] 100%
+( 2/22) upgrading gcc-libs                                   [###############################] 100%
+( 3/22) upgrading libexpat                                   [###############################] 100%
+( 4/22) upgrading bsdtar                                     [###############################] 100%
+( 5/22) upgrading libnghttp3                                 [###############################] 100%
+( 6/22) upgrading libngtcp2                                  [###############################] 100%
+( 7/22) upgrading findutils                                  [###############################] 100%
+( 8/22) upgrading libffi                                     [###############################] 100%
+( 9/22) upgrading libp11-kit                                 [###############################] 100%
+(10/22) upgrading p11-kit                                    [###############################] 100%
+(11/22) upgrading libcurl                                    [###############################] 100%
+(12/22) upgrading curl                                       [###############################] 100%
+(13/22) upgrading gawk                                       [###############################] 100%
+(14/22) upgrading libhogweed                                 [###############################] 100%
+(15/22) upgrading libnettle                                  [###############################] 100%
+(16/22) upgrading libgnutls                                  [###############################] 100%
+(17/22) upgrading libsqlite                                  [###############################] 100%
+(18/22) upgrading nano                                       [###############################] 100%
+(19/22) upgrading nettle                                     [###############################] 100%
+(20/22) upgrading pinentry                                   [###############################] 100%
+(21/22) upgrading tzcode                                     [###############################] 100%
+(22/22) upgrading wget                                       [###############################] 100%
+:: Running post-transaction hooks...
+(1/1) Updating the info directory file...
+
+Peter@LEAD-V-W22-PETER UCRT64 ~
+$ pacman -Syu
+:: Synchronizing package databases...
+ clangarm64 is up to date
+ mingw32 is up to date
+ mingw64 is up to date
+ ucrt64 is up to date
+ clang64 is up to date
+ msys is up to date
+:: Starting core system upgrade...
+ there is nothing to do
+:: Starting full system upgrade...
+ there is nothing to do
+
+Peter@LEAD-V-W22-PETER UCRT64 ~
+$ gcc --version
+-bash: gcc: command not found
+
+Peter@LEAD-V-W22-PETER UCRT64 ~
+$ make --version
+-bash: make: command not found
+
+Peter@LEAD-V-W22-PETER UCRT64 ~
+$ pacman -S --needed mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-zlib make
+resolving dependencies...
+looking for conflicting packages...
+
+Packages (18) mingw-w64-ucrt-x86_64-binutils-2.46.1-2
+              mingw-w64-ucrt-x86_64-crt-14.0.0.r220.gd999af622-1
+              mingw-w64-ucrt-x86_64-gcc-libs-16.1.0-5  mingw-w64-ucrt-x86_64-gettext-runtime-1.0-1
+              mingw-w64-ucrt-x86_64-gmp-6.3.0-2
+              mingw-w64-ucrt-x86_64-headers-14.0.0.r220.gd999af622-1
+              mingw-w64-ucrt-x86_64-isl-0.28-1  mingw-w64-ucrt-x86_64-libiconv-1.19-1
+              mingw-w64-ucrt-x86_64-libwinpthread-14.0.0.r220.gd999af622-1
+              mingw-w64-ucrt-x86_64-mpc-1.4.1-1  mingw-w64-ucrt-x86_64-mpfr-4.2.2-3
+              mingw-w64-ucrt-x86_64-tzdata-2026c-1
+              mingw-w64-ucrt-x86_64-windows-default-manifest-6.4-4
+              mingw-w64-ucrt-x86_64-winpthreads-14.0.0.r220.gd999af622-1
+              mingw-w64-ucrt-x86_64-zstd-1.5.7-2  make-4.4.1-3  mingw-w64-ucrt-x86_64-gcc-16.1.0-5
+              mingw-w64-ucrt-x86_64-zlib-1.3.2-2
+
+Total Download Size:    69.57 MiB
+Total Installed Size:  493.02 MiB
+
+:: Proceed with installation? [Y/n]
+:: Retrieving packages...
+ mingw-w64-ucrt-x86_64-head...     6.6 MiB  5.32 MiB/s 00:01 [###############################] 100%
+ mingw-w64-ucrt-x86_64-isl-...  1504.6 KiB   573 KiB/s 00:03 [###############################] 100%
+ mingw-w64-ucrt-x86_64-gcc-...  1125.3 KiB   567 KiB/s 00:02 [###############################] 100%
+ mingw-w64-ucrt-x86_64-libi...   727.3 KiB   992 KiB/s 00:01 [###############################] 100%
+ mingw-w64-ucrt-x86_64-gmp-...   578.5 KiB  1044 KiB/s 00:01 [###############################] 100%
+ mingw-w64-ucrt-x86_64-zstd...   652.6 KiB  1153 KiB/s 00:01 [###############################] 100%
+ mingw-w64-ucrt-x86_64-crt-...     4.7 MiB  1118 KiB/s 00:04 [###############################] 100%
+ mingw-w64-ucrt-x86_64-gett...   408.2 KiB   148 KiB/s 00:03 [###############################] 100%
+ make-4.4.1-3-x86_64             502.6 KiB   155 KiB/s 00:03 [###############################] 100%
+ mingw-w64-ucrt-x86_64-mpfr...   540.8 KiB   161 KiB/s 00:03 [###############################] 100%
+ mingw-w64-ucrt-x86_64-zlib...   108.9 KiB   126 KiB/s 00:01 [###############################] 100%
+ mingw-w64-ucrt-x86_64-mpc-...   136.3 KiB   102 KiB/s 00:01 [###############################] 100%
+ mingw-w64-ucrt-x86_64-tzda...   219.6 KiB   148 KiB/s 00:01 [###############################] 100%
+ mingw-w64-ucrt-x86_64-winp...    42.8 KiB   205 KiB/s 00:00 [###############################] 100%
+ mingw-w64-ucrt-x86_64-libw...    29.8 KiB   148 KiB/s 00:00 [###############################] 100%
+ mingw-w64-ucrt-x86_64-wind...     3.0 KiB  18.9 KiB/s 00:00 [###############################] 100%
+ mingw-w64-ucrt-x86_64-gcc-...    45.6 MiB  4.20 MiB/s 00:11 [###############################] 100%
+ mingw-w64-ucrt-x86_64-binu...     6.3 MiB   590 KiB/s 00:11 [###############################] 100%
+ Total (18/18)                    69.6 MiB  6.31 MiB/s 00:11 [###############################] 100%
+(18/18) checking keys in keyring                             [###############################] 100%
+(18/18) checking package integrity                           [###############################] 100%
+(18/18) loading package files                                [###############################] 100%
+(18/18) checking for file conflicts                          [###############################] 100%
+(18/18) checking available disk space                        [###############################] 100%
+:: Processing package changes...
+( 1/18) installing mingw-w64-ucrt-x86_64-libwinpthread       [###############################] 100%
+( 2/18) installing mingw-w64-ucrt-x86_64-tzdata              [###############################] 100%
+( 3/18) installing mingw-w64-ucrt-x86_64-gcc-libs            [###############################] 100%
+( 4/18) installing mingw-w64-ucrt-x86_64-libiconv            [###############################] 100%
+( 5/18) installing mingw-w64-ucrt-x86_64-gettext-runtime     [###############################] 100%
+( 6/18) installing mingw-w64-ucrt-x86_64-zlib                [###############################] 100%
+( 7/18) installing mingw-w64-ucrt-x86_64-zstd                [###############################] 100%
+( 8/18) installing mingw-w64-ucrt-x86_64-binutils            [###############################] 100%
+( 9/18) installing mingw-w64-ucrt-x86_64-headers             [###############################] 100%
+(10/18) installing mingw-w64-ucrt-x86_64-crt                 [###############################] 100%
+(11/18) installing mingw-w64-ucrt-x86_64-gmp                 [###############################] 100%
+(12/18) installing mingw-w64-ucrt-x86_64-isl                 [###############################] 100%
+(13/18) installing mingw-w64-ucrt-x86_64-mpfr                [###############################] 100%
+(14/18) installing mingw-w64-ucrt-x86_64-mpc                 [###############################] 100%
+(15/18) installing mingw-w64-ucrt-x86_64-windows-default...  [###############################] 100%
+(16/18) installing mingw-w64-ucrt-x86_64-winpthreads         [###############################] 100%
+(17/18) installing mingw-w64-ucrt-x86_64-gcc                 [###############################] 100%
+(18/18) installing make                                      [###############################] 100%
+:: Running post-transaction hooks...
+(1/1) Updating the info directory file...
+
+Peter@LEAD-V-W22-PETER UCRT64 ~
+$ make --version
+GNU Make 4.4.1
+Built for x86_64-pc-cygwin
+Copyright (C) 1988-2023 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Peter@LEAD-V-W22-PETER UCRT64 ~
+$ gcc --version
+gcc.exe (Rev5, Built by MSYS2 project) 16.1.0
+Copyright (C) 2026 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+Peter@LEAD-V-W22-PETER UCRT64 ~
+$ cd /c/users
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users
+$ dirr
+-bash: dirr: command not found
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users
+$ dir
+Administrator  Administrator.CARTA  All\ Users  Default  Default\ User  Public desktop.ini  peter
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users
+$ cd peter
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter
+$ dir
+3D\ Objects
+AppData
+Application\ Data
+CartaDocs
+Contacts
+Cookies
+Desktop
+Documents
+Downloads
+Favorites
+Lead\ Solutions\ BV
+Links
+Local\ Settings
+MockService.log
+Moved
+Moved-LEAD
+Music
+My\ Documents
+NTUSER.DAT
+NTUSER.DAT{c76cbcdb-afc9-11eb-8234-000d3aa6d50e}.TM.blf
+NTUSER.DAT{c76cbcdb-afc9-11eb-8234-000d3aa6d50e}.TMContainer00000000000000000001.regtrans-ms
+NTUSER.DAT{c76cbcdb-afc9-11eb-8234-000d3aa6d50e}.TMContainer00000000000000000002.regtrans-ms
+NetHood
+OneDrive
+OneDrive\ -\ GAC\ Business\ Solutions
+OneDrive\ -\ Lead\ Solutions\ BV
+Pictures
+Postman
+PrintHood
+Recent
+Saved\ Games
+Searches
+SendTo
+SetupCarta.cmd
+SoapUI-Tutorials
+Source
+Start\ Menu
+Templates
+Videos
+default-soapui-workspace.xml
+llmConfig.json
+ntuser.dat.LOG1
+ntuser.dat.LOG2
+ntuser.ini
+soapui-settings.xml
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter
+$ cd source
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source
+$ cd repos
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos
+$ cd everest
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest
+$ dir
+codebase-memory-mcp
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest
+$ cd codebase-memory-mcp/
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ dir
+CODE_OF_CONDUCT.md  MAINTAINERS.md  docs        install.ps1  scripts   tools
+CONTRIBUTING.md     Makefile.cbm    flake.lock  install.sh   server.json   vendored
+DCO                 README.md       flake.nix   internal     src
+Formula             SECURITY.md     glama.json  pkg          test-infrastructure
+LICENSE             THIRD_PARTY.md  graph-ui    private      tests
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ ^C
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ ls scripts
+audit-grammar-security.sh    gen-ui-licenses.py         security-fuzz.sh
+audit-license-provenance.py  generate-lang-code.py      security-install.sh
+benchmark-index.sh           git-hooks                  security-network.sh
+benchmark-search-graph.sh    hooks                      security-strings.sh
+build.sh                     install-git-hooks.sh       security-ui.sh
+check-dco.sh                 license-gate-check-npm.py  security-vendored.sh
+check-lsp-originality.sh     license-gate-check.py      setup-windows.ps1
+check-no-test-skips.sh       license-gate.sh            setup.sh
+check-nolint-whitelist.sh    license-policy.json        smoke-invariants.sh
+ci                           lint.sh                    smoke-test.sh
+clean.sh                     new-languages.json         soak-test.sh
+clone-bench-repos.sh         path-safety.sh             test-windows.ps1
+embed-frontend.sh            repro.sh                   test.sh
+env.sh                       run-tests-parallel.sh      test_mcp_interactive.py
+extract_nomic_vectors.py     security-allowlist.txt     test_mcp_rapid_init.py
+gen-py-stdlib.py             security-audit.sh          vendor-grammar.sh
+gen-third-party-notices.sh   security-fuzz-random.sh    vendored-checksums.txt
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ ^C
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ head -30 scripts/build.sh
+#!/usr/bin/env bash
+# build.sh — Clean build of production binary (standard or with UI).
+#
+# Usage:
+#   scripts/build.sh                              # Standard binary
+#   scripts/build.sh --with-ui                    # Binary with embedded UI
+#   scripts/build.sh --version v0.8.0             # With version stamp
+#   scripts/build.sh --arch x86_64                # Force x86_64 build
+#   scripts/build.sh CC=gcc-14 CXX=g++-14        # Override compiler
+#
+# This script is the SINGLE source of truth for building release binaries.
+# Used identically in local development and CI workflows.
+
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT"
+
+# Pre-parse --arch flag before sourcing env.sh
+for arg in "$@"; do
+    case "$arg" in
+        --arch=*) export CBM_ARCH="${arg#--arch=}" ;;
+    esac
+done
+prev_arg=""
+for arg in "$@"; do
+    if [[ "${prev_arg:-}" == "--arch" ]]; then
+        export CBM_ARCH="$arg"
+    fi
+    prev_arg="$arg"
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ python --version
+g++ --version
+pkg-config --version
+bash --version
+-bash: python: command not found
+g++.exe (Rev5, Built by MSYS2 project) 16.1.0
+Copyright (C) 2026 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+-bash: pkg-config: command not found
+GNU bash, version 5.3.15(1)-release (x86_64-pc-cygwin)
+Copyright (C) 2025 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+
+This is free software; you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ ^C
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ pacman -S --needed mingw-w64-ucrt-x86_64-python mingw-w64-ucrt-x86_64-pkgconf
+resolving dependencies...
+looking for conflicting packages...
+
+Packages (17) mingw-w64-ucrt-x86_64-bzip2-1.0.8-3  mingw-w64-ucrt-x86_64-expat-2.8.2-1
+              mingw-w64-ucrt-x86_64-libb2-0.98.1-3  mingw-w64-ucrt-x86_64-libffi-3.7.1-1
+              mingw-w64-ucrt-x86_64-libsystre-1.0.2-2  mingw-w64-ucrt-x86_64-libtre-0.9.0-2
+              mingw-w64-ucrt-x86_64-mpdecimal-4.0.1-3  mingw-w64-ucrt-x86_64-ncurses-6.6-4
+              mingw-w64-ucrt-x86_64-openssl-3.6.3-1  mingw-w64-ucrt-x86_64-pcre2-10.47-1
+              mingw-w64-ucrt-x86_64-sqlite3-3.53.3-1  mingw-w64-ucrt-x86_64-tcl-8.6.18-1
+              mingw-w64-ucrt-x86_64-tk-8.6.18-1  mingw-w64-ucrt-x86_64-wineditline-2.208-1
+              mingw-w64-ucrt-x86_64-xz-5.8.3-1  mingw-w64-ucrt-x86_64-pkgconf-1~3.0.4-1
+              mingw-w64-ucrt-x86_64-python-3.14.6-1
+
+Total Download Size:    45.59 MiB
+Total Installed Size:  338.77 MiB
+
+:: Proceed with installation? [Y/n]
+:: Retrieving packages...
+ mingw-w64-ucrt-x86_64-tk-8...     2.0 MiB  2.43 MiB/s 00:01 [###############################] 100%
+ mingw-w64-ucrt-x86_64-tcl-...     2.7 MiB   877 KiB/s 00:03 [###############################] 100%
+ mingw-w64-ucrt-x86_64-sqli...     2.4 MiB   733 KiB/s 00:03 [###############################] 100%
+ mingw-w64-ucrt-x86_64-open...     7.9 MiB  1850 KiB/s 00:04 [###############################] 100%
+ mingw-w64-ucrt-x86_64-ncur...  1568.2 KiB   412 KiB/s 00:04 [###############################] 100%
+ mingw-w64-ucrt-x86_64-expa...   188.8 KiB   304 KiB/s 00:01 [###############################] 100%
+ mingw-w64-ucrt-x86_64-xz-5...   930.7 KiB   491 KiB/s 00:02 [###############################] 100%
+ mingw-w64-ucrt-x86_64-libt...    80.3 KiB  74.0 KiB/s 00:01 [###############################] 100%
+ mingw-w64-ucrt-x86_64-mpde...   154.9 KiB  91.0 KiB/s 00:02 [###############################] 100%
+ mingw-w64-ucrt-x86_64-pkgc...   144.9 KiB   107 KiB/s 00:01 [###############################] 100%
+ mingw-w64-ucrt-x86_64-wine...    59.7 KiB   291 KiB/s 00:00 [###############################] 100%
+ mingw-w64-ucrt-x86_64-bzip...    76.5 KiB   158 KiB/s 00:00 [###############################] 100%
+ mingw-w64-ucrt-x86_64-libf...    48.7 KiB   160 KiB/s 00:00 [###############################] 100%
+ mingw-w64-ucrt-x86_64-pcre...  1401.7 KiB   256 KiB/s 00:05 [###############################] 100%
+ mingw-w64-ucrt-x86_64-libb...    24.0 KiB  21.2 KiB/s 00:01 [###############################] 100%
+ mingw-w64-ucrt-x86_64-libs...     9.7 KiB  42.3 KiB/s 00:00 [###############################] 100%
+ mingw-w64-ucrt-x86_64-pyth...    26.1 MiB  2.74 MiB/s 00:10 [###############################] 100%
+ Total (17/17)                    45.6 MiB  4.76 MiB/s 00:10 [###############################] 100%
+(17/17) checking keys in keyring                             [###############################] 100%
+(17/17) checking package integrity                           [###############################] 100%
+(17/17) loading package files                                [###############################] 100%
+(17/17) checking for file conflicts                          [###############################] 100%
+(17/17) checking available disk space                        [###############################] 100%
+:: Processing package changes...
+( 1/17) installing mingw-w64-ucrt-x86_64-expat               [###############################] 100%
+( 2/17) installing mingw-w64-ucrt-x86_64-bzip2               [###############################] 100%
+( 3/17) installing mingw-w64-ucrt-x86_64-libffi              [###############################] 100%
+( 4/17) installing mingw-w64-ucrt-x86_64-mpdecimal           [###############################] 100%
+( 5/17) installing mingw-w64-ucrt-x86_64-wineditline         [###############################] 100%
+( 6/17) installing mingw-w64-ucrt-x86_64-pcre2               [###############################] 100%
+( 7/17) installing mingw-w64-ucrt-x86_64-libtre              [###############################] 100%
+( 8/17) installing mingw-w64-ucrt-x86_64-libsystre           [###############################] 100%
+( 9/17) installing mingw-w64-ucrt-x86_64-ncurses             [###############################] 100%
+(10/17) installing mingw-w64-ucrt-x86_64-openssl             [###############################] 100%
+Optional dependencies for mingw-w64-ucrt-x86_64-openssl
+    mingw-w64-ucrt-x86_64-ca-certificates
+(11/17) installing mingw-w64-ucrt-x86_64-tcl                 [###############################] 100%
+(12/17) installing mingw-w64-ucrt-x86_64-sqlite3             [###############################] 100%
+Optional dependencies for mingw-w64-ucrt-x86_64-sqlite3
+    mingw-w64-ucrt-x86_64-tcl: for sqlite3_analyzer [installed]
+(13/17) installing mingw-w64-ucrt-x86_64-tk                  [###############################] 100%
+(14/17) installing mingw-w64-ucrt-x86_64-libb2               [###############################] 100%
+(15/17) installing mingw-w64-ucrt-x86_64-xz                  [###############################] 100%
+(16/17) installing mingw-w64-ucrt-x86_64-python              [###############################] 100%
+(17/17) installing mingw-w64-ucrt-x86_64-pkgconf             [###############################] 100%
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ python --version
+pkg-config --version
+Python 3.14.6
+3.0.4
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ scripts/build.sh
+=== build.sh: os=windows arch=x86_64 cores=2 cc=gcc cxx=g++ ===
+  ui=false version=dev
+mkdir -p build/c
+gcc  -std=c11 -O2 -w -Ivendored/mimalloc/include -Ivendored/mimalloc/src -DMI_OVERRIDE=1 -DMI_MALLOC_OVERRIDE=1 -c -o build/c/prod_mimalloc.o vendored/mimalloc/src/static.c
+gcc  -std=c11 -O2 -w -DSQLITE_DQS=0 -DSQLITE_THREADSAFE=1 -DSQLITE_ENABLE_FTS5-c -o build/c/prod_sqlite3.o vendored/sqlite3/sqlite3.c
+gcc  -std=c11 -g -O1 -w -Ivendored/tre -O2 -c -o build/c/prod_tre.o vendored/tre/tre_all.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_ada.o internal/cbm/grammar_ada.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_agda.o internal/cbm/grammar_agda.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_apex.o internal/cbm/grammar_apex.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_assembly.o internal/cbm/grammar_assembly.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_astro.o internal/cbm/grammar_astro.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_awk.o internal/cbm/grammar_awk.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_bash.o internal/cbm/grammar_bash.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_beancount.o internal/cbm/grammar_beancount.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_bibtex.o internal/cbm/grammar_bibtex.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_bicep.o internal/cbm/grammar_bicep.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_bitbake.o internal/cbm/grammar_bitbake.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_blade.o internal/cbm/grammar_blade.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_c.o internal/cbm/grammar_c.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_c_sharp.o internal/cbm/grammar_c_sharp.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_cairo.o internal/cbm/grammar_cairo.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_capnp.o internal/cbm/grammar_capnp.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_cfml.o internal/cbm/grammar_cfml.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_cfscript.o internal/cbm/grammar_cfscript.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_clojure.o internal/cbm/grammar_clojure.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_cmake.o internal/cbm/grammar_cmake.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_cobol.o internal/cbm/grammar_cobol.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_commonlisp.o internal/cbm/grammar_commonlisp.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_cpp.o internal/cbm/grammar_cpp.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_crystal.o internal/cbm/grammar_crystal.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_css.o internal/cbm/grammar_css.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_csv.o internal/cbm/grammar_csv.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_cuda.o internal/cbm/grammar_cuda.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_d.o internal/cbm/grammar_d.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_dart.o internal/cbm/grammar_dart.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_devicetree.o internal/cbm/grammar_devicetree.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_diff.o internal/cbm/grammar_diff.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_dockerfile.o internal/cbm/grammar_dockerfile.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_dotenv.o internal/cbm/grammar_dotenv.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_elisp.o internal/cbm/grammar_elisp.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_elixir.o internal/cbm/grammar_elixir.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_elm.o internal/cbm/grammar_elm.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_erlang.o internal/cbm/grammar_erlang.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_fennel.o internal/cbm/grammar_fennel.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_fish.o internal/cbm/grammar_fish.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_form.o internal/cbm/grammar_form.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_fortran.o internal/cbm/grammar_fortran.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_fsharp.o internal/cbm/grammar_fsharp.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_func.o internal/cbm/grammar_func.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_gdscript.o internal/cbm/grammar_gdscript.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_gitattributes.o internal/cbm/grammar_gitattributes.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_gitignore.o internal/cbm/grammar_gitignore.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_gleam.o internal/cbm/grammar_gleam.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_glsl.o internal/cbm/grammar_glsl.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_gn.o internal/cbm/grammar_gn.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_go.o internal/cbm/grammar_go.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_gomod.o internal/cbm/grammar_gomod.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_gotemplate.o internal/cbm/grammar_gotemplate.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_graphql.o internal/cbm/grammar_graphql.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_groovy.o internal/cbm/grammar_groovy.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_hare.o internal/cbm/grammar_hare.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_haskell.o internal/cbm/grammar_haskell.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_hcl.o internal/cbm/grammar_hcl.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_hlsl.o internal/cbm/grammar_hlsl.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_html.o internal/cbm/grammar_html.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_hyprlang.o internal/cbm/grammar_hyprlang.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_ini.o internal/cbm/grammar_ini.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_ispc.o internal/cbm/grammar_ispc.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_janet.o internal/cbm/grammar_janet.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_java.o internal/cbm/grammar_java.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_javascript.o internal/cbm/grammar_javascript.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_jinja2.o internal/cbm/grammar_jinja2.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_jsdoc.o internal/cbm/grammar_jsdoc.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_json.o internal/cbm/grammar_json.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_json5.o internal/cbm/grammar_json5.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_jsonnet.o internal/cbm/grammar_jsonnet.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_julia.o internal/cbm/grammar_julia.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_just.o internal/cbm/grammar_just.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_kconfig.o internal/cbm/grammar_kconfig.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_kdl.o internal/cbm/grammar_kdl.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_kotlin.o internal/cbm/grammar_kotlin.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_lean.o internal/cbm/grammar_lean.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_linkerscript.o internal/cbm/grammar_linkerscript.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_liquid.o internal/cbm/grammar_liquid.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_llvm.o internal/cbm/grammar_llvm.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_lua.o internal/cbm/grammar_lua.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_luau.o internal/cbm/grammar_luau.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_magma.o internal/cbm/grammar_magma.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_makefile.o internal/cbm/grammar_makefile.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_markdown.o internal/cbm/grammar_markdown.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_matlab.o internal/cbm/grammar_matlab.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_mermaid.o internal/cbm/grammar_mermaid.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_meson.o internal/cbm/grammar_meson.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_mojo.o internal/cbm/grammar_mojo.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_move.o internal/cbm/grammar_move.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_nasm.o internal/cbm/grammar_nasm.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_nickel.o internal/cbm/grammar_nickel.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_nix.o internal/cbm/grammar_nix.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_objc.o internal/cbm/grammar_objc.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_objectscript_routine.o internal/cbm/grammar_objectscript_routine.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_objectscript_udl.o internal/cbm/grammar_objectscript_udl.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_ocaml.o internal/cbm/grammar_ocaml.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_odin.o internal/cbm/grammar_odin.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_pascal.o internal/cbm/grammar_pascal.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_perl.o internal/cbm/grammar_perl.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_php.o internal/cbm/grammar_php.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_pine.o internal/cbm/grammar_pine.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_pkl.o internal/cbm/grammar_pkl.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_po.o internal/cbm/grammar_po.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_pony.o internal/cbm/grammar_pony.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_powershell.o internal/cbm/grammar_powershell.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_prisma.o internal/cbm/grammar_prisma.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_properties.o internal/cbm/grammar_properties.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_protobuf.o internal/cbm/grammar_protobuf.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_puppet.o internal/cbm/grammar_puppet.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_purescript.o internal/cbm/grammar_purescript.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_python.o internal/cbm/grammar_python.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_qml.o internal/cbm/grammar_qml.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_r.o internal/cbm/grammar_r.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_racket.o internal/cbm/grammar_racket.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_regex.o internal/cbm/grammar_regex.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_requirements.o internal/cbm/grammar_requirements.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_rescript.o internal/cbm/grammar_rescript.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_ron.o internal/cbm/grammar_ron.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_rst.o internal/cbm/grammar_rst.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_ruby.o internal/cbm/grammar_ruby.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_rust.o internal/cbm/grammar_rust.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_scala.o internal/cbm/grammar_scala.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_scheme.o internal/cbm/grammar_scheme.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_scss.o internal/cbm/grammar_scss.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_slang.o internal/cbm/grammar_slang.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_smali.o internal/cbm/grammar_smali.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_smithy.o internal/cbm/grammar_smithy.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_solidity.o internal/cbm/grammar_solidity.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_soql.o internal/cbm/grammar_soql.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_sosl.o internal/cbm/grammar_sosl.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_sql.o internal/cbm/grammar_sql.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_squirrel.o internal/cbm/grammar_squirrel.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_sshconfig.o internal/cbm/grammar_sshconfig.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_starlark.o internal/cbm/grammar_starlark.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_svelte.o internal/cbm/grammar_svelte.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_sway.o internal/cbm/grammar_sway.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_swift.o internal/cbm/grammar_swift.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_systemverilog.o internal/cbm/grammar_systemverilog.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_tablegen.o internal/cbm/grammar_tablegen.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_tcl.o internal/cbm/grammar_tcl.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_teal.o internal/cbm/grammar_teal.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_templ.o internal/cbm/grammar_templ.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_thrift.o internal/cbm/grammar_thrift.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_tlaplus.o internal/cbm/grammar_tlaplus.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_toml.o internal/cbm/grammar_toml.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_tsx.o internal/cbm/grammar_tsx.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_typescript.o internal/cbm/grammar_typescript.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_typst.o internal/cbm/grammar_typst.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_verilog.o internal/cbm/grammar_verilog.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_vhdl.o internal/cbm/grammar_vhdl.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_vim.o internal/cbm/grammar_vim.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_vue.o internal/cbm/grammar_vue.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_wgsl.o internal/cbm/grammar_wgsl.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_wit.o internal/cbm/grammar_wit.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_wolfram.o internal/cbm/grammar_wolfram.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_xml.o internal/cbm/grammar_xml.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_yaml.o internal/cbm/grammar_yaml.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_zig.o internal/cbm/grammar_zig.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_zsh.o internal/cbm/grammar_zsh.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_ts_runtime.o internal/cbm/ts_runtime.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_lsp_all.o internal/cbm/lsp_all.c
+g++  -std=c++14 -Wall -Wextra -Werror -Wno-unused-parameter -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -O2 -w -Iinternal/cbm/vendored -c -o build/c/prod_preprocessor.o internal/cbm/preprocessor.cpp
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -c -o build/c/prod_lz4.ointernal/cbm/vendored/lz4/lz4.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm/vendored/lz4 -c -o build/c/prod_lz4hc.o internal/cbm/vendored/lz4/lz4hc.c
+gcc  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm/vendored/zstd -c -o build/c/prod_zstd.o internal/cbm/vendored/zstd/zstd.c
+gcc  -c -o build/c/unixcoder_blob.o vendored/nomic/code_vectors_blob.S
+gcc  -std=c11 -D_DEFAULT_SOURCE -D_GNU_SOURCE -Wall -Wextra -Werror -Wno-unused-parameter -Wno-sign-compare -Wno-format-truncation -Wno-unused-result -Wno-stringop-truncation -Wno-alloc-size-larger-than -Isrc -Ivendored -Ivendored/sqlite3 -Ivendored/mimalloc/include -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -O2 -DCBM_BIND_TS_ALLOCATOR=1  -o build/c/codebase-memory-mcp-launcher.exe \
+        src/launcher/windows_launcher.c src/cli/windows_launcher_state.c \
+        -municode -lbcrypt -lws2_32 -lpsapi -lshell32 -ladvapi32 -Wl,--allow-multiple-definition -Wl,--stack,8388608 -static
+gcc  -std=c11 -D_DEFAULT_SOURCE -D_GNU_SOURCE -Wall -Wextra -Werror -Wno-unused-parameter -Wno-sign-compare -Wno-format-truncation -Wno-unused-result -Wno-stringop-truncation -Wno-alloc-size-larger-than -Isrc -Ivendored -Ivendored/sqlite3 -Ivendored/mimalloc/include -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -O2 -DCBM_BIND_TS_ALLOCATOR=1  -o build/c/codebase-memory-mcp \
+        src/main.c src/foundation/arena.c src/foundation/hash_table.c src/foundation/str_intern.c src/foundation/log.c src/foundation/str_util.c src/foundation/platform.c src/foundation/system_info.c src/foundation/slab_alloc.c src/foundation/yaml.c src/foundation/compat.c src/foundation/compat_thread.c src/foundation/compat_fs.c src/foundation/compat_regex.c src/foundation/mem.c src/foundation/diagnostics.c src/foundation/profile.c src/foundation/dump_verify.c src/foundation/limits.c src/foundation/subprocess.c src/foundation/sha256.c src/foundation/macos_acl.c src/foundation/private_file_lock.c src/foundation/lock_registry.c src/store/store.c src/cypher/cypher.c src/mcp/mcp.c src/mcp/index_supervisor.c src/mcp/compact_out.c src/daemon/daemon.c src/daemon/project_lock.c src/daemon/version_cohort.c src/daemon/service.c src/daemon/runtime.c src/daemon/application.c src/daemon/frontend.c src/daemon/host.c src/daemon/bootstrap.c src/daemon/ipc.c src/discover/language.c src/discover/userconfig.c src/discover/gitignore.c src/discover/discover.c src/graph_buffer/graph_buffer.c src/pipeline/fqn.c src/pipeline/path_alias.c src/pipeline/registry.c src/pipeline/pipeline.c src/pipeline/pipeline_incremental.c src/pipeline/worker_pool.c src/pipeline/pass_parallel.c src/pipeline/pass_definitions.c src/pipeline/pass_calls.c src/pipeline/pass_lsp_cross.c src/pipeline/pass_usages.c src/pipeline/pass_semantic.c src/pipeline/pass_tests.c src/pipeline/pass_githistory.c src/pipeline/pass_gitdiff.c src/pipeline/pass_configures.c src/pipeline/pass_configlink.c src/pipeline/pass_route_nodes.c src/pipeline/pass_enrichment.c src/pipeline/pass_envscan.c src/pipeline/pass_compile_commands.c src/pipeline/pass_infrascan.c src/pipeline/pass_k8s.c src/pipeline/pass_similarity.c src/pipeline/pass_semantic_edges.c src/pipeline/pass_complexity.c src/pipeline/pass_cross_repo.c src/pipeline/artifact.c src/pipeline/pass_pkgmap.c src/simhash/minhash.c src/semantic/semantic.c src/semantic/ast_profile.c src/semantic/rotsq.c src/traces/traces.c src/watcher/watcher.c src/git/git_context.c src/cli/cli.c src/cli/progress_sink.c src/cli/hook_augment.c src/cli/agent_clients.c src/cli/agent_profiles.c src/cli/config_json_like.c src/cli/config_toml_edit.c src/cli/config_yaml_edit.c src/cli/config_text_edit.c src/cli/activation_transaction.c src/cli/windows_launcher_state.c src/ui/config.c src/ui/http_server.c src/ui/layout3d.c src/ui/httpd.c src/ui/embedded_stub.c vendored/yyjson/yyjson.c \
+        internal/cbm/cbm.c internal/cbm/extract_defs.c internal/cbm/extract_calls.c internal/cbm/extract_imports.c internal/cbm/extract_usages.c internal/cbm/extract_unified.c internal/cbm/extract_semantic.c internal/cbm/extract_type_refs.c internal/cbm/extract_type_assigns.c internal/cbm/extract_env_accesses.c internal/cbm/extract_channels.c internal/cbm/extract_k8s.c internal/cbm/helpers.cinternal/cbm/lang_specs.c internal/cbm/macro_table.c internal/cbm/iris_export_xml.c internal/cbm/service_patterns.c internal/cbm/ac.c internal/cbm/lz4_store.c internal/cbm/zstd_store.c internal/cbm/sqlite_writer.c \
+        build/c/prod_mimalloc.o build/c/prod_sqlite3.o build/c/prod_tre.o build/c/prod_grammar_ada.o build/c/prod_grammar_agda.o build/c/prod_grammar_apex.o build/c/prod_grammar_assembly.o build/c/prod_grammar_astro.o build/c/prod_grammar_awk.o build/c/prod_grammar_bash.o build/c/prod_grammar_beancount.o build/c/prod_grammar_bibtex.o build/c/prod_grammar_bicep.o build/c/prod_grammar_bitbake.o build/c/prod_grammar_blade.o build/c/prod_grammar_c.o build/c/prod_grammar_c_sharp.o build/c/prod_grammar_cairo.o build/c/prod_grammar_capnp.o build/c/prod_grammar_cfml.o build/c/prod_grammar_cfscript.o build/c/prod_grammar_clojure.o build/c/prod_grammar_cmake.o build/c/prod_grammar_cobol.o build/c/prod_grammar_commonlisp.o build/c/prod_grammar_cpp.o build/c/prod_grammar_crystal.o build/c/prod_grammar_css.o build/c/prod_grammar_csv.o build/c/prod_grammar_cuda.o build/c/prod_grammar_d.o build/c/prod_grammar_dart.o build/c/prod_grammar_devicetree.o build/c/prod_grammar_diff.o build/c/prod_grammar_dockerfile.o build/c/prod_grammar_dotenv.o build/c/prod_grammar_elisp.o build/c/prod_grammar_elixir.o build/c/prod_grammar_elm.o build/c/prod_grammar_erlang.o build/c/prod_grammar_fennel.o build/c/prod_grammar_fish.o build/c/prod_grammar_form.o build/c/prod_grammar_fortran.o build/c/prod_grammar_fsharp.o build/c/prod_grammar_func.o build/c/prod_grammar_gdscript.o build/c/prod_grammar_gitattributes.o build/c/prod_grammar_gitignore.o build/c/prod_grammar_gleam.o build/c/prod_grammar_glsl.o build/c/prod_grammar_gn.o build/c/prod_grammar_go.o build/c/prod_grammar_gomod.o build/c/prod_grammar_gotemplate.o build/c/prod_grammar_graphql.o build/c/prod_grammar_groovy.o build/c/prod_grammar_hare.o build/c/prod_grammar_haskell.o build/c/prod_grammar_hcl.o build/c/prod_grammar_hlsl.o build/c/prod_grammar_html.o build/c/prod_grammar_hyprlang.o build/c/prod_grammar_ini.o build/c/prod_grammar_ispc.obuild/c/prod_grammar_janet.o build/c/prod_grammar_java.o build/c/prod_grammar_javascript.o build/c/prod_grammar_jinja2.o build/c/prod_grammar_jsdoc.o build/c/prod_grammar_json.o build/c/prod_grammar_json5.o build/c/prod_grammar_jsonnet.o build/c/prod_grammar_julia.o build/c/prod_grammar_just.o build/c/prod_grammar_kconfig.o build/c/prod_grammar_kdl.o build/c/prod_grammar_kotlin.o build/c/prod_grammar_lean.o build/c/prod_grammar_linkerscript.o build/c/prod_grammar_liquid.o build/c/prod_grammar_llvm.o build/c/prod_grammar_lua.o build/c/prod_grammar_luau.o build/c/prod_grammar_magma.o build/c/prod_grammar_makefile.o build/c/prod_grammar_markdown.o build/c/prod_grammar_matlab.o build/c/prod_grammar_mermaid.o build/c/prod_grammar_meson.o build/c/prod_grammar_mojo.o build/c/prod_grammar_move.o build/c/prod_grammar_nasm.o build/c/prod_grammar_nickel.o build/c/prod_grammar_nix.o build/c/prod_grammar_objc.o build/c/prod_grammar_objectscript_routine.o build/c/prod_grammar_objectscript_udl.o build/c/prod_grammar_ocaml.o build/c/prod_grammar_odin.o build/c/prod_grammar_pascal.o build/c/prod_grammar_perl.o build/c/prod_grammar_php.o build/c/prod_grammar_pine.o build/c/prod_grammar_pkl.o build/c/prod_grammar_po.o build/c/prod_grammar_pony.o build/c/prod_grammar_powershell.o build/c/prod_grammar_prisma.o build/c/prod_grammar_properties.o build/c/prod_grammar_protobuf.o build/c/prod_grammar_puppet.o build/c/prod_grammar_purescript.o build/c/prod_grammar_python.o build/c/prod_grammar_qml.o build/c/prod_grammar_r.o build/c/prod_grammar_racket.o build/c/prod_grammar_regex.o build/c/prod_grammar_requirements.o build/c/prod_grammar_rescript.o build/c/prod_grammar_ron.o build/c/prod_grammar_rst.o build/c/prod_grammar_ruby.o build/c/prod_grammar_rust.o build/c/prod_grammar_scala.o build/c/prod_grammar_scheme.o build/c/prod_grammar_scss.o build/c/prod_grammar_slang.o build/c/prod_grammar_smali.o build/c/prod_grammar_smithy.o build/c/prod_grammar_solidity.o build/c/prod_grammar_soql.o build/c/prod_grammar_sosl.o build/c/prod_grammar_sql.o build/c/prod_grammar_squirrel.o build/c/prod_grammar_sshconfig.o build/c/prod_grammar_starlark.o build/c/prod_grammar_svelte.o build/c/prod_grammar_sway.o build/c/prod_grammar_swift.o build/c/prod_grammar_systemverilog.o build/c/prod_grammar_tablegen.o build/c/prod_grammar_tcl.o build/c/prod_grammar_teal.o build/c/prod_grammar_templ.o build/c/prod_grammar_thrift.o build/c/prod_grammar_tlaplus.o build/c/prod_grammar_toml.o build/c/prod_grammar_tsx.o build/c/prod_grammar_typescript.o build/c/prod_grammar_typst.o build/c/prod_grammar_verilog.o build/c/prod_grammar_vhdl.o build/c/prod_grammar_vim.o build/c/prod_grammar_vue.o build/c/prod_grammar_wgsl.o build/c/prod_grammar_wit.o build/c/prod_grammar_wolfram.obuild/c/prod_grammar_xml.o build/c/prod_grammar_yaml.o build/c/prod_grammar_zig.o build/c/prod_grammar_zsh.o build/c/prod_ts_runtime.o build/c/prod_lsp_all.obuild/c/prod_preprocessor.o build/c/prod_lz4.o build/c/prod_lz4hc.o build/c/prod_zstd.o build/c/unixcoder_blob.o \
+        -lm -lstdc++ -lpthread -lz -lws2_32 -lpsapi -lshell32 -ladvapi32 -Wl,--allow-multiple-definition -Wl,--stack,8388608 -static
+src/foundation/compat_fs.c: In function 'cbm_canonical_path':
+src/foundation/compat_fs.c:886:61: error: comparison is always false due to limited range of data type [-Werror=type-limits]
+  886 |     if (needed == 0 || needed == MAXDWORD || (size_t)needed > SIZE_MAX/ sizeof(wchar_t) - 1) {
+      |                                                             ^
+cc1.exe: all warnings being treated as errors
+In file included from C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include/immintrin.h:55,
+                 from C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include/x86intrin.h:32,
+                 from C:/msys64/ucrt64/include/winnt.h:1703,
+                 from C:/msys64/ucrt64/include/minwindef.h:163,
+                 from C:/msys64/ucrt64/include/windef.h:9,
+                 from C:/msys64/ucrt64/include/windows.h:69,
+                 from src/foundation/compat.h:32,
+                 from src/foundation/subprocess.c:8:
+C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include/avx512fintrin.h:6108:1: internal compiler error: Segmentation fault
+ 6108 | {
+      | ^
+C:/msys64/ucrt64/bin/../lib/gcc/x86_64-w64-mingw32/16.1.0/cc1.exe -quiet -I src -I vendored -I vendored/sqlite3 -I vendored/mimalloc/include -I internal/cbm -I internal/cbm/vendored/ts_runtime/include -iprefix C:/msys64/ucrt64/bin/../lib/gcc/x86_64-w64-mingw32/16.1.0/ -D_REENTRANT -D _DEFAULT_SOURCE -D _GNU_SOURCE-D CBM_BIND_TS_ALLOCATOR=1 src/foundation/subprocess.c -quiet -dumpdir build/c/codebase-memory-mcp- -dumpbase subprocess.c -dumpbase-ext .c -mtune=generic -march=nocona -O2 -Wall -Wextra -Werror -Wno-unused-parameter -Wno-sign-compare -Wformat-truncation=0 -Wno-unused-result -Wno-stringop-truncation -Walloc-size-larger-than=18446744073709551615EiB -std=c11 -o C:\msys64\tmp\ccS1sTHm.s
+Please submit a full bug report, with preprocessed source (by using -freport-bug).
+See <https://github.com/msys2/MINGW-packages/issues> for instructions.
+src/foundation/private_file_lock.c: In function 'private_win_security_init':
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'BOOL (*)(void *, DWORD,  void **)' {aka 'int (*)(void *, long unsigned int,  void **)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:753:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  753 |     PRIVATE_RESOLVE_ADVAPI(security, open_process_token, private_open_process_token_fn,
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'BOOL (*)(void *, TOKEN_INFORMATION_CLASS,  void *, DWORD,  DWORD *)' {aka 'int (*)(void *, TOKEN_INFORMATION_CLASS,  void *, long unsigned int,  long unsigned int *)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:755:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  755 |     PRIVATE_RESOLVE_ADVAPI(security, get_token_information, private_get_token_information_fn,
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'DWORD (*)(void *)' {aka 'long unsigned int (*)(void *)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:757:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  757 |     PRIVATE_RESOLVE_ADVAPI(security, get_length_sid, private_get_length_sid_fn, "GetLengthSid");
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'BOOL (*)(DWORD,  void *, void *)' {aka 'int (*)(long unsigned int,  void *, void *)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:758:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  758 |     PRIVATE_RESOLVE_ADVAPI(security, copy_sid, private_copy_sid_fn, "CopySid");
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'BOOL (*)(void *, void *)' {aka 'int (*)(void *, void *)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:759:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  759 |     PRIVATE_RESOLVE_ADVAPI(security, equal_sid, private_equal_sid_fn, "EqualSid");
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'BOOL (*)(void *)' {aka 'int (*)(void *)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:760:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  760 |     PRIVATE_RESOLVE_ADVAPI(security, is_valid_sid, private_is_valid_sid_fn, "IsValidSid");
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'BOOL (*)(ACL *, DWORD,  DWORD)' {aka 'int (*)(ACL *, long unsigned int,  long unsigned int)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:761:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  761 |     PRIVATE_RESOLVE_ADVAPI(security, initialize_acl, private_initialize_acl_fn, "InitializeAcl");
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'BOOL (*)(ACL *, DWORD,  DWORD,  void *)' {aka 'int (*)(ACL *, long unsigned int,  long unsigned int,  void *)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:762:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  762 |     PRIVATE_RESOLVE_ADVAPI(security, add_access_allowed_ace, private_add_access_allowed_ace_fn,
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'BOOL (*)(void *, DWORD)' {aka 'int (*)(void *, long unsigned int)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:764:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  764 |     PRIVATE_RESOLVE_ADVAPI(security, initialize_security_descriptor,
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'BOOL (*)(void *, BOOL,  ACL *, BOOL)' {aka 'int (*)(void *, int,  ACL *, int)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:767:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  767 |     PRIVATE_RESOLVE_ADVAPI(security, set_security_descriptor_dacl,
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'BOOL (*)(void *, void *, BOOL)' {aka 'int (*)(void *, void *, int)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:769:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  769 |     PRIVATE_RESOLVE_ADVAPI(security, set_security_descriptor_owner,
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'BOOL (*)(void *, SECURITY_DESCRIPTOR_CONTROL,  SECURITY_DESCRIPTOR_CONTROL)' {aka 'int (*)(void *,short unsigned int,  short unsigned int)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:771:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  771 |     PRIVATE_RESOLVE_ADVAPI(security, set_security_descriptor_control,
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'BOOL (*)(void *, WORD *, DWORD *)' {aka 'int (*)(void *, short unsigned int *, long unsigned int *)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:774:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  774 |     PRIVATE_RESOLVE_ADVAPI(security, get_security_descriptor_control,
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'BOOL (*)(ACL *, void *, DWORD,  ACL_INFORMATION_CLASS)' {aka
+int (*)(ACL *, void *, long unsigned int,  ACL_INFORMATION_CLASS)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:777:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  777 |     PRIVATE_RESOLVE_ADVAPI(security, get_acl_information, private_get_acl_information_fn,
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'BOOL (*)(ACL *, DWORD,  void **)' {aka 'int (*)(ACL *, long unsigned int,  void **)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:779:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  779 |     PRIVATE_RESOLVE_ADVAPI(security, get_ace, private_get_ace_fn, "GetAce");
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+src/foundation/private_file_lock.c:740:29: error: cast between incompatible function types from 'FARPROC' {aka 'long long int (*)()'} to 'DWORD (*)(void *, SE_OBJECT_TYPE,  SECURITY_INFORMATION,  void **, void **, ACL **, ACL **, void **)' {aka 'long unsigned int (*)(void *, SE_OBJECT_TYPE,  long unsigned int,  void **, void **, ACL **, ACL **, void **)'} [-Werror=cast-function-type]
+  740 |         (context)->member = (type)GetProcAddress((context)->advapi, (symbol)); \
+      |                             ^
+src/foundation/private_file_lock.c:780:5: note: in expansion of macro 'PRIVATE_RESOLVE_ADVAPI'
+  780 |     PRIVATE_RESOLVE_ADVAPI(security, get_security_info, private_get_security_info_fn,
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+cc1.exe: all warnings being treated as errors
+In file included from C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include/immintrin.h:151,
+                 from C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include/x86intrin.h:32,
+                 from C:/msys64/ucrt64/include/winnt.h:1703,
+                 from C:/msys64/ucrt64/include/minwindef.h:163,
+                 from C:/msys64/ucrt64/include/windef.h:9,
+                 from C:/msys64/ucrt64/include/windows.h:69,
+                 from src/foundation/compat.h:32,
+                 from src/daemon/ipc.c:7:
+C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include/avx10_2bf16intrin.h:394:1: internal compiler error: Segmentation fault
+  394 | {
+      | ^
+C:/msys64/ucrt64/bin/../lib/gcc/x86_64-w64-mingw32/16.1.0/cc1.exe -quiet -I src -I vendored -I vendored/sqlite3 -I vendored/mimalloc/include -I internal/cbm -I internal/cbm/vendored/ts_runtime/include -iprefix C:/msys64/ucrt64/bin/../lib/gcc/x86_64-w64-mingw32/16.1.0/ -D_REENTRANT -D _DEFAULT_SOURCE -D _GNU_SOURCE-D CBM_BIND_TS_ALLOCATOR=1 src/daemon/ipc.c -quiet -dumpdir build/c/codebase-memory-mcp- -dumpbase ipc.c -dumpbase-ext .c -mtune=generic -march=nocona -O2 -Wall -Wextra -Werror -Wno-unused-parameter -Wno-sign-compare -Wformat-truncation=0 -Wno-unused-result -Wno-stringop-truncation -Walloc-size-larger-than=18446744073709551615EiB -std=c11 -o C:\msys64\tmp\ccS1sTHm.s
+Please submit a full bug report, with preprocessed source (by using -freport-bug).
+See <https://github.com/msys2/MINGW-packages/issues> for instructions.
+In file included from C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include/immintrin.h:61,
+                 from C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include/x86intrin.h:32,
+                 from C:/msys64/ucrt64/include/winnt.h:1703,
+                 from C:/msys64/ucrt64/include/minwindef.h:163,
+                 from C:/msys64/ucrt64/include/windef.h:9,
+                 from C:/msys64/ucrt64/include/windows.h:69,
+                 from src/foundation/compat.h:32,
+                 from src/cli/config_json_like.c:11:
+C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include/avx512bwintrin.h:430:1: internal compiler error: Segmentation fault
+  430 | {
+      | ^
+C:/msys64/ucrt64/bin/../lib/gcc/x86_64-w64-mingw32/16.1.0/cc1.exe -quiet -I src -I vendored -I vendored/sqlite3 -I vendored/mimalloc/include -I internal/cbm -I internal/cbm/vendored/ts_runtime/include -iprefix C:/msys64/ucrt64/bin/../lib/gcc/x86_64-w64-mingw32/16.1.0/ -D_REENTRANT -D _DEFAULT_SOURCE -D _GNU_SOURCE-D CBM_BIND_TS_ALLOCATOR=1 src/cli/config_json_like.c -quiet -dumpdir build/c/codebase-memory-mcp- -dumpbase config_json_like.c -dumpbase-ext .c -mtune=generic -march=nocona -O2 -Wall -Wextra -Werror -Wno-unused-parameter -Wno-sign-compare -Wformat-truncation=0 -Wno-unused-result -Wno-stringop-truncation -Walloc-size-larger-than=18446744073709551615EiB -std=c11 -o C:\msys64\tmp\ccS1sTHm.s
+Please submit a full bug report, with preprocessed source (by using -freport-bug).
+See <https://github.com/msys2/MINGW-packages/issues> for instructions.
+make: *** [Makefile.cbm:827: build/c/codebase-memory-mcp] Error 1
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ grep -R "gcc-" -n scripts Makefile.cbm | head -20
+scripts/build.sh:9:#   scripts/build.sh CC=gcc-14 CXX=g++-14        # Overridecompiler
+scripts/test.sh:7:#   scripts/test.sh CC=gcc-14 CXX=g++-14    # Override compiler
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ $ grep -R "gcc-" -n scripts Makefile.cbm | head -20
+scripts/build.sh:9:#   scripts/build.sh CC=gcc-14 CXX=g++-14        # Overridecompiler
+scripts/test.sh:7:#   scripts/test.sh CC=gcc-14 CXX=g++-14    # Override compiler
+-bash: $: command not found
+-bash: scripts/build.sh:9:#: No such file or directory
+-bash: scripts/test.sh:7:#: No such file or directory
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ pacman -Ss mingw-w64-ucrt-x86_64-gcc
+ucrt64/mingw-w64-ucrt-x86_64-gcc 16.1.0-5 (mingw-w64-ucrt-x86_64-toolchain) [installed]
+    GNU Compiler Collection (C,C++,OpenMP) for MinGW-w64
+ucrt64/mingw-w64-ucrt-x86_64-gcc-ada 16.1.0-5
+    GNU Compiler Collection (Ada) for MinGW-w64
+ucrt64/mingw-w64-ucrt-x86_64-gcc-fortran 16.1.0-5
+    GNU Compiler Collection (Fortran) for MinGW-w64
+ucrt64/mingw-w64-ucrt-x86_64-gcc-libgfortran 16.1.0-5
+    GNU Compiler Collection (libgfortran) for MinGW-w64
+ucrt64/mingw-w64-ucrt-x86_64-gcc-libs 16.1.0-5 [installed]
+    GNU Compiler Collection (libraries) for MinGW-w64
+ucrt64/mingw-w64-ucrt-x86_64-gcc-lto-dump 16.1.0-5
+    Dump link time optimization object files (mingw-w64)
+ucrt64/mingw-w64-ucrt-x86_64-gcc-objc 16.1.0-5
+    GNU Compiler Collection (ObjC,Obj-C++) for MinGW-w64
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ ^C
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ pacman -S --needed mingw-w64-ucrt-x86_64-clang
+resolving dependencies...
+looking for conflicting packages...
+
+Packages (4) mingw-w64-ucrt-x86_64-clang-libs-22.1.8-2  mingw-w64-ucrt-x86_64-libxml2-2.15.3-1
+             mingw-w64-ucrt-x86_64-llvm-libs-22.1.8-2  mingw-w64-ucrt-x86_64-clang-22.1.8-2
+
+Total Download Size:    81.51 MiB
+Total Installed Size:  557.35 MiB
+
+:: Proceed with installation? [Y/n]
+:: Retrieving packages...
+ mingw-w64-ucrt-x86_64-libx...   978.5 KiB  1080 KiB/s 00:01 [###############################] 100%
+ mingw-w64-ucrt-x86_64-clan...    21.8 MiB  6.61 MiB/s 00:03 [###############################] 100%
+ mingw-w64-ucrt-x86_64-clan...    29.2 MiB  7.22 MiB/s 00:04 [###############################] 100%
+ mingw-w64-ucrt-x86_64-llvm...    29.5 MiB  4.80 MiB/s 00:06 [###############################] 100%
+ Total (4/4)                      81.5 MiB  12.7 MiB/s 00:06 [###############################] 100%
+(4/4) checking keys in keyring                               [###############################] 100%
+(4/4) checking package integrity                             [###############################] 100%
+(4/4) loading package files                                  [###############################] 100%
+(4/4) checking for file conflicts                            [###############################] 100%
+(4/4) checking available disk space                          [###############################] 100%
+:: Processing package changes...
+(1/4) installing mingw-w64-ucrt-x86_64-libxml2               [###############################] 100%
+Optional dependencies for mingw-w64-ucrt-x86_64-libxml2
+    mingw-w64-ucrt-x86_64-python: Python bindings [installed]
+(2/4) installing mingw-w64-ucrt-x86_64-llvm-libs             [###############################] 100%
+(3/4) installing mingw-w64-ucrt-x86_64-clang-libs            [###############################] 100%
+(4/4) installing mingw-w64-ucrt-x86_64-clang                 [###############################] 100%
+Optional dependencies for mingw-w64-ucrt-x86_64-clang
+    mingw-w64-ucrt-x86_64-llvm=22.1.8
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ clang --version
+clang version 22.1.8 (https://github.com/msys2/MINGW-packages 6e4e79c2f86eeb534e324e583f2057dc9fd5ecab)
+Target: x86_64-w64-windows-gnu
+Thread model: posix
+InstalledDir: C:/msys64/ucrt64/bin
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ clang++ --version
+clang version 22.1.8 (https://github.com/msys2/MINGW-packages 6e4e79c2f86eeb534e324e583f2057dc9fd5ecab)
+Target: x86_64-w64-windows-gnu
+Thread model: posix
+InstalledDir: C:/msys64/ucrt64/bin
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ ^C
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ CC=clang CXX=clang++ scripts/build.sh
+=== build.sh: os=windows arch=x86_64 cores=2 cc=clang cxx=clang++ ===
+  ui=false version=dev
+mkdir -p build/c
+clang  -std=c11 -O2 -w -Ivendored/mimalloc/include -Ivendored/mimalloc/src -DMI_OVERRIDE=1 -DMI_MALLOC_OVERRIDE=1 -c -o build/c/prod_mimalloc.o vendored/mimalloc/src/static.c
+clang  -std=c11 -O2 -w -DSQLITE_DQS=0 -DSQLITE_THREADSAFE=1 -DSQLITE_ENABLE_FTS5 -c -o build/c/prod_sqlite3.o vendored/sqlite3/sqlite3.c
+clang  -std=c11 -g -O1 -w -Ivendored/tre -O2 -c -o build/c/prod_tre.o vendored/tre/tre_all.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_ada.o internal/cbm/grammar_ada.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_agda.o internal/cbm/grammar_agda.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_apex.o internal/cbm/grammar_apex.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_assembly.o internal/cbm/grammar_assembly.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_astro.o internal/cbm/grammar_astro.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_awk.o internal/cbm/grammar_awk.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_bash.o internal/cbm/grammar_bash.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_beancount.o internal/cbm/grammar_beancount.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_bibtex.o internal/cbm/grammar_bibtex.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_bicep.o internal/cbm/grammar_bicep.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_bitbake.o internal/cbm/grammar_bitbake.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_blade.o internal/cbm/grammar_blade.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_c.o internal/cbm/grammar_c.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_c_sharp.o internal/cbm/grammar_c_sharp.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_cairo.o internal/cbm/grammar_cairo.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_capnp.o internal/cbm/grammar_capnp.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_cfml.o internal/cbm/grammar_cfml.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_cfscript.o internal/cbm/grammar_cfscript.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_clojure.o internal/cbm/grammar_clojure.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_cmake.o internal/cbm/grammar_cmake.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_cobol.o internal/cbm/grammar_cobol.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_commonlisp.o internal/cbm/grammar_commonlisp.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_cpp.o internal/cbm/grammar_cpp.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_crystal.o internal/cbm/grammar_crystal.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_css.o internal/cbm/grammar_css.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_csv.o internal/cbm/grammar_csv.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_cuda.o internal/cbm/grammar_cuda.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_d.o internal/cbm/grammar_d.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_dart.o internal/cbm/grammar_dart.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_devicetree.o internal/cbm/grammar_devicetree.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_diff.o internal/cbm/grammar_diff.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_dockerfile.o internal/cbm/grammar_dockerfile.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_dotenv.o internal/cbm/grammar_dotenv.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_elisp.o internal/cbm/grammar_elisp.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_elixir.o internal/cbm/grammar_elixir.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_elm.o internal/cbm/grammar_elm.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_erlang.o internal/cbm/grammar_erlang.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_fennel.o internal/cbm/grammar_fennel.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_fish.o internal/cbm/grammar_fish.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_form.o internal/cbm/grammar_form.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_fortran.o internal/cbm/grammar_fortran.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_fsharp.o internal/cbm/grammar_fsharp.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_func.o internal/cbm/grammar_func.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_gdscript.o internal/cbm/grammar_gdscript.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_gitattributes.o internal/cbm/grammar_gitattributes.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_gitignore.o internal/cbm/grammar_gitignore.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_gleam.o internal/cbm/grammar_gleam.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_glsl.o internal/cbm/grammar_glsl.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_gn.o internal/cbm/grammar_gn.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_go.o internal/cbm/grammar_go.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_gomod.o internal/cbm/grammar_gomod.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_gotemplate.o internal/cbm/grammar_gotemplate.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_graphql.o internal/cbm/grammar_graphql.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_groovy.o internal/cbm/grammar_groovy.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_hare.o internal/cbm/grammar_hare.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_haskell.o internal/cbm/grammar_haskell.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_hcl.o internal/cbm/grammar_hcl.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_hlsl.o internal/cbm/grammar_hlsl.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_html.o internal/cbm/grammar_html.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_hyprlang.o internal/cbm/grammar_hyprlang.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_ini.o internal/cbm/grammar_ini.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_ispc.o internal/cbm/grammar_ispc.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_janet.o internal/cbm/grammar_janet.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_java.o internal/cbm/grammar_java.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_javascript.o internal/cbm/grammar_javascript.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_jinja2.o internal/cbm/grammar_jinja2.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_jsdoc.o internal/cbm/grammar_jsdoc.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_json.o internal/cbm/grammar_json.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_json5.o internal/cbm/grammar_json5.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_jsonnet.o internal/cbm/grammar_jsonnet.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_julia.o internal/cbm/grammar_julia.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_just.o internal/cbm/grammar_just.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_kconfig.o internal/cbm/grammar_kconfig.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_kdl.o internal/cbm/grammar_kdl.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_kotlin.o internal/cbm/grammar_kotlin.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_lean.o internal/cbm/grammar_lean.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_linkerscript.o internal/cbm/grammar_linkerscript.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_liquid.o internal/cbm/grammar_liquid.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_llvm.o internal/cbm/grammar_llvm.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_lua.o internal/cbm/grammar_lua.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_luau.o internal/cbm/grammar_luau.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_magma.o internal/cbm/grammar_magma.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_makefile.o internal/cbm/grammar_makefile.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_markdown.o internal/cbm/grammar_markdown.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_matlab.o internal/cbm/grammar_matlab.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_mermaid.o internal/cbm/grammar_mermaid.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_meson.o internal/cbm/grammar_meson.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_mojo.o internal/cbm/grammar_mojo.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_move.o internal/cbm/grammar_move.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_nasm.o internal/cbm/grammar_nasm.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_nickel.o internal/cbm/grammar_nickel.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_nix.o internal/cbm/grammar_nix.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_objc.o internal/cbm/grammar_objc.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_objectscript_routine.o internal/cbm/grammar_objectscript_routine.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_objectscript_udl.o internal/cbm/grammar_objectscript_udl.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_ocaml.o internal/cbm/grammar_ocaml.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_odin.o internal/cbm/grammar_odin.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_pascal.o internal/cbm/grammar_pascal.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_perl.o internal/cbm/grammar_perl.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_php.o internal/cbm/grammar_php.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_pine.o internal/cbm/grammar_pine.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_pkl.o internal/cbm/grammar_pkl.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_po.o internal/cbm/grammar_po.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_pony.o internal/cbm/grammar_pony.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_powershell.o internal/cbm/grammar_powershell.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_prisma.o internal/cbm/grammar_prisma.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_properties.o internal/cbm/grammar_properties.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_protobuf.o internal/cbm/grammar_protobuf.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_puppet.o internal/cbm/grammar_puppet.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_purescript.o internal/cbm/grammar_purescript.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_python.o internal/cbm/grammar_python.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_qml.o internal/cbm/grammar_qml.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_r.o internal/cbm/grammar_r.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_racket.o internal/cbm/grammar_racket.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_regex.o internal/cbm/grammar_regex.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_requirements.o internal/cbm/grammar_requirements.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_rescript.o internal/cbm/grammar_rescript.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_ron.o internal/cbm/grammar_ron.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_rst.o internal/cbm/grammar_rst.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_ruby.o internal/cbm/grammar_ruby.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_rust.o internal/cbm/grammar_rust.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_scala.o internal/cbm/grammar_scala.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_scheme.o internal/cbm/grammar_scheme.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_scss.o internal/cbm/grammar_scss.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_slang.o internal/cbm/grammar_slang.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_smali.o internal/cbm/grammar_smali.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_smithy.o internal/cbm/grammar_smithy.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_solidity.o internal/cbm/grammar_solidity.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_soql.o internal/cbm/grammar_soql.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_sosl.o internal/cbm/grammar_sosl.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_sql.o internal/cbm/grammar_sql.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_squirrel.o internal/cbm/grammar_squirrel.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_sshconfig.o internal/cbm/grammar_sshconfig.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_starlark.o internal/cbm/grammar_starlark.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_svelte.o internal/cbm/grammar_svelte.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_sway.o internal/cbm/grammar_sway.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_swift.o internal/cbm/grammar_swift.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_systemverilog.o internal/cbm/grammar_systemverilog.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_tablegen.o internal/cbm/grammar_tablegen.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_tcl.o internal/cbm/grammar_tcl.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_teal.o internal/cbm/grammar_teal.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_templ.o internal/cbm/grammar_templ.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_thrift.o internal/cbm/grammar_thrift.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_tlaplus.o internal/cbm/grammar_tlaplus.c
+
+
+
+
+
+
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_toml.o internal/cbm/grammar_toml.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_tsx.o internal/cbm/grammar_tsx.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_typescript.o internal/cbm/grammar_typescript.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_typst.o internal/cbm/grammar_typst.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_verilog.o internal/cbm/grammar_verilog.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_vhdl.o internal/cbm/grammar_vhdl.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_vim.o internal/cbm/grammar_vim.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_vue.o internal/cbm/grammar_vue.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_wgsl.o internal/cbm/grammar_wgsl.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_wit.o internal/cbm/grammar_wit.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_wolfram.o internal/cbm/grammar_wolfram.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_xml.o internal/cbm/grammar_xml.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_yaml.o internal/cbm/grammar_yaml.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_zig.o internal/cbm/grammar_zig.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_grammar_zsh.o internal/cbm/grammar_zsh.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_ts_runtime.o internal/cbm/ts_runtime.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -Iinternal/cbm/vendored/ts_runtime/src -c -o build/c/prod_lsp_all.o internal/cbm/lsp_all.c
+clang++  -std=c++14 -Wall -Wextra -Werror -Wno-unused-parameter -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -O2 -w -Iinternal/cbm/vendored -c -o build/c/prod_preprocessor.o internal/cbm/preprocessor.cpp
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm -c -o build/c/prod_lz4.o internal/cbm/vendored/lz4/lz4.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm/vendored/lz4 -c -o build/c/prod_lz4hc.o internal/cbm/vendored/lz4/lz4hc.c
+clang  -std=c11 -D_DEFAULT_SOURCE -O2 -w -Iinternal/cbm/vendored/zstd -c -o build/c/prod_zstd.o internal/cbm/vendored/zstd/zstd.c
+clang  -c -o build/c/unixcoder_blob.o vendored/nomic/code_vectors_blob.S
+clang  -std=c11 -D_DEFAULT_SOURCE -D_GNU_SOURCE -Wall -Wextra -Werror -Wno-unused-parameter -Wno-sign-compare  -Isrc -Ivendored -Ivendored/sqlite3 -Ivendored/mimalloc/include -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -O2 -DCBM_BIND_TS_ALLOCATOR=1  -o build/c/codebase-memory-mcp-launcher.exe \
+        src/launcher/windows_launcher.c src/cli/windows_launcher_state.c \
+        -municode -lbcrypt -lws2_32 -lpsapi -lshell32 -ladvapi32 -Wl,--allow-multiple-definition -Wl,--stack,8388608 -static
+clang  -std=c11 -D_DEFAULT_SOURCE -D_GNU_SOURCE -Wall -Wextra -Werror -Wno-unused-parameter -Wno-sign-compare  -Isrc -Ivendored -Ivendored/sqlite3 -Ivendored/mimalloc/include -Iinternal/cbm -Iinternal/cbm/vendored/ts_runtime/include -O2 -DCBM_BIND_TS_ALLOCATOR=1  -o build/c/codebase-memory-mcp \
+        src/main.c src/foundation/arena.c src/foundation/hash_table.c src/foundation/str_intern.c src/foundation/log.c src/foundation/str_util.c src/foundation/platform.c src/foundation/system_info.c src/foundation/slab_alloc.c src/foundation/yaml.c src/foundation/compat.c src/foundation/compat_thread.c src/foundation/compat_fs.c src/foundation/compat_regex.c src/foundation/mem.c src/foundation/diagnostics.c src/foundation/profile.c src/foundation/dump_verify.c src/foundation/limits.c src/foundation/subprocess.c src/foundation/sha256.c src/foundation/macos_acl.c src/foundation/private_file_lock.c src/foundation/lock_registry.c src/store/store.c src/cypher/cypher.c src/mcp/mcp.c src/mcp/index_supervisor.c src/mcp/compact_out.c src/daemon/daemon.c src/daemon/project_lock.c src/daemon/version_cohort.c src/daemon/service.c src/daemon/runtime.c src/daemon/application.c src/daemon/frontend.c src/daemon/host.c src/daemon/bootstrap.c src/daemon/ipc.c src/discover/language.c src/discover/userconfig.c src/discover/gitignore.c src/discover/discover.c src/graph_buffer/graph_buffer.c src/pipeline/fqn.c src/pipeline/path_alias.c src/pipeline/registry.c src/pipeline/pipeline.c src/pipeline/pipeline_incremental.c src/pipeline/worker_pool.c src/pipeline/pass_parallel.c src/pipeline/pass_definitions.c src/pipeline/pass_calls.c src/pipeline/pass_lsp_cross.c src/pipeline/pass_usages.c src/pipeline/pass_semantic.c src/pipeline/pass_tests.c src/pipeline/pass_githistory.c src/pipeline/pass_gitdiff.c src/pipeline/pass_configures.c src/pipeline/pass_configlink.c src/pipeline/pass_route_nodes.c src/pipeline/pass_enrichment.c src/pipeline/pass_envscan.c src/pipeline/pass_compile_commands.c src/pipeline/pass_infrascan.c src/pipeline/pass_k8s.c src/pipeline/pass_similarity.c src/pipeline/pass_semantic_edges.c src/pipeline/pass_complexity.c src/pipeline/pass_cross_repo.c src/pipeline/artifact.c src/pipeline/pass_pkgmap.c src/simhash/minhash.c src/semantic/semantic.c src/semantic/ast_profile.c src/semantic/rotsq.c src/traces/traces.c src/watcher/watcher.c src/git/git_context.c src/cli/cli.c src/cli/progress_sink.c src/cli/hook_augment.c src/cli/agent_clients.c src/cli/agent_profiles.c src/cli/config_json_like.c src/cli/config_toml_edit.c src/cli/config_yaml_edit.c src/cli/config_text_edit.c src/cli/activation_transaction.c src/cli/windows_launcher_state.c src/ui/config.c src/ui/http_server.c src/ui/layout3d.c src/ui/httpd.c src/ui/embedded_stub.c vendored/yyjson/yyjson.c \
+        internal/cbm/cbm.c internal/cbm/extract_defs.c internal/cbm/extract_calls.c internal/cbm/extract_imports.c internal/cbm/extract_usages.c internal/cbm/extract_unified.c internal/cbm/extract_semantic.c internal/cbm/extract_type_refs.c internal/cbm/extract_type_assigns.c internal/cbm/extract_env_accesses.c internal/cbm/extract_channels.c internal/cbm/extract_k8s.c internal/cbm/helpers.c internal/cbm/lang_specs.c internal/cbm/macro_table.c internal/cbm/iris_export_xml.c internal/cbm/service_patterns.c internal/cbm/ac.c internal/cbm/lz4_store.c internal/cbm/zstd_store.c internal/cbm/sqlite_writer.c \
+        build/c/prod_mimalloc.o build/c/prod_sqlite3.o build/c/prod_tre.o build/c/prod_grammar_ada.o build/c/prod_grammar_agda.o build/c/prod_grammar_apex.o build/c/prod_grammar_assembly.o build/c/prod_grammar_astro.o build/c/prod_grammar_awk.o build/c/prod_grammar_bash.o build/c/prod_grammar_beancount.o build/c/prod_grammar_bibtex.o build/c/prod_grammar_bicep.o build/c/prod_grammar_bitbake.o build/c/prod_grammar_blade.o build/c/prod_grammar_c.o build/c/prod_grammar_c_sharp.o build/c/prod_grammar_cairo.o build/c/prod_grammar_capnp.o build/c/prod_grammar_cfml.o build/c/prod_grammar_cfscript.o build/c/prod_grammar_clojure.o build/c/prod_grammar_cmake.o build/c/prod_grammar_cobol.o build/c/prod_grammar_commonlisp.o build/c/prod_grammar_cpp.o build/c/prod_grammar_crystal.o build/c/prod_grammar_css.o build/c/prod_grammar_csv.o build/c/prod_grammar_cuda.o build/c/prod_grammar_d.o build/c/prod_grammar_dart.o build/c/prod_grammar_devicetree.o build/c/prod_grammar_diff.o build/c/prod_grammar_dockerfile.o build/c/prod_grammar_dotenv.o build/c/prod_grammar_elisp.o build/c/prod_grammar_elixir.o build/c/prod_grammar_elm.o build/c/prod_grammar_erlang.o build/c/prod_grammar_fennel.o build/c/prod_grammar_fish.o build/c/prod_grammar_form.o build/c/prod_grammar_fortran.o build/c/prod_grammar_fsharp.o build/c/prod_grammar_func.o build/c/prod_grammar_gdscript.o build/c/prod_grammar_gitattributes.o build/c/prod_grammar_gitignore.o build/c/prod_grammar_gleam.o build/c/prod_grammar_glsl.o build/c/prod_grammar_gn.o build/c/prod_grammar_go.o build/c/prod_grammar_gomod.o build/c/prod_grammar_gotemplate.o build/c/prod_grammar_graphql.o build/c/prod_grammar_groovy.o build/c/prod_grammar_hare.o build/c/prod_grammar_haskell.o build/c/prod_grammar_hcl.o build/c/prod_grammar_hlsl.o build/c/prod_grammar_html.o build/c/prod_grammar_hyprlang.o build/c/prod_grammar_ini.o build/c/prod_grammar_ispc.o build/c/prod_grammar_janet.o build/c/prod_grammar_java.o build/c/prod_grammar_javascript.o build/c/prod_grammar_jinja2.o build/c/prod_grammar_jsdoc.o build/c/prod_grammar_json.o build/c/prod_grammar_json5.o build/c/prod_grammar_jsonnet.o build/c/prod_grammar_julia.o build/c/prod_grammar_just.o build/c/prod_grammar_kconfig.o build/c/prod_grammar_kdl.o build/c/prod_grammar_kotlin.o build/c/prod_grammar_lean.o build/c/prod_grammar_linkerscript.o build/c/prod_grammar_liquid.o build/c/prod_grammar_llvm.o build/c/prod_grammar_lua.o build/c/prod_grammar_luau.o build/c/prod_grammar_magma.o build/c/prod_grammar_makefile.o build/c/prod_grammar_markdown.o build/c/prod_grammar_matlab.o build/c/prod_grammar_mermaid.o build/c/prod_grammar_meson.o build/c/prod_grammar_mojo.o build/c/prod_grammar_move.o build/c/prod_grammar_nasm.o build/c/prod_grammar_nickel.o build/c/prod_grammar_nix.o build/c/prod_grammar_objc.o build/c/prod_grammar_objectscript_routine.o build/c/prod_grammar_objectscript_udl.o build/c/prod_grammar_ocaml.o build/c/prod_grammar_odin.o build/c/prod_grammar_pascal.o build/c/prod_grammar_perl.o build/c/prod_grammar_php.o build/c/prod_grammar_pine.o build/c/prod_grammar_pkl.o build/c/prod_grammar_po.o build/c/prod_grammar_pony.o build/c/prod_grammar_powershell.o build/c/prod_grammar_prisma.o build/c/prod_grammar_properties.o build/c/prod_grammar_protobuf.o build/c/prod_grammar_puppet.o build/c/prod_grammar_purescript.o build/c/prod_grammar_python.o build/c/prod_grammar_qml.o build/c/prod_grammar_r.o build/c/prod_grammar_racket.o build/c/prod_grammar_regex.o build/c/prod_grammar_requirements.o build/c/prod_grammar_rescript.o build/c/prod_grammar_ron.o build/c/prod_grammar_rst.o build/c/prod_grammar_ruby.o build/c/prod_grammar_rust.o build/c/prod_grammar_scala.o build/c/prod_grammar_scheme.o build/c/prod_grammar_scss.o build/c/prod_grammar_slang.o build/c/prod_grammar_smali.o build/c/prod_grammar_smithy.o build/c/prod_grammar_solidity.o build/c/prod_grammar_soql.o build/c/prod_grammar_sosl.o build/c/prod_grammar_sql.o build/c/prod_grammar_squirrel.o build/c/prod_grammar_sshconfig.o build/c/prod_grammar_starlark.o build/c/prod_grammar_svelte.o build/c/prod_grammar_sway.o build/c/prod_grammar_swift.o build/c/prod_grammar_systemverilog.o build/c/prod_grammar_tablegen.o build/c/prod_grammar_tcl.o build/c/prod_grammar_teal.o build/c/prod_grammar_templ.o build/c/prod_grammar_thrift.o build/c/prod_grammar_tlaplus.o build/c/prod_grammar_toml.o build/c/prod_grammar_tsx.o build/c/prod_grammar_typescript.o build/c/prod_grammar_typst.o build/c/prod_grammar_verilog.o build/c/prod_grammar_vhdl.o build/c/prod_grammar_vim.o build/c/prod_grammar_vue.o build/c/prod_grammar_wgsl.o build/c/prod_grammar_wit.o build/c/prod_grammar_wolfram.o build/c/prod_grammar_xml.o build/c/prod_grammar_yaml.o build/c/prod_grammar_zig.o build/c/prod_grammar_zsh.o build/c/prod_ts_runtime.o build/c/prod_lsp_all.o build/c/prod_preprocessor.o build/c/prod_lz4.o build/c/prod_lz4hc.o build/c/prod_zstd.o build/c/unixcoder_blob.o \
+        -lm -lstdc++ -lpthread -lz -lws2_32 -lpsapi -lshell32 -ladvapi32 -Wl,--allow-multiple-definition -Wl,--stack,8388608 -static
+C:/msys64/ucrt64/lib\libstdc++.a(eh_alloc.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(eh_exception.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(eh_personality.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(guard.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(new_op.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(vterminate.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(locale.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(stdexcept.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(stdexcept.o): duplicate section `.rdata$_ZTSSt13runtime_error[_ZTSSt13runtime_error]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(stdexcept.o): duplicate section `.rdata$_ZTISt13runtime_error[_ZTISt13runtime_error]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(stdexcept.o): duplicate section `.rdata$_ZTSSt14overflow_error[_ZTSSt14overflow_error]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(stdexcept.o): duplicate section `.rdata$_ZTISt14overflow_error[_ZTISt14overflow_error]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(functexcept.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(functexcept.o): duplicate section `.rdata$_ZTSSt13runtime_error[_ZTSSt13runtime_error]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(functexcept.o): duplicate section `.rdata$_ZTISt13runtime_error[_ZTISt13runtime_error]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(functexcept.o): duplicate section `.rdata$_ZTSSt14overflow_error[_ZTSSt14overflow_error]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(functexcept.o): duplicate section `.rdata$_ZTISt14overflow_error[_ZTISt14overflow_error]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(locale_init.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(random.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(random.o): duplicate section `.rdata$_ZTSSt13runtime_error[_ZTSSt13runtime_error]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(random.o): duplicate section `.rdata$_ZTISt13runtime_error[_ZTISt13runtime_error]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(system_error.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(system_error.o): duplicate section `.rdata$_ZTSSt13runtime_error[_ZTSSt13runtime_error]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(system_error.o): duplicate section `.rdata$_ZTISt13runtime_error[_ZTISt13runtime_error]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(bad_alloc.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(bad_array_new.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(bad_cast.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(bad_typeid.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(eh_aux_runtime.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(cxx11-ios_failure.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(cxx11-ios_failure.o): duplicate section `.rdata$_ZTSSt13runtime_error[_ZTSSt13runtime_error]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(cxx11-ios_failure.o): duplicate section `.rdata$_ZTISt13runtime_error[_ZTISt13runtime_error]' has different size
+C:/msys64/ucrt64/lib\libstdc++.a(ios_failure.o): duplicate section `.rdata$_ZTSSt9exception[_ZTSSt9exception]' has different size
+Built: build/c/codebase-memory-mcp
+=== Build complete: build/c/codebase-memory-mcp ===
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$ build/c/codebase-memory-mcp --help
+codebase-memory-mcp dev
+
+Usage:
+  codebase-memory-mcp              Run MCP server on stdio
+  codebase-memory-mcp cli [--progress] [--json] <tool> [args]
+                                      Run one tool locally, then exit
+  codebase-memory-mcp install [-y|-n] [--force] [--dry-run] [--dir=<path>] [--skip-config]
+  codebase-memory-mcp uninstall [-y|-n] [--dry-run]
+  codebase-memory-mcp update [-y|-n]
+  codebase-memory-mcp config <list|get|set|reset>
+  codebase-memory-mcp --version    Print version
+  codebase-memory-mcp --help       Print this help
+
+UI options:
+  --ui=true    Enable HTTP graph visualization (persisted)
+  --ui=false   Disable HTTP graph visualization (persisted)
+  --port=N     Set UI port (default 9749, persisted)
+  --tool-profile=analysis|scout  Expose a restricted inspection surface
+
+Supported automatic/conditional client surfaces (43):
+  Claude Code, Codex CLI, Gemini CLI, Zed, OpenCode,
+  Antigravity, Aider, KiloCode, VS Code, Cursor, Windsurf,
+  Augment / Auggie, OpenClaw, Kiro, Junie, Hermes, OpenHands,
+  Cline, Warp, Qwen Code, GitHub Copilot CLI, Factory Droid, Crush,
+  Goose, Mistral Vibe, Qoder CLI, Kimi Code CLI, GitLab Duo CLI,
+  Rovo Dev CLI, Amp, Devin CLI / Local, Tabnine, Continue / cn,
+  Visual Studio, TRAE, Roo Code, Amazon Q Developer IDE,
+  CodeBuddy Code CLI, IBM Bob IDE, IBM Bob Shell, Pochi, Pi,
+  Sourcegraph Cody
+  Conditional/explicit targets are changed only when their documented
+  platform, marker, or explicit existing config path is present.
+  Manual/UI MCP boundaries: Qodo, Warp, JetBrains AI/ACP, Replit,
+  Plandex, SWE-agent, BLACKBOX, GitHub cloud agents, Jules,
+  CodeRabbit.
+
+Tools: index_repository, search_graph, query_graph, trace_path,
+  get_code_snippet, get_graph_schema, get_architecture, search_code,
+  list_projects, delete_project, index_status, detect_changes,
+  manage_adr, ingest_traces
+
+Peter@LEAD-V-W22-PETER UCRT64 /c/users/peter/source/repos/everest/codebase-memory-mcp
+$
